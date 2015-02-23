@@ -118,8 +118,10 @@ angular.module('myApp', []).factory('gameLogic', function() {
                 }
             }
         }
-        if (numR === 0) return 'B';
-        if (numB === 0) return 'R';
+        if (numR === 0)
+            return 'B';
+        if (numB === 0)
+            return 'R';
         return '';
     }
 
@@ -156,7 +158,8 @@ angular.module('myApp', []).factory('gameLogic', function() {
             }
         }
         // If Red and Blue has both one chess and they are not next to each other, it's a tie
-        if (numR === 1 && numB === 1 && !isNext(Rx, Ry, Bx, By)) return true;
+        if (numR === 1 && numB === 1 && !isNext(Rx, Ry, Bx, By))
+            return true;
 
         //Red only has one chess left and the chess rank higher than all chess in Blue, it's a tie
         if (numR === 1 && numB > 1){
@@ -196,8 +199,12 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @returns {boolean}
      */
     function isNext(x1, y1, x2, y2){
-        if (x1 === x2 && (y1 - y2 === 1|| y1 - y2 === -1)) {return true;}
-        if (y1 === y2 && (x1 - x2 === 1|| x1 - x2 === -1)) {return true;}
+        if (x1 === x2 && (y1 - y2 === 1|| y1 - y2 === -1)) {
+            return true;
+        }
+        if (y1 === y2 && (x1 - x2 === 1|| x1 - x2 === -1)) {
+            return true;
+        }
         return false;
     }
 
@@ -209,24 +216,24 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param turnIndexBeforeMove
      * @returns {Array}
      */
-    function getPossibleMoves(board, turnIndexBeforeMove){
-        var possibleMoves = [];
-        var i, j, k, l;
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 8; j++) {
-                for (k = 0; k < 4; k++) {
-                    for (l = 0; l < 8; l++) {
-                        try {
-                            possibleMoves.push(createMove(board, i, j, k, l, turnIndexBeforeMove));
-                        } catch (e) {
-                            // if there are any exceptions then the move is illegal
-                        }
-                    }
-                }
-            }
-        }
-        return possibleMoves;
-    }
+    //function getPossibleMoves(board, turnIndexBeforeMove){
+    //    var possibleMoves = [];
+    //    var i, j, k, l;
+    //    for (i = 0; i < 4; i++) {
+    //        for (j = 0; j < 8; j++) {
+    //            for (k = 0; k < 4; k++) {
+    //                for (l = 0; l < 8; l++) {
+    //                    try {
+    //                        possibleMoves.push(createMove(board, i, j, k, l, turnIndexBeforeMove));
+    //                    } catch (e) {
+    //                        // if there are any exceptions then the move is illegal
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //    return possibleMoves;
+    //}
 
     /**
      * CreateMove function
@@ -251,6 +258,17 @@ angular.module('myApp', []).factory('gameLogic', function() {
         if (board[rowBeforeMove][colBeforeMove].color === '') {
             throw new Error("There is nothing at that position!");
         }
+
+        //can't move a unturned chess
+        if ((board[rowBeforeMove][colBeforeMove].hide === 0) && !(rowAfterMove === -1 && colAfterMove === -1)) {
+            throw new Error("Can not move a unturned chess!");
+        }
+
+        ////can't turn a turned chess
+        if ((board[rowBeforeMove][colBeforeMove].hide === 1) && (rowAfterMove === -1 && colAfterMove === -1)) {
+            throw new Error("This chess is already turned!");
+        }
+
         //when it's not Red's turn, cant choose red showed chess
         if (board[rowBeforeMove][colBeforeMove].color === 'R' && board[rowBeforeMove][colBeforeMove].hide === 1 && turnIndexBeforeMove !== 0) {
             throw new Error("Please wait for your turn!");
@@ -266,18 +284,18 @@ angular.module('myApp', []).factory('gameLogic', function() {
         var boardAfterMove = angular.copy(board);
 
         //turn a chess over
-        if ((boardAfterMove[rowBeforeMove][colBeforeMove].hide === 0) || (rowAfterMove === -1 && colAfterMove === -1)) {
+        if ((boardAfterMove[rowBeforeMove][colBeforeMove].hide === 0) && (rowAfterMove === -1 && colAfterMove === -1)) {
             boardAfterMove[rowBeforeMove][colBeforeMove].hide = 1;
         }
         //move or kill chess
         else {
             //move chess
             if (boardAfterMove[rowAfterMove][colAfterMove].color === '') {
-                boardAfterMove = moveChess(boardAfterMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove)
+                boardAfterMove = moveChess(boardAfterMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove);
             }
             //kill chess
             else {
-                boardAfterMove = killChess(boardAfterMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove)
+                boardAfterMove = killChess(boardAfterMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove);
             }
         }
 
@@ -310,15 +328,14 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @returns {*}
      */
     function moveChess(board, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove){
-        if (!isNext(board, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove)){
+        if (!isNext(rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove)){
             throw new Error("You can not move the chess to that position!");
         }
         else {
-            board[rowAfterMove][colAfterMove]=board[rowBeforeMove][colBeforeMove];
+            board[rowAfterMove][colAfterMove] = angular.copy(board[rowBeforeMove][colBeforeMove]);
             board[rowBeforeMove][colBeforeMove].color = '';
+            return board;
         }
-
-        return board;
     }
 
     /**
@@ -333,8 +350,12 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @returns {*}
      */
     function killChess(board, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove){
+        //can not kill a unturned chess
+        if (board[rowAfterMove][colAfterMove].hide === 0){
+            throw new Error("You can not kill a unturned chess!")
+        }
         //For special Cannon
-        if (board[rowBeforeMove][colBeforeMove].rank ===2){
+        if (board[rowBeforeMove][colBeforeMove].rank === 2){
             //check if it's follow the cannon killing rule
             if (rowBeforeMove === rowAfterMove){
                 var cnt = 0;
@@ -344,7 +365,7 @@ angular.module('myApp', []).factory('gameLogic', function() {
                     }
                 }
                 if (cnt === 1) {
-                    board[rowAfterMove][colAfterMove]=board[rowBeforeMove][colBeforeMove];
+                    board[rowAfterMove][colAfterMove]= angular.copy(board[rowBeforeMove][colBeforeMove]);
                     board[rowBeforeMove][colBeforeMove].color = '';
                     return board;
                 }
@@ -357,7 +378,7 @@ angular.module('myApp', []).factory('gameLogic', function() {
                     }
                 }
                 if (cnt === 1) {
-                    board[rowAfterMove][colAfterMove]=board[rowBeforeMove][colBeforeMove];
+                    board[rowAfterMove][colAfterMove] = angular.copy(board[rowBeforeMove][colBeforeMove]);
                     board[rowBeforeMove][colBeforeMove].color = '';
                     return board;
                 }
@@ -424,7 +445,7 @@ angular.module('myApp', []).factory('gameLogic', function() {
 
     return {
         getInitialBoard: getInitialBoard,
-        getPossibleMoves: getPossibleMoves,
+        //getPossibleMoves: getPossibleMoves,
         createMove: createMove,
         isMoveOk: isMoveOk
     };
