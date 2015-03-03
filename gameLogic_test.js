@@ -595,4 +595,19 @@ describe("In Banqi", function() {
                 {set: {key: 'delta', value: {rowBeforeMove: 0, colBeforeMove: 6, rowAfterMove: -1, colAfterMove: -1}}}]);
     });
 
+    it("getPossibleMoves test, new board", function() {
+        var boardBefore = board;
+
+        var boardAfter = angular.copy(boardBefore);
+        boardAfter[0][3].hide = 1;
+
+        var possibleMoves = _gameLogic.getPossibleMoves(boardBefore, 0);
+
+        var expectedMove = [{setTurn: {turnIndex : 1}},
+                {set: {key: 'board', value: boardAfter}},
+                {set: {key: 'delta', value: {rowBeforeMove: 0, colBeforeMove: 3, rowAfterMove: -1, colAfterMove: -1}}}];
+
+        expect(angular.equals(possibleMoves[3], expectedMove)).toBe(true);
+    });
+
 });

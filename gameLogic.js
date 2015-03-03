@@ -216,24 +216,24 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param turnIndexBeforeMove
      * @returns {Array}
      */
-    //function getPossibleMoves(board, turnIndexBeforeMove){
-    //    var possibleMoves = [];
-    //    var i, j, k, l;
-    //    for (i = 0; i < 4; i++) {
-    //        for (j = 0; j < 8; j++) {
-    //            for (k = 0; k < 4; k++) {
-    //                for (l = 0; l < 8; l++) {
-    //                    try {
-    //                        possibleMoves.push(createMove(board, i, j, k, l, turnIndexBeforeMove));
-    //                    } catch (e) {
-    //                        // if there are any exceptions then the move is illegal
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //    return possibleMoves;
-    //}
+    function getPossibleMoves(board, turnIndexBeforeMove){
+        var possibleMoves = [];
+        var i, j, k, l;
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 8; j++) {
+                for (k = -1; k < 4; k++) {
+                    for (l = -1; l < 8; l++) {
+                        try {
+                            possibleMoves.push(createMove(board, i, j, k, l, turnIndexBeforeMove));
+                        } catch (e) {
+                            // if there are any exceptions then the move is illegal
+                        }
+                    }
+                }
+            }
+        }
+        return possibleMoves;
+    }
 
     /**
      * CreateMove function
@@ -445,7 +445,7 @@ angular.module('myApp', []).factory('gameLogic', function() {
 
     return {
         getInitialBoard: getInitialBoard,
-        //getPossibleMoves: getPossibleMoves,
+        getPossibleMoves: getPossibleMoves,
         createMove: createMove,
         isMoveOk: isMoveOk
     };
