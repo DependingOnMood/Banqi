@@ -10,7 +10,7 @@ module.exports = function(config){
             'http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js',
             'http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-mocks.js',
             'gameLogic.js',
-            'gameLogic_test.js',
+            'gameLogicZhuoran_test.js',
             //'http://yoav-zibin.github.io/emulator/alphaBetaService.js',
             //'aiService.js',
             //'aiService_test.js'
@@ -36,10 +36,10 @@ module.exports = function(config){
 
         frameworks: ['jasmine'],
 
-        browsers : ['Chrome'],
+        browsers : ['Firefox'],
 
         plugins : [
-            'karma-chrome-launcher',
+            'karma-firefox-launcher',
             'karma-jasmine',
             'karma-coverage'
         ]
