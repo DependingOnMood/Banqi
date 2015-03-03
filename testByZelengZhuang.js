@@ -39,9 +39,9 @@ describe("In Banqi", function() {
      the game ends in a win-lose condition. Here is an example:
 
      --------------------
-     | |马|
+                    | |马|
      --------------------
-     |车| |
+                    |车| |
      --------------------
      ...
 
