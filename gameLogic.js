@@ -65,6 +65,8 @@ angular.module('myApp', []).factory('gameLogic', function() {
             {set: {key: '3x6', value: 'B6', visibleToPlayerIndexes: []}},//Advisor
             {set: {key: '3x7', value: 'B7', visibleToPlayerIndexes: []}},//General
 
+            {set: {key: 'stage', value: 0}},
+
             //shuffle
             {shuffle: { keys: ['0x0', '0x1', '0x2', '0x3', '0x4', '0x5', '0x6', '0x7',
                 '1x0', '1x1', '1x2', '1x3', '1x4', '1x5', '1x6', '1x7',
@@ -233,6 +235,8 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * if the piece is hided, simply gave (-1, -1) to (rowAfterMove, colAfterMove), this would turn it over
      * a spot is free if stateBeforeMove[key(row, col)] === ''
      *
+     * stage 0, createMove
+     *
      * @param stateBeforeMove
      * @param rowBeforeMove
      * @param colBeforeMove
@@ -273,12 +277,12 @@ angular.module('myApp', []).factory('gameLogic', function() {
             throw new Error("Same piece, move canceled!");
         }
 
-        //var stateAfterMove = angular.copy(stateBeforeMove);
+        //if state 0, move or kill
         var needToSet;
 
         //turn a piece over
-        if ((stateBeforeMove[key(rowBeforeMove,colBeforeMove)] === null) && (rowAfterMove === -1 && colAfterMove === -1)) {
-            needToSet = [{setVisibility: {key: key(rowBeforeMove,colBeforeMove), visibleToPlayerIndexes: null}}];
+        if ((stateBeforeMove[key(rowBeforeMove, colBeforeMove)] === null) && (rowAfterMove === -1 && colAfterMove === -1)) {
+            needToSet = [{setVisibility: {key: key(rowBeforeMove, colBeforeMove), visibleToPlayerIndexes: null}}];
         }
         //move or kill piece
         else {
@@ -291,22 +295,44 @@ angular.module('myApp', []).factory('gameLogic', function() {
                 needToSet = killPiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove);
             }
         }
+        return [turnIndexBeforeMove,
+            {
+                set: {
+                    key: 'delta', value: {
+                        rowBeforeMove: rowBeforeMove, colBeforeMove: colBeforeMove,
+                        rowAfterMove: rowAfterMove, colAfterMove: colAfterMove
+                    }
+                }
+            },
+            {set: {key: 'stage', value: 1}}].concat(needToSet);
 
+    }
+
+    /**
+     * checkGameEnd
+     * if state 1, check if game end
+     *
+     * @param stateBeforeMove
+     * @returns {{set: {key: string, value: number}}[]}
+     */
+    function checkGameEnd(stateBeforeMove, turnIndexBeforeMove){
         var firstOperation;
         var winner = getWinner(stateBeforeMove);
 
         if (winner !== '' || isTie(stateBeforeMove)) {
             // Game over.
-            firstOperation = {endMatch: {endMatchScores:
-                (winner === 'R' ? [1, 0] : (winner === 'B' ? [0, 1] : [0, 0]))}};
+            firstOperation = {
+                endMatch: {
+                    endMatchScores: (winner === 'R' ? [1, 0] : (winner === 'B' ? [0, 1] : [0, 0]))
+                }
+            };
         } else {
             // Game continues. Now it's the opponent's turn (the turn switches from 0 to 1 and 1 to 0).
             firstOperation = {setTurn: {turnIndex: 1 - turnIndexBeforeMove}};
         }
 
         return [firstOperation,
-            {set: {key: 'delta', value: {rowBeforeMove: rowBeforeMove, colBeforeMove: colBeforeMove,
-                rowAfterMove: rowAfterMove, colAfterMove: colAfterMove }}}].concat(needToSet);
+            {set: {key: 'stage', value: 0}}]
     }
 
     /**
@@ -406,26 +432,41 @@ angular.module('myApp', []).factory('gameLogic', function() {
         var move = params.move;
         var turnIndexBeforeMove = params.turnIndexBeforeMove;
         var stateBeforeMove = params.stateBeforeMove;
+        var stage = stateBeforeMove.stage;
         // The state and turn after move are not needed in any game where all state is public.
         //var turnIndexAfterMove = params.turnIndexAfterMove;
         //var stateAfterMove = params.stateAfterMove;
 
         // We can assume that turnIndexBeforeMove and stateBeforeMove are legal, and we need
         // to verify that move is legal.
-        try {
+        if (stage === 0) {
+            try {
 
-            var deltaValue = move[1].set.value;
-            var rowBeforeMove = deltaValue.rowBeforeMove;
-            var colBeforeMove = deltaValue.colBeforeMove;
-            var rowAfterMove = deltaValue.rowAfterMove;
-            var colAfterMove = deltaValue.colAfterMove;
-            var expectedMove = createMove(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove, turnIndexBeforeMove);
-            if (!angular.equals(move, expectedMove)) {
+                var deltaValue = move[1].set.value;
+                var rowBeforeMove = deltaValue.rowBeforeMove;
+                var colBeforeMove = deltaValue.colBeforeMove;
+                var rowAfterMove = deltaValue.rowAfterMove;
+                var colAfterMove = deltaValue.colAfterMove;
+                var expectedMove = createMove(stateBeforeMove, rowBeforeMove, colBeforeMove,
+                    rowAfterMove, colAfterMove, turnIndexBeforeMove);
+                if (!angular.equals(move, expectedMove)) {
+                    return false;
+                }
+            } catch (e) {
+                // if there are any exceptions then the move is illegal
                 return false;
             }
-        } catch (e) {
-            // if there are any exceptions then the move is illegal
-            return false;
+        }
+        if (stage === 1) {
+            try {
+                var expectedMove = checkGameEnd(stateBeforeMove, turnIndexBeforeMove);
+                if (!angular.equals(move, expectedMove)) {
+                    return false;
+                }
+            } catch (e) {
+                // if there are any exceptions then the move is illegal
+                return false;
+            }
         }
         return true;
     }
