@@ -3,13 +3,12 @@
  */
 describe("In Banqi", function() {
     var _gameLogic;
-    var board;
 
     beforeEach(module("myApp"));
 
     beforeEach(inject(function (gameLogic) {
         _gameLogic = gameLogic;
-        board = _gameLogic.getInitialBoard();
+        initialBoard();
     }));
 
     function expectMoveOk(turnIndexBeforeMove, stateBeforeMove, move) {
