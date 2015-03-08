@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('myApp', []).factory('gameLogic', function() {
+angular.module('myApp', []).factory('gameLogic', function () {
 
     /**
      * initial the Game
@@ -31,47 +31,51 @@ angular.module('myApp', []).factory('gameLogic', function() {
             {set: {key: 'delta', value: {rowBeforeMove: -1, colBeforeMove: -1, rowAfterMove: -1, colAfterMove: -1}}},
 
             //set keys
-            {set: {key: '0x0', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '0x1', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '0x2', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '0x3', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '0x4', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '0x5', value: 'R2', visibleToPlayerIndexes: []}},//Cannon
-            {set: {key: '0x6', value: 'R2', visibleToPlayerIndexes: []}},//Cannon
-            {set: {key: '0x7', value: 'R3', visibleToPlayerIndexes: []}},//Horse
-            {set: {key: '1x0', value: 'R3', visibleToPlayerIndexes: []}},//Horse
-            {set: {key: '1x1', value: 'R4', visibleToPlayerIndexes: []}},//Chariot
-            {set: {key: '1x2', value: 'R4', visibleToPlayerIndexes: []}},//Chariot
-            {set: {key: '1x3', value: 'R5', visibleToPlayerIndexes: []}},//Elephant
-            {set: {key: '1x4', value: 'R5', visibleToPlayerIndexes: []}},//Elephant
-            {set: {key: '1x5', value: 'R6', visibleToPlayerIndexes: []}},//Advisor
-            {set: {key: '1x6', value: 'R6', visibleToPlayerIndexes: []}},//Advisor
-            {set: {key: '1x7', value: 'R7', visibleToPlayerIndexes: []}},//General
+            {set: {key: 'b0x0', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b0x1', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b0x2', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b0x3', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b0x4', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b0x5', value: 'R2', visibleToPlayerIndexes: []}},//Cannon
+            {set: {key: 'b0x6', value: 'R2', visibleToPlayerIndexes: []}},//Cannon
+            {set: {key: 'b0x7', value: 'R3', visibleToPlayerIndexes: []}},//Horse
+            {set: {key: 'b1x0', value: 'R3', visibleToPlayerIndexes: []}},//Horse
+            {set: {key: 'b1x1', value: 'R4', visibleToPlayerIndexes: []}},//Chariot
+            {set: {key: 'b1x2', value: 'R4', visibleToPlayerIndexes: []}},//Chariot
+            {set: {key: 'b1x3', value: 'R5', visibleToPlayerIndexes: []}},//Elephant
+            {set: {key: 'b1x4', value: 'R5', visibleToPlayerIndexes: []}},//Elephant
+            {set: {key: 'b1x5', value: 'R6', visibleToPlayerIndexes: []}},//Advisor
+            {set: {key: 'b1x6', value: 'R6', visibleToPlayerIndexes: []}},//Advisor
+            {set: {key: 'b1x7', value: 'R7', visibleToPlayerIndexes: []}},//General
 
-            {set: {key: '2x0', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '2x1', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '2x2', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '2x3', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '2x4', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: '2x5', value: 'B2', visibleToPlayerIndexes: []}},//Cannon
-            {set: {key: '2x6', value: 'B2', visibleToPlayerIndexes: []}},//Cannon
-            {set: {key: '2x7', value: 'B3', visibleToPlayerIndexes: []}},//Horse
-            {set: {key: '3x0', value: 'B3', visibleToPlayerIndexes: []}},//Horse
-            {set: {key: '3x1', value: 'B4', visibleToPlayerIndexes: []}},//Chariot
-            {set: {key: '3x2', value: 'B4', visibleToPlayerIndexes: []}},//Chariot
-            {set: {key: '3x3', value: 'B5', visibleToPlayerIndexes: []}},//Elephant
-            {set: {key: '3x4', value: 'B5', visibleToPlayerIndexes: []}},//Elephant
-            {set: {key: '3x5', value: 'B6', visibleToPlayerIndexes: []}},//Advisor
-            {set: {key: '3x6', value: 'B6', visibleToPlayerIndexes: []}},//Advisor
-            {set: {key: '3x7', value: 'B7', visibleToPlayerIndexes: []}},//General
+            {set: {key: 'b2x0', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b2x1', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b2x2', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b2x3', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b2x4', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
+            {set: {key: 'b2x5', value: 'B2', visibleToPlayerIndexes: []}},//Cannon
+            {set: {key: 'b2x6', value: 'B2', visibleToPlayerIndexes: []}},//Cannon
+            {set: {key: 'b2x7', value: 'B3', visibleToPlayerIndexes: []}},//Horse
+            {set: {key: 'b3x0', value: 'B3', visibleToPlayerIndexes: []}},//Horse
+            {set: {key: 'b3x1', value: 'B4', visibleToPlayerIndexes: []}},//Chariot
+            {set: {key: 'b3x2', value: 'B4', visibleToPlayerIndexes: []}},//Chariot
+            {set: {key: 'b3x3', value: 'B5', visibleToPlayerIndexes: []}},//Elephant
+            {set: {key: 'b3x4', value: 'B5', visibleToPlayerIndexes: []}},//Elephant
+            {set: {key: 'b3x5', value: 'B6', visibleToPlayerIndexes: []}},//Advisor
+            {set: {key: 'b3x6', value: 'B6', visibleToPlayerIndexes: []}},//Advisor
+            {set: {key: 'b3x7', value: 'B7', visibleToPlayerIndexes: []}},//General
 
             {set: {key: 'stage', value: 0}},
 
             //shuffle
-            {shuffle: { keys: ['0x0', '0x1', '0x2', '0x3', '0x4', '0x5', '0x6', '0x7',
-                '1x0', '1x1', '1x2', '1x3', '1x4', '1x5', '1x6', '1x7',
-                '2x0', '2x1', '2x2', '2x3', '2x4', '2x5', '2x6', '2x7',
-                '3x0', '3x1', '3x2', '3x3', '3x4', '3x5', '3x6', '3x7']}}];
+            {
+                shuffle: {
+                    keys: ['b0x0', 'b0x1', 'b0x2', 'b0x3', 'b0x4', 'b0x5', 'b0x6', 'b0x7',
+                        'b1x0', 'b1x1', 'b1x2', 'b1x3', 'b1x4', 'b1x5', 'b1x6', 'b1x7',
+                        'b2x0', 'b2x1', 'b2x2', 'b2x3', 'b2x4', 'b2x5', 'b2x6', 'b2x7',
+                        'b3x0', 'b3x1', 'b3x2', 'b3x3', 'b3x4', 'b3x5', 'b3x6', 'b3x7']
+                }
+            }];
 
     }
 
@@ -83,8 +87,8 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param y
      * @returns {string}
      */
-    function key(x,y){
-        return x.toString() + 'x' + y.toString();
+    function key(x, y) {
+        return 'b' + x.toString() + 'x' + y.toString();
     }
 
     /**
@@ -102,10 +106,10 @@ angular.module('myApp', []).factory('gameLogic', function() {
         var numB = 0;
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 8; j++) {
-                if (stateBeforeMove[key(i,j)][0] === 'R') {
+                if (stateBeforeMove[key(i, j)][0] === 'R') {
                     numR++;
                 }
-                if (stateBeforeMove[key(i,j)][0] === 'B') {
+                if (stateBeforeMove[key(i, j)][0] === 'B') {
                     numB++;
                 }
             }
@@ -131,18 +135,18 @@ angular.module('myApp', []).factory('gameLogic', function() {
     function isTie(stateBeforeMove) {
         var numR = 0;
         var numB = 0;
-        var Rx =0;
-        var Ry =0;
-        var Bx =0;
-        var By =0;
+        var Rx = 0;
+        var Ry = 0;
+        var Bx = 0;
+        var By = 0;
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 8; j++) {
-                if (stateBeforeMove[key(i,j)][0] === 'R') {
+                if (stateBeforeMove[key(i, j)][0] === 'R') {
                     numR++;
                     Rx = i;
                     Ry = j;
                 }
-                if (stateBeforeMove[key(i,j)][0] === 'B') {
+                if (stateBeforeMove[key(i, j)][0] === 'B') {
                     numB++;
                     Bx = i;
                     By = j;
@@ -154,11 +158,11 @@ angular.module('myApp', []).factory('gameLogic', function() {
             return true;
 
         //Red only has one piece left and the piece rank higher than all piece in Blue, it's a tie
-        if (numR === 1 && numB > 1){
+        if (numR === 1 && numB > 1) {
             for (var i = 0; i < 4; i++) {
                 for (var j = 0; j < 8; j++) {
-                    if ((stateBeforeMove[key(i,j)][0] === 'B')
-                        && (stateBeforeMove[key(Rx,Ry)][1] < stateBeforeMove[key(i,j)][1])){
+                    if ((stateBeforeMove[key(i, j)][0] === 'B')
+                        && (stateBeforeMove[key(Rx, Ry)][1] < stateBeforeMove[key(i, j)][1])) {
                         return false;
                     }
                 }
@@ -167,11 +171,11 @@ angular.module('myApp', []).factory('gameLogic', function() {
         }
 
         //Blue only has one piece left and the piece rank higher than all piece in Red, it's a tie
-        if (numB === 1 && numR > 1){
+        if (numB === 1 && numR > 1) {
             for (var i = 0; i < 4; i++) {
                 for (var j = 0; j < 8; j++) {
-                    if ((stateBeforeMove[key(i,j)][0] === 'R')
-                        && (stateBeforeMove[key(Bx,By)][1] < stateBeforeMove[key(i,j)][1])){
+                    if ((stateBeforeMove[key(i, j)][0] === 'R')
+                        && (stateBeforeMove[key(Bx, By)][1] < stateBeforeMove[key(i, j)][1])) {
                         return false;
                     }
                 }
@@ -192,11 +196,11 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param y2
      * @returns {boolean}
      */
-    function isNext(x1, y1, x2, y2){
-        if (x1 === x2 && (y1 - y2 === 1|| y1 - y2 === -1)) {
+    function isNext(x1, y1, x2, y2) {
+        if (x1 === x2 && (y1 - y2 === 1 || y1 - y2 === -1)) {
             return true;
         }
-        if (y1 === y2 && (x1 - x2 === 1|| x1 - x2 === -1)) {
+        if (y1 === y2 && (x1 - x2 === 1 || x1 - x2 === -1)) {
             return true;
         }
         return false;
@@ -210,7 +214,7 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param turnIndexBeforeMove
      * @returns {Array}
      */
-    function getPossibleMoves(stateBeforeMove, turnIndexBeforeMove){
+    function getPossibleMoves(stateBeforeMove, turnIndexBeforeMove) {
         var possibleMoves = [];
         var i, j, k, l;
         for (i = 0; i < 4; i++) {
@@ -245,38 +249,33 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param turnIndexBeforeMove
      * @returns {*}
      */
-    function createMove(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove,turnIndexBeforeMove){
-        if (stateBeforeMove === undefined) {
-            // Initially (at the beginning of the match), the board in state is undefined.
-            return initialGame();
-        }
+    function createMove(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove, turnIndexBeforeMove) {
         //When the space has nothing, cant choose it
-        if (stateBeforeMove[key(rowBeforeMove,colBeforeMove)] === '') {
+        if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)] === '') {
             throw new Error("There is nothing at that position!");
         }
 
         //can't move a unturned piece
-        if ((stateBeforeMove[key(rowBeforeMove,colBeforeMove)] === null) && !(rowAfterMove === -1 && colAfterMove === -1)) {
+        if ((stateBeforeMove[key(rowBeforeMove, colBeforeMove)] === null) && !(rowAfterMove === -1 && colAfterMove === -1)) {
             throw new Error("Can not move a unturned piece!");
         }
-
         ////can't turn a turned piece
-        if ((stateBeforeMove[key(rowBeforeMove,colBeforeMove)] !== null) && (rowAfterMove === -1 && colAfterMove === -1)) {
+        if ((stateBeforeMove[key(rowBeforeMove, colBeforeMove)] !== null) && (rowAfterMove === -1 && colAfterMove === -1)) {
             throw new Error("This piece is already turned!");
         }
-
-        //when it's not Red's turn, cant choose red showed piece
-        if (stateBeforeMove[key(rowBeforeMove,colBeforeMove)][0] === 'R' && turnIndexBeforeMove !== 0) {
-            throw new Error("Please wait for your turn!");
+        if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)] !== null) {
+            //when it's not Red's turn, cant choose red showed piece
+            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === 'R' && turnIndexBeforeMove !== 0) {
+                throw new Error("Please wait for your turn!");
+            }
+            //when it's not Blue's turn, cant choose blue showed piece
+            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === 'B' && turnIndexBeforeMove !== 1) {
+                throw new Error("Please wait for your turn!");
+            }
         }
-        //when it's not Blue's turn, cant choose blue showed piece
-        if (stateBeforeMove[key(rowBeforeMove,colBeforeMove)][0] === 'B' && turnIndexBeforeMove !== 1) {
-            throw new Error("Please wait for your turn!");
-        }
-        if (rowBeforeMove === rowAfterMove && colBeforeMove === colAfterMove){
+        if (rowBeforeMove === rowAfterMove && colBeforeMove === colAfterMove) {
             throw new Error("Same piece, move canceled!");
         }
-
         //if state 0, move or kill
         var needToSet;
 
@@ -295,7 +294,7 @@ angular.module('myApp', []).factory('gameLogic', function() {
                 needToSet = killPiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove);
             }
         }
-        return [turnIndexBeforeMove,
+        return [{setTurn: {turnIndex: turnIndexBeforeMove}},
             {
                 set: {
                     key: 'delta', value: {
@@ -313,9 +312,10 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * if state 1, check if game end
      *
      * @param stateBeforeMove
+     * @param turnIndexBeforeMove
      * @returns {{set: {key: string, value: number}}[]}
      */
-    function checkGameEnd(stateBeforeMove, turnIndexBeforeMove){
+    function checkGameEnd(stateBeforeMove, turnIndexBeforeMove) {
         var firstOperation;
         var winner = getWinner(stateBeforeMove);
 
@@ -345,12 +345,17 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param colAfterMove
      * @returns {*[]}
      */
-    function movePiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove){
-        if (!isNext(rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove)){
+    function movePiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove) {
+        if (!isNext(rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove)) {
             throw new Error("You can not move the piece to that position!");
         }
         else {
-            return [{set: {key: key(rowAfterMove, colAfterMove), value: stateBeforeMove[key(rowBeforeMove, colBeforeMove)]}},
+            return [{
+                set: {
+                    key: key(rowAfterMove, colAfterMove),
+                    value: stateBeforeMove[key(rowBeforeMove, colBeforeMove)]
+                }
+            },
                 {set: {key: key(rowBeforeMove, colBeforeMove), value: ''}}];
         }
     }
@@ -366,35 +371,45 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param colAfterMove
      * @returns {*[]}
      */
-    function killPiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove){
+    function killPiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove) {
         //can not kill a unturned piece
-        if (stateBeforeMove[key(rowAfterMove, colAfterMove)] === null){
+        if (stateBeforeMove[key(rowAfterMove, colAfterMove)] === null) {
             throw new Error("You can not kill a unturned piece!")
         }
         //For special Cannon
-        if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][1] === '2'){
+        if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][1] === '2') {
             //check if it's follow the cannon killing rule
-            if (rowBeforeMove === rowAfterMove){
+            if (rowBeforeMove === rowAfterMove) {
                 var cnt = 0;
-                for (var i = colBeforeMove + 1; i < colAfterMove; i++){
+                for (var i = colBeforeMove + 1; i < colAfterMove; i++) {
                     if (stateBeforeMove[key(rowAfterMove, i)] !== '') {
                         cnt++;
                     }
                 }
                 if (cnt === 1) {
-                    return [{set: {key: key(rowAfterMove, colAfterMove), value: stateBeforeMove[key(rowBeforeMove, colBeforeMove)]}},
+                    return [{
+                        set: {
+                            key: key(rowAfterMove, colAfterMove),
+                            value: stateBeforeMove[key(rowBeforeMove, colBeforeMove)]
+                        }
+                    },
                         {set: {key: key(rowBeforeMove, colBeforeMove), value: ''}}];
                 }
             }
-            if (colBeforeMove === colAfterMove){
+            if (colBeforeMove === colAfterMove) {
                 var cnt = 0;
-                for (var i = rowBeforeMove + 1; i < rowAfterMove; i++){
-                    if (stateBeforeMove[key(i, colAfterMove)] !== ''){
+                for (var i = rowBeforeMove + 1; i < rowAfterMove; i++) {
+                    if (stateBeforeMove[key(i, colAfterMove)] !== '') {
                         cnt++;
                     }
                 }
                 if (cnt === 1) {
-                    return [{set: {key: key(rowAfterMove, colAfterMove), value: stateBeforeMove[key(rowBeforeMove, colBeforeMove)]}},
+                    return [{
+                        set: {
+                            key: key(rowAfterMove, colAfterMove),
+                            value: stateBeforeMove[key(rowBeforeMove, colBeforeMove)]
+                        }
+                    },
                         {set: {key: key(rowBeforeMove, colBeforeMove), value: ''}}];
                 }
             }
@@ -403,18 +418,18 @@ angular.module('myApp', []).factory('gameLogic', function() {
         }
         //For special general soldier option
         else if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][1] === '7'
-            && stateBeforeMove[(rowAfterMove, colAfterMove)][1] === '1'){
+            && stateBeforeMove[key(rowAfterMove, colAfterMove)][1] === '1') {
             throw new Error("General can not kills soldier, soldier kills General!");
         }
         //For special general soldier option
         else if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][1] === '1'
-            && stateBeforeMove[key(rowAfterMove, colAfterMove)][1] === '7'){
+            && stateBeforeMove[key(rowAfterMove, colAfterMove)][1] === '7') {
             return movePiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove);
         }
         //For pieces not Cannon, and not general soldier option
-        else{
+        else {
             //rank compare
-            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][1] >= stateBeforeMove[key(rowAfterMove, colAfterMove)][1]){
+            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][1] >= stateBeforeMove[key(rowAfterMove, colAfterMove)][1]) {
                 return movePiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove);
             }
             throw new Error("You can not kill the piece at that position!");
@@ -428,45 +443,55 @@ angular.module('myApp', []).factory('gameLogic', function() {
      * @param params
      * @returns {boolean}
      */
-    function isMoveOk(params){
+    function isMoveOk(params) {
         var move = params.move;
         var turnIndexBeforeMove = params.turnIndexBeforeMove;
         var stateBeforeMove = params.stateBeforeMove;
-        var stage = stateBeforeMove.stage;
+
         // The state and turn after move are not needed in any game where all state is public.
         //var turnIndexAfterMove = params.turnIndexAfterMove;
         //var stateAfterMove = params.stateAfterMove;
 
         // We can assume that turnIndexBeforeMove and stateBeforeMove are legal, and we need
         // to verify that move is legal.
-        if (stage === 0) {
-            try {
+        try {
+            var stage;
+            if (stateBeforeMove !== (undefined || null)) {
+                stage = stateBeforeMove.stage;
+            }
+
+            if (stage === 0) {
 
                 var deltaValue = move[1].set.value;
+
                 var rowBeforeMove = deltaValue.rowBeforeMove;
                 var colBeforeMove = deltaValue.colBeforeMove;
                 var rowAfterMove = deltaValue.rowAfterMove;
                 var colAfterMove = deltaValue.colAfterMove;
                 var expectedMove = createMove(stateBeforeMove, rowBeforeMove, colBeforeMove,
                     rowAfterMove, colAfterMove, turnIndexBeforeMove);
+
                 if (!angular.equals(move, expectedMove)) {
                     return false;
                 }
-            } catch (e) {
-                // if there are any exceptions then the move is illegal
-                return false;
             }
-        }
-        if (stage === 1) {
-            try {
+            else if (stage === 1) {
                 var expectedMove = checkGameEnd(stateBeforeMove, turnIndexBeforeMove);
+
                 if (!angular.equals(move, expectedMove)) {
                     return false;
                 }
-            } catch (e) {
-                // if there are any exceptions then the move is illegal
-                return false;
             }
+            else {
+                var expectedMove = initialGame();
+
+                if (!angular.equals(move, expectedMove)) {
+                    return false;
+                }
+            }
+        } catch (e) {
+            // if there are any exceptions then the move is illegal
+            return false;
         }
         return true;
     }
@@ -475,6 +500,7 @@ angular.module('myApp', []).factory('gameLogic', function() {
         initialGame: initialGame,
         getPossibleMoves: getPossibleMoves,
         createMove: createMove,
+        checkGameEnd: checkGameEnd,
         isMoveOk: isMoveOk
     };
 
