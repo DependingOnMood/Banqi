@@ -20,10 +20,10 @@ angular.module('myApp').controller('Ctrl',
 
             function updateUI(params) {
                 $scope.stateAfterMove = params.stateAfterMove;
-                if ($scope.stateAfterMove === null) {
-                    $scope.stateAfterMove = gameLogic.initialGame();
-                    return;
-                }
+                //if ($scope.stateAfterMove === null) {
+                //    $scope.stateAfterMove = gameLogic.initialGame();
+                //    return;
+                //}
                 $scope.delta = params.stateAfterMove.delta;
                 $scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
@@ -62,16 +62,25 @@ angular.module('myApp').controller('Ctrl',
                     gameService.makeMove(move);
                 } catch (e) {
                     $log.info(e);
-                    $log.info(["initialGame() failed"]);
+                    $log.info("initialGame() failed");
                     return;
                 }
             }
 
-            initial();
+
+            gameService.setGame({
+                gameDeveloperEmail: "xiaodongbo627@gmail.com",
+                minNumberOfPlayers: 2,
+                maxNumberOfPlayers: 2,
+                isMoveOk: gameLogic.isMoveOk,
+                updateUI: updateUI
+            });
 
             // Before getting any updateUI, we initialize $scope variables (such as board)
             // and show an empty board to a viewer (so you can't perform moves).
-            updateUI({stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2});
+            //updateUI({stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2});
+
+            initial();
 
             var firstClickRow = null;
             var firstClickCol = null;
@@ -98,6 +107,7 @@ angular.module('myApp').controller('Ctrl',
                 else{
                     if (firstClickRow === null || firstClickCol === null) {
                         firstClickRow = row, firstClickCol = col;
+                        return;
                     }
                     else{
                         try {
@@ -107,6 +117,8 @@ angular.module('myApp').controller('Ctrl',
                             gameService.makeMove(move);
                         } catch (e) {
                             $log.info(["Can not move the piece:", firstClickRow, firstClickCol, row, col]);
+                            firstClickRow = null;
+                            firstClickCol = null;
                             return;
                         }
                     }
@@ -132,21 +144,21 @@ angular.module('myApp').controller('Ctrl',
             };
             $scope.getImageSrc = function (row, col) {
                 var cell = $scope.stateAfterMove[key(row, col)];
-                return cell === "R1" ? "R1.png"
-                    : cell === "R2" ? "R2.png"
-                    : cell === "R3" ? "R3.png"
-                    : cell === "R4" ? "R4.png"
-                    : cell === "R5" ? "R5.png"
-                    : cell === "R6" ? "R6.png"
-                    : cell === "R7" ? "R7.png"
-                    : cell === "B1" ? "B1.png"
-                    : cell === "B2" ? "B2.png"
-                    : cell === "B3" ? "B3.png"
-                    : cell === "B4" ? "B4.png"
-                    : cell === "B5" ? "B5.png"
-                    : cell === "B6" ? "B6.png"
-                    : cell === "B7" ? "B7.png"
-                    : cell === null ? "Hide.png"
+                return cell === "R1" ? "res/R1.png"
+                    : cell === "R2" ? "res/R2.png"
+                    : cell === "R3" ? "res/R3.png"
+                    : cell === "R4" ? "res/R4.png"
+                    : cell === "R5" ? "res/R5.png"
+                    : cell === "R6" ? "res/R6.png"
+                    : cell === "R7" ? "res/R7.png"
+                    : cell === "B1" ? "res/B1.png"
+                    : cell === "B2" ? "res/B2.png"
+                    : cell === "B3" ? "res/B3.png"
+                    : cell === "B4" ? "res/B4.png"
+                    : cell === "B5" ? "res/B5.png"
+                    : cell === "B6" ? "res/B6.png"
+                    : cell === "B7" ? "res/B7.png"
+                    : cell === null ? "res/Hide.png"
                     : "";
             };
             $scope.shouldSlowlyAppear = function (row, col) {
@@ -154,11 +166,4 @@ angular.module('myApp').controller('Ctrl',
                     $scope.delta.row === row && $scope.delta.col === col;
             };
 
-            gameService.setGame({
-                gameDeveloperEmail: "xiaodongbo627@gmail.com",
-                minNumberOfPlayers: 2,
-                maxNumberOfPlayers: 2,
-                isMoveOk: gameLogic.isMoveOk,
-                updateUI: updateUI
-            });
         }]);

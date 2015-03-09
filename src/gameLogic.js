@@ -106,6 +106,9 @@ angular.module('myApp', []).factory('gameLogic', function () {
         var numB = 0;
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 8; j++) {
+                //if there is a hide piece, the game won't end
+                if (stateBeforeMove[key(i, j)] === null) return '';
+
                 if (stateBeforeMove[key(i, j)][0] === 'R') {
                     numR++;
                 }
@@ -141,6 +144,9 @@ angular.module('myApp', []).factory('gameLogic', function () {
         var By = 0;
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 8; j++) {
+                //if there is a hide piece, the game won't end
+                if (stateBeforeMove[key(i, j)] === null) return false;
+
                 if (stateBeforeMove[key(i, j)][0] === 'R') {
                     numR++;
                     Rx = i;
@@ -381,7 +387,18 @@ angular.module('myApp', []).factory('gameLogic', function () {
             //check if it's follow the cannon killing rule
             if (rowBeforeMove === rowAfterMove) {
                 var cnt = 0;
-                for (var i = colBeforeMove + 1; i < colAfterMove; i++) {
+                var bigger;
+                var smaller;
+                if (colBeforeMove > colAfterMove){
+                    bigger = colBeforeMove;
+                    smaller = colAfterMove;
+                }
+                else{
+                    bigger = colAfterMove;
+                    smaller = colBeforeMove;
+                }
+
+                for (var i = smaller + 1; i < bigger; i++) {
                     if (stateBeforeMove[key(rowAfterMove, i)] !== '') {
                         cnt++;
                     }
@@ -398,7 +415,17 @@ angular.module('myApp', []).factory('gameLogic', function () {
             }
             if (colBeforeMove === colAfterMove) {
                 var cnt = 0;
-                for (var i = rowBeforeMove + 1; i < rowAfterMove; i++) {
+                var bigger;
+                var smaller;
+                if (rowBeforeMove > rowAfterMove){
+                    bigger = rowBeforeMove;
+                    smaller = rowAfterMove;
+                }
+                else{
+                    bigger = rowAfterMove;
+                    smaller = rowBeforeMove;
+                }
+                for (var i = smaller + 1; i < bigger; i++) {
                     if (stateBeforeMove[key(i, colAfterMove)] !== '') {
                         cnt++;
                     }
@@ -460,6 +487,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 stage = stateBeforeMove.stage;
             }
 
+            console.log('stage', stage);
             if (stage === 0) {
 
                 var deltaValue = move[1].set.value;
@@ -472,6 +500,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     rowAfterMove, colAfterMove, turnIndexBeforeMove);
 
                 if (!angular.equals(move, expectedMove)) {
+                    console.log('move, expectedMove are not equal');
                     return false;
                 }
             }
@@ -479,20 +508,28 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 var expectedMove = checkGameEnd(stateBeforeMove, turnIndexBeforeMove);
 
                 if (!angular.equals(move, expectedMove)) {
+                    console.log('move, expectedMove are not equal');
                     return false;
                 }
             }
             else {
+                console.log('should initialGame');
                 var expectedMove = initialGame();
 
-                if (!angular.equals(move, expectedMove)) {
-                    return false;
-                }
+                //the move and expected move won't equal because move would set hide pieces to null
+                //if (!angular.equals(move, expectedMove)) {
+                //    console.log('move: ', move);
+                //    console.log('expectedMove: ', expectedMove)
+                //    console.log('move, expectedMove are not equal');
+                //    return false;
+                //}
             }
         } catch (e) {
             // if there are any exceptions then the move is illegal
+            console.log('got exceptions in isMoveOk: ', e);
             return false;
         }
+        console.log('isMoveOk is True!');
         return true;
     }
 
