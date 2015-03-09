@@ -1,0 +1,22 @@
+.piece {
+  position: absolute;
+  width: 80%;
+  top: 10%;
+  left: 10%;
+}
+
+.slowlyAppear {
+  -webkit-animation: slowlyAppear 0.5s linear; /* Chrome, Safari, Opera */
+  animation: slowlyAppear 0.5s linear;
+}
+/* Chrome, Safari, Opera */
+@-webkit-keyframes slowlyAppear {
+  from {opacity: 0.1;}
+  to {opacity: 1;}
+}
+
+/* Standard syntax */
+@keyframes slowlyAppear {
+  from {opacity: 0.1;}
+  to {opacity: 1;}
+}
