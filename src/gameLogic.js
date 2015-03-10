@@ -14,13 +14,17 @@ angular.module('myApp', []).factory('gameLogic', function () {
      * setDelta -1,-1,-1,-1 for initial:
      * {set: {key: 'delta', value: {rowBeforeMove: -1, colBeforeMove: -1, rowAfterMove: -1, colAfterMove: -1}}},
      *
-     * set keys (pieces) with position as the key, and hide team all;
+     * set keys (pieces) with position as the key;
      *
-     * {set: {key: '0x0', value: 'R1', visibleToPlayerIndexes: []}}
-     * ...{{key: '3x7', value: 'B7', visibleToPlayerIndexes: []}}
+     * {set: {key: '0x0', value: 'R1'}}
+     * ...{{key: '3x7', value: 'B7'}}
      *
      * shuffle:
      * {shuffle: ["0x0", ..., "3x7"]}
+     *
+     * hide:
+     * {setVisibility: {key: 'b0x0', visibleToPlayerIndexes: []}}
+     * ...{setVisibility: {key: 'b3x7', visibleToPlayerIndexes: []}}
      *
      * @returns {*[]}
      */
@@ -34,39 +38,39 @@ angular.module('myApp', []).factory('gameLogic', function () {
             {set: {key: 'delta', value: {rowBeforeMove: -1, colBeforeMove: -1, rowAfterMove: -1, colAfterMove: -1}}},
 
             //set keys
-            {set: {key: 'b0x0', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b0x1', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b0x2', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b0x3', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b0x4', value: 'R1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b0x5', value: 'R2', visibleToPlayerIndexes: []}},//Cannon
-            {set: {key: 'b0x6', value: 'R2', visibleToPlayerIndexes: []}},//Cannon
-            {set: {key: 'b0x7', value: 'R3', visibleToPlayerIndexes: []}},//Horse
-            {set: {key: 'b1x0', value: 'R3', visibleToPlayerIndexes: []}},//Horse
-            {set: {key: 'b1x1', value: 'R4', visibleToPlayerIndexes: []}},//Chariot
-            {set: {key: 'b1x2', value: 'R4', visibleToPlayerIndexes: []}},//Chariot
-            {set: {key: 'b1x3', value: 'R5', visibleToPlayerIndexes: []}},//Elephant
-            {set: {key: 'b1x4', value: 'R5', visibleToPlayerIndexes: []}},//Elephant
-            {set: {key: 'b1x5', value: 'R6', visibleToPlayerIndexes: []}},//Advisor
-            {set: {key: 'b1x6', value: 'R6', visibleToPlayerIndexes: []}},//Advisor
-            {set: {key: 'b1x7', value: 'R7', visibleToPlayerIndexes: []}},//General
+            {set: {key: 'b0x0', value: 'R1'}},//Soldier;
+            {set: {key: 'b0x1', value: 'R1'}},//Soldier;
+            {set: {key: 'b0x2', value: 'R1'}},//Soldier;
+            {set: {key: 'b0x3', value: 'R1'}},//Soldier;
+            {set: {key: 'b0x4', value: 'R1'}},//Soldier;
+            {set: {key: 'b0x5', value: 'R2'}},//Cannon
+            {set: {key: 'b0x6', value: 'R2'}},//Cannon
+            {set: {key: 'b0x7', value: 'R3'}},//Horse
+            {set: {key: 'b1x0', value: 'R3'}},//Horse
+            {set: {key: 'b1x1', value: 'R4'}},//Chariot
+            {set: {key: 'b1x2', value: 'R4'}},//Chariot
+            {set: {key: 'b1x3', value: 'R5'}},//Elephant
+            {set: {key: 'b1x4', value: 'R5'}},//Elephant
+            {set: {key: 'b1x5', value: 'R6'}},//Advisor
+            {set: {key: 'b1x6', value: 'R6'}},//Advisor
+            {set: {key: 'b1x7', value: 'R7'}},//General
 
-            {set: {key: 'b2x0', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b2x1', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b2x2', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b2x3', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b2x4', value: 'B1', visibleToPlayerIndexes: []}},//Soldier;
-            {set: {key: 'b2x5', value: 'B2', visibleToPlayerIndexes: []}},//Cannon
-            {set: {key: 'b2x6', value: 'B2', visibleToPlayerIndexes: []}},//Cannon
-            {set: {key: 'b2x7', value: 'B3', visibleToPlayerIndexes: []}},//Horse
-            {set: {key: 'b3x0', value: 'B3', visibleToPlayerIndexes: []}},//Horse
-            {set: {key: 'b3x1', value: 'B4', visibleToPlayerIndexes: []}},//Chariot
-            {set: {key: 'b3x2', value: 'B4', visibleToPlayerIndexes: []}},//Chariot
-            {set: {key: 'b3x3', value: 'B5', visibleToPlayerIndexes: []}},//Elephant
-            {set: {key: 'b3x4', value: 'B5', visibleToPlayerIndexes: []}},//Elephant
-            {set: {key: 'b3x5', value: 'B6', visibleToPlayerIndexes: []}},//Advisor
-            {set: {key: 'b3x6', value: 'B6', visibleToPlayerIndexes: []}},//Advisor
-            {set: {key: 'b3x7', value: 'B7', visibleToPlayerIndexes: []}},//General
+            {set: {key: 'b2x0', value: 'B1'}},//Soldier;
+            {set: {key: 'b2x1', value: 'B1'}},//Soldier;
+            {set: {key: 'b2x2', value: 'B1'}},//Soldier;
+            {set: {key: 'b2x3', value: 'B1'}},//Soldier;
+            {set: {key: 'b2x4', value: 'B1'}},//Soldier;
+            {set: {key: 'b2x5', value: 'B2'}},//Cannon
+            {set: {key: 'b2x6', value: 'B2'}},//Cannon
+            {set: {key: 'b2x7', value: 'B3'}},//Horse
+            {set: {key: 'b3x0', value: 'B3'}},//Horse
+            {set: {key: 'b3x1', value: 'B4'}},//Chariot
+            {set: {key: 'b3x2', value: 'B4'}},//Chariot
+            {set: {key: 'b3x3', value: 'B5'}},//Elephant
+            {set: {key: 'b3x4', value: 'B5'}},//Elephant
+            {set: {key: 'b3x5', value: 'B6'}},//Advisor
+            {set: {key: 'b3x6', value: 'B6'}},//Advisor
+            {set: {key: 'b3x7', value: 'B7'}},//General
 
             {set: {key: 'stage', value: 0}},
 
@@ -78,7 +82,40 @@ angular.module('myApp', []).factory('gameLogic', function () {
                         'b2x0', 'b2x1', 'b2x2', 'b2x3', 'b2x4', 'b2x5', 'b2x6', 'b2x7',
                         'b3x0', 'b3x1', 'b3x2', 'b3x3', 'b3x4', 'b3x5', 'b3x6', 'b3x7']
                 }
-            }];
+            },
+            {setVisibility: {key: 'b0x0', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b0x1', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b0x2', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b0x3', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b0x4', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b0x5', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b0x6', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b0x7', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b1x0', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b1x1', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b1x2', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b1x3', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b1x4', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b1x5', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b1x6', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b1x7', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b2x0', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b2x1', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b2x2', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b2x3', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b2x4', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b2x5', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b2x6', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b2x7', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b3x0', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b3x1', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b3x2', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b3x3', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b3x4', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b3x5', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b3x6', visibleToPlayerIndexes: []}},
+            {setVisibility: {key: 'b3x7', visibleToPlayerIndexes: []}},
+            ];
 
     }
 
@@ -521,14 +558,13 @@ angular.module('myApp', []).factory('gameLogic', function () {
             else {
                 console.log('should initialGame');
                 var expectedMove = initialGame();
-
                 //the move and expected move won't equal because move would set hide pieces to null
-                //if (!angular.equals(move, expectedMove)) {
-                //    console.log('move: ', move);
-                //    console.log('expectedMove: ', expectedMove)
-                //    console.log('move, expectedMove are not equal');
-                //    return false;
-                //}
+                if (!angular.equals(move, expectedMove)) {
+                    console.log('move: ', move);
+                    console.log('expectedMove: ', expectedMove)
+                    console.log('move, expectedMove are not equal');
+                    return false;
+                }
             }
         } catch (e) {
             // if there are any exceptions then the move is illegal
