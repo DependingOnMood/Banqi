@@ -107,7 +107,8 @@ angular.module('myApp').controller('Ctrl',
                     return;
                 }
                 //turn the piece
-                if ($scope.stateAfterMove[key(row, col)] === null) {
+                if ($scope.stateAfterMove[key(row, col)] === null
+                    && (firstClickRow === null || firstClickCol === null)) {
                     try {
                         var move = gameLogic.createMove($scope.stateAfterMove,
                             row, col, -1, -1, $scope.turnIndex);
