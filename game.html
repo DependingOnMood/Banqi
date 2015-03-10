@@ -42,9 +42,9 @@
                  style="position:absolute; top:0; left:{{col * 12.5}}%; width:12.5%; height:100%;"
                  ng-click="cellClicked(row, col)">
                 <!--id="{{'e2e_test_div_' + row + 'x' + col}}">-->
-                <img ng-class="{piece: true, slowlyAppear: shouldSlowlyAppear(row, col)}"
-                ng-show="shouldShowImage(row, col)"
-                ng-src="{{getImageSrc(row, col)}}">
+                <img ng-class="{piece: true}"
+                     ng-show="shouldShowImage(row, col)"
+                     ng-src="{{getImageSrc(row, col)}}">
                 <!--id="{{'e2e_test_img_' + row + 'x' + col}}">-->
             </div>
         </div>

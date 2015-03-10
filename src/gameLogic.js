@@ -260,7 +260,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
         if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)] === '') {
             throw new Error("There is nothing at that position!");
         }
-
         //can't move a unturned piece
         if ((stateBeforeMove[key(rowBeforeMove, colBeforeMove)] === null) && !(rowAfterMove === -1 && colAfterMove === -1)) {
             throw new Error("Can not move a unturned piece!");
@@ -270,6 +269,10 @@ angular.module('myApp', []).factory('gameLogic', function () {
             throw new Error("This piece is already turned!");
         }
         if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)] !== null) {
+            //You can't kill yourself
+            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === stateBeforeMove[key(rowAfterMove, colAfterMove)][0]) {
+                throw new Error("You can't kill yourself!");
+            }
             //when it's not Red's turn, cant choose red showed piece
             if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === 'R' && turnIndexBeforeMove !== 0) {
                 throw new Error("Please wait for your turn!");
