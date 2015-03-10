@@ -11,6 +11,9 @@ angular.module('myApp', []).factory('gameLogic', function () {
      * setTurn:
      * {setTurn: {turnIndex: 0}}
      *
+     * setDelta -1,-1,-1,-1 for initial:
+     * {set: {key: 'delta', value: {rowBeforeMove: -1, colBeforeMove: -1, rowAfterMove: -1, colAfterMove: -1}}},
+     *
      * set keys (pieces) with position as the key, and hide team all;
      *
      * {set: {key: '0x0', value: 'R1', visibleToPlayerIndexes: []}}

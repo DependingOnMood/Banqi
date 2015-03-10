@@ -44,8 +44,8 @@
                 <!--id="{{'e2e_test_div_' + row + 'x' + col}}">-->
                 <img ng-class="{piece: true}"
                      ng-show="shouldShowImage(row, col)"
-                     ng-src="{{getImageSrc(row, col)}}">
-                <!--id="{{'e2e_test_img_' + row + 'x' + col}}">-->
+                     ng-src="{{getImageSrc(row, col)}}"
+                     id="{{'img_' + row + 'x' + col}}">
             </div>
         </div>
     </div>

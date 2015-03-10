@@ -97,6 +97,7 @@ angular.module('myApp').controller('Ctrl',
 
             var firstClickRow = null;
             var firstClickCol = null;
+            var img = null;
             $scope.cellClicked = function (row, col) {
                 $log.info(["Clicked on cell:", row, col]);
                 if (window.location.search === '?throwException') { // to test encoding a stack trace with sourcemap
@@ -120,6 +121,8 @@ angular.module('myApp').controller('Ctrl',
                 else{
                     if (firstClickRow === null || firstClickCol === null) {
                         firstClickRow = row, firstClickCol = col;
+                        img = document.getElementById('img_' + firstClickRow + 'x' + firstClickCol);
+                        img.className = "pieceClicked";
                         return;
                     }
                     else{
@@ -128,10 +131,12 @@ angular.module('myApp').controller('Ctrl',
                                 firstClickRow, firstClickCol, row, col, $scope.turnIndex);
                             $scope.isYourTurn = false; // to prevent making another move
                             gameService.makeMove(move);
+                            if (img !== null) {img.className = "piece"; img = null;}
                         } catch (e) {
                             $log.info(["Can not move the piece:", firstClickRow, firstClickCol, row, col]);
                             firstClickRow = null;
                             firstClickCol = null;
+                            if (img !== null) {img.className = "piece"; img = null;}
                             return;
                         }
                     }
@@ -143,11 +148,13 @@ angular.module('myApp').controller('Ctrl',
                     gameService.makeMove(move);
                     firstClickRow = null;
                     firstClickCol = null;
+                    if (img !== null) {img.className = "piece"; img = null;}
                 } catch (e) {
                     $log.info(e);
                     $log.info("checkGameEnd failed!");
                     firstClickRow = null;
                     firstClickCol = null;
+                    if (img !== null) {img.className = "piece"; img = null;}
                     return;
                 }
             };
