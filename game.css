@@ -5,6 +5,13 @@
   left: 10%;
 }
 
+.pieceClicked {
+    position: absolute;
+    width: 100%;
+    top: 0%;
+    left: 0%;
+}
+
 .slowlyAppear {
   -webkit-animation: slowlyAppear 0.5s linear; /* Chrome, Safari, Opera */
   animation: slowlyAppear 0.5s linear;

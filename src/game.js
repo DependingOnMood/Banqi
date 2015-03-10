@@ -12,11 +12,20 @@ angular.module('myApp').controller('Ctrl',
 
             resizeGameAreaService.setWidthToHeight(2);
 
-            //function sendComputerMove() {
-            //  gameService.makeMove(aiService.createComputerMove($scope.board, $scope.turnIndex,
-            //      // at most 1 second for the AI to choose a move (but might be much quicker)
-            //      {millisecondsLimit: 1000}));
-            //}
+            var computerMoved = 0;// check if AI already made a move
+
+            function sendComputerMove() {
+                var possibleMoves = gameLogic.getPossibleMoves($scope.stateAfterMove, $scope.turnIndex);
+                console.log('possibleMoves: ', possibleMoves);
+                gameService.makeMove(possibleMoves[Math.floor(Math.random()*possibleMoves.length)]);
+
+                //gameService.makeMove(aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex,
+                //  // at most 1 second for the AI to choose a move (but might be much quicker)
+                //  {millisecondsLimit: 1000}));
+
+                //check if the game ends
+                gameService.makeMove(gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex));
+            }
 
             function updateUI(params) {
                 $scope.stateAfterMove = params.stateAfterMove;
@@ -30,13 +39,17 @@ angular.module('myApp').controller('Ctrl',
                 $scope.turnIndex = params.turnIndexAfterMove;
 
                 // Is it the computer's turn?
-                //  if ($scope.isYourTurn &&
-                //      params.playersInfo[params.yourPlayerIndex].playerId === '') {
-                //    $scope.isYourTurn = false; // to make sure the UI won't send another move.
-                //    // Waiting 0.5 seconds to let the move animation finish; if we call aiService
-                //    // then the animation is paused until the javascript finishes.
-                //    $timeout(sendComputerMove, 500);
-                //  }
+                  if (computerMoved !== 1 &&
+                      params.playersInfo[params.yourPlayerIndex].playerId === '') {
+                      computerMoved = 1;// to make sure the UI won't send another move.
+                    // Waiting 0.5 seconds to let the move animation finish; if we call aiService
+                    // then the animation is paused until the javascript finishes.
+                    $timeout(sendComputerMove, 500);
+                  }
+                else
+                  {
+                      computerMoved = 0;
+                  }
             }
 
             /**
@@ -160,10 +173,6 @@ angular.module('myApp').controller('Ctrl',
                     : cell === "B7" ? "res/B7.png"
                     : cell === null ? "res/Hide.png"
                     : "";
-            };
-            $scope.shouldSlowlyAppear = function (row, col) {
-                return $scope.delta !== undefined &&
-                    $scope.delta.row === row && $scope.delta.col === col;
             };
 
         }]);
