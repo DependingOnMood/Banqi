@@ -83,6 +83,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                         'b3x0', 'b3x1', 'b3x2', 'b3x3', 'b3x4', 'b3x5', 'b3x6', 'b3x7']
                 }
             },
+            //hide
             {setVisibility: {key: 'b0x0', visibleToPlayerIndexes: []}},
             {setVisibility: {key: 'b0x1', visibleToPlayerIndexes: []}},
             {setVisibility: {key: 'b0x2', visibleToPlayerIndexes: []}},

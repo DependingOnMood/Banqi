@@ -29,10 +29,6 @@ angular.module('myApp').controller('Ctrl',
 
             function updateUI(params) {
                 $scope.stateAfterMove = params.stateAfterMove;
-                //if ($scope.stateAfterMove === null) {
-                //    $scope.stateAfterMove = gameLogic.initialGame();
-                //    return;
-                //}
                 $scope.delta = params.stateAfterMove.delta;
                 $scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
@@ -71,7 +67,6 @@ angular.module('myApp').controller('Ctrl',
             function initial() {
                 try {
                     var move = gameLogic.initialGame();
-                    //$scope.isYourTurn = false; // to prevent making another move
                     gameService.makeMove(move);
                 } catch (e) {
                     $log.info(e);
@@ -89,10 +84,7 @@ angular.module('myApp').controller('Ctrl',
                 updateUI: updateUI
             });
 
-            // Before getting any updateUI, we initialize $scope variables (such as board)
-            // and show an empty board to a viewer (so you can't perform moves).
-            //updateUI({stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2});
-
+            //initial the game
             initial();
 
             var firstClickRow = null;
@@ -122,8 +114,10 @@ angular.module('myApp').controller('Ctrl',
                 else{
                     if (firstClickRow === null || firstClickCol === null) {
                         firstClickRow = row, firstClickCol = col;
-                        img = document.getElementById('img_' + firstClickRow + 'x' + firstClickCol);
-                        img.className = "pieceClicked";
+                        if ($scope.shouldShowImage(firstClickRow, firstClickCol)){
+                            img = document.getElementById('img_' + firstClickRow + 'x' + firstClickCol);
+                            img.className = "pieceClicked";
+                        }
                         return;
                     }
                     else{
