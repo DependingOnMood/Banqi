@@ -35,8 +35,9 @@ angular.module('myApp').controller('Ctrl',
                 $scope.turnIndex = params.turnIndexAfterMove;
 
                 // Is it the computer's turn?
-                  if (computerMoved !== 1 &&
-                      params.playersInfo[params.yourPlayerIndex].playerId === '') {
+                  if (computerMoved !== 1
+                      && $scope.isYourTurn
+                      && params.playersInfo[params.yourPlayerIndex].playerId === '') {
                       computerMoved = 1;// to make sure the UI won't send another move.
                     // Waiting 0.5 seconds to let the move animation finish; if we call aiService
                     // then the animation is paused until the javascript finishes.
