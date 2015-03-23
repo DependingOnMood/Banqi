@@ -2,6 +2,9 @@
  * Created by Dongbo on 2/22/15.
  */
 module.exports = function(config){
+
+    'use strict';
+
     config.set({
 
         basePath : './',
