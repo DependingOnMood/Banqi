@@ -192,12 +192,12 @@ describe("In Banqi", function() {
 
     it("turn a unturned chess is legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         expectMoveOk(0,
             _stateBeforeMove,
@@ -210,12 +210,12 @@ describe("In Banqi", function() {
 
     it("turn a unturned chess without passing it's turned is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         expectIllegalMove(0,
             _stateBeforeMove,
@@ -227,12 +227,12 @@ describe("In Banqi", function() {
 
     it("move a turned chess to a space nearby is legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         expectMoveOk(1,
             _stateBeforeMove,
@@ -246,12 +246,12 @@ describe("In Banqi", function() {
 
     it("move a turned chess to a space not nearby is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         expectIllegalMove(1,
             _stateBeforeMove,
@@ -266,12 +266,12 @@ describe("In Banqi", function() {
     it("move a unturned chess is not legal", function() {
         var boardBefore = board;
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         expectIllegalMove(1,
             _stateBeforeMove,
@@ -285,12 +285,12 @@ describe("In Banqi", function() {
 
     it("move a turned chess to the same place is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         expectIllegalMove(1,
             _stateBeforeMove,
@@ -304,12 +304,12 @@ describe("In Banqi", function() {
 
     it("move a space is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         expectIllegalMove(1,
             _stateBeforeMove,
@@ -323,12 +323,12 @@ describe("In Banqi", function() {
 
     it("kill a chess has lower rank is legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         expectMoveOk(1,
             _stateBeforeMove,
@@ -342,13 +342,13 @@ describe("In Banqi", function() {
 
     it("kill a chess has higher rank is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
-        _stateBeforeMove['b2x1']= 'B4';//Blue Chariot
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
+        _stateBeforeMove['b2x1']= 'B4';//Black Chariot
 
         expectIllegalMove(0,
             _stateBeforeMove,
@@ -362,13 +362,13 @@ describe("In Banqi", function() {
 
     it("a Soldier kills a nearby General is legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
-        _stateBeforeMove['b2x1']= 'B4';//Blue Chariot
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
+        _stateBeforeMove['b2x1']= 'B4';//Black Chariot
 
         expectMoveOk(0,
             _stateBeforeMove,
@@ -382,13 +382,13 @@ describe("In Banqi", function() {
 
     it("a General kills a nearby Soldier is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
-        _stateBeforeMove['b2x1']= 'B4';//Blue Chariot
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
+        _stateBeforeMove['b2x1']= 'B4';//Black Chariot
 
         expectIllegalMove(1,
             _stateBeforeMove,
@@ -402,13 +402,13 @@ describe("In Banqi", function() {
 
     it("a Cannon kill any chess has one turned chess between hori it is legal ", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= 'B4';//Blue Chariot
-        _stateBeforeMove['b2x1']= 'B4';//Blue Chariot
+        _stateBeforeMove['b1x2']= 'B4';//Black Chariot
+        _stateBeforeMove['b2x1']= 'B4';//Black Chariot
         _stateBeforeMove['b2x2']= 'R4';//Red Chariot
 
         expectMoveOk(0,
@@ -423,14 +423,14 @@ describe("In Banqi", function() {
 
     it("a Cannon kill any chess has one turned chess between verti it is legal ", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= 'B4';//Blue Chariot
-        _stateBeforeMove['b2x0']= 'B1';//Blue Soldier
-        _stateBeforeMove['b3x0']= 'B1';//Blue Soldier
+        _stateBeforeMove['b1x2']= 'B4';//Black Chariot
+        _stateBeforeMove['b2x0']= 'B1';//Black Soldier
+        _stateBeforeMove['b3x0']= 'B1';//Black Soldier
 
         expectMoveOk(0,
             _stateBeforeMove,
@@ -444,14 +444,14 @@ describe("In Banqi", function() {
 
     it("a Cannon kill any nearby chess is not legal ", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
         _stateBeforeMove['b2x0']= 'R1';//Red Soldier
-        _stateBeforeMove['b2x1']= 'B4';//Blue Chariot
+        _stateBeforeMove['b2x1']= 'B4';//Black Chariot
         _stateBeforeMove['b2x2']= 'R4';//Red Chariot
 
         expectIllegalMove(0,
@@ -466,13 +466,13 @@ describe("In Banqi", function() {
 
     it("kill a unturned chess is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
-        _stateBeforeMove['b2x1']= 'B4';//Blue Chariot
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
+        _stateBeforeMove['b2x1']= 'B4';//Black Chariot
         _stateBeforeMove['b2x2']= 'R4';//Red Chariot
 
         //var boardAfter = angular.copy(boardBefore);
@@ -489,15 +489,15 @@ describe("In Banqi", function() {
             ]);
     });
 
-    it("move Red chess at Blue's turn is not legal", function() {
+    it("move Red chess at Black's turn is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
-        _stateBeforeMove['b2x1']= 'B4';//Blue Chariot
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
+        _stateBeforeMove['b2x1']= 'B4';//Black Chariot
 
         expectIllegalMove(1,
             _stateBeforeMove,
@@ -509,14 +509,14 @@ describe("In Banqi", function() {
             ]);
     });
 
-    it("move Blue chess at Red's turn is not legal", function() {
+    it("move Black chess at Red's turn is not legal", function() {
         var _stateBeforeMove = _newState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b0x1']= 'B7';//Blue General
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
-        _stateBeforeMove['b1x2']= null;//Blue Cannon(unturned)
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
 
         //var boardAfter = angular.copy(boardBefore);
         //boardAfter[0][0] = {color:'', hide:1, rank:3};
@@ -546,7 +546,7 @@ describe("In Banqi", function() {
                 {set: {key: 'stage', value: 0}}]);
     });
 
-    it("game end with Red win but pass Blue Win is not legal", function() {
+    it("game end with Red win but pass Black Win is not legal", function() {
         var _stateBeforeMove = _noPieceState;
         _stateBeforeMove['b0x0']= 'R7';//Red General
         _stateBeforeMove['b0x1']= '';//Space
@@ -560,13 +560,13 @@ describe("In Banqi", function() {
                 {set: {key: 'stage', value: 0}}]);
     });
 
-    it("game end with Blue win", function() {
+    it("game end with Black win", function() {
         var _stateBeforeMove = _noPieceState;
         _stateBeforeMove['b0x0']= 'B3';//Red Horse
         _stateBeforeMove['b0x1']= ''; //Space
-        _stateBeforeMove['b0x2']= 'B7';//Blue General
-        _stateBeforeMove['b1x1']= 'B2';//Blue Cannon
-        _stateBeforeMove['b1x2']= 'B2';//Blue Cannon
+        _stateBeforeMove['b0x2']= 'B7';//Black General
+        _stateBeforeMove['b1x1']= 'B2';//Black Cannon
+        _stateBeforeMove['b1x2']= 'B2';//Black Cannon
 
         expectMoveOk(1,
             _stateBeforeMove,
@@ -574,13 +574,13 @@ describe("In Banqi", function() {
                 {set: {key: 'stage', value: 0}}]);
     });
 
-    it("game end with Tie, Red has one chess left and higher rank than all Blue chesses", function() {
+    it("game end with Tie, Red has one chess left and higher rank than all Black chesses", function() {
         var _stateBeforeMove = _noPieceState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b1x1']= 'B3';//Blue Horse
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b1x1']= 'B3';//Black Horse
         _stateBeforeMove['b0x2']= ''; //Space
         _stateBeforeMove['b1x7']= 'R7';//Red General
-        _stateBeforeMove['b1x2']= 'B2';//Blue Cannon
+        _stateBeforeMove['b1x2']= 'B2';//Black Cannon
 
         expectMoveOk(1,
             _stateBeforeMove,
@@ -589,13 +589,13 @@ describe("In Banqi", function() {
 
     });
 
-    it("game not end with Tie, Red has one chess left but not higher rank than all Blue chesses", function() {
+    it("game not end with Tie, Red has one chess left but not higher rank than all Black chesses", function() {
         var _stateBeforeMove = _noPieceState;
-        _stateBeforeMove['b0x0']= 'B3';//Blue Horse
-        _stateBeforeMove['b1x1']= 'B3';//Blue Horse
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b1x1']= 'B3';//Black Horse
         _stateBeforeMove['b0x2']= '';  //Space
         _stateBeforeMove['b1x7']= 'R2';//Red Cannon
-        _stateBeforeMove['b1x2']= 'B2';//Blue Cannon
+        _stateBeforeMove['b1x2']= 'B2';//Black Cannon
 
         expectMoveOk(1,
             _stateBeforeMove,
@@ -604,12 +604,12 @@ describe("In Banqi", function() {
 
     });
 
-    it("game end with Tie, Blue has one chess left and higher rank than all Red chesses", function() {
+    it("game end with Tie, Black has one chess left and higher rank than all Red chesses", function() {
         var _stateBeforeMove = _noPieceState;
         _stateBeforeMove['b0x0']= 'R3';//Red Horse
         _stateBeforeMove['b1x1']= 'R3';//Red Horse
         _stateBeforeMove['b0x2']= '';  //Space
-        _stateBeforeMove['b1x7']= 'B7';//Blue Cannon
+        _stateBeforeMove['b1x7']= 'B7';//Black Cannon
         _stateBeforeMove['b1x2']= 'R2';//Red Cannon
 
         expectMoveOk(0,
@@ -619,12 +619,12 @@ describe("In Banqi", function() {
 
     });
 
-    it("game not end with Tie, Blue has one chess left but not higher rank than all Red chesses", function() {
+    it("game not end with Tie, Black has one chess left but not higher rank than all Red chesses", function() {
         var _stateBeforeMove = _noPieceState;
         _stateBeforeMove['b0x0']= 'R3';//Red Horse
         _stateBeforeMove['b1x1']= 'R3';//Red Horse
         _stateBeforeMove['b0x2']= '';  //Space
-        _stateBeforeMove['b1x7']= 'B2';//Blue Cannon
+        _stateBeforeMove['b1x7']= 'B2';//Black Cannon
         _stateBeforeMove['b1x2']= 'R2';//Red Cannon
 
         expectMoveOk(0,
@@ -634,15 +634,15 @@ describe("In Banqi", function() {
 
     });
 
-    it("game not end with Tie, Blue and Red have a lot of pieces", function() {
+    it("game not end with Tie, Black and Red have a lot of pieces", function() {
         var _stateBeforeMove = _noPieceState;
         _stateBeforeMove['b0x0']= 'R3';//Red Horse
         _stateBeforeMove['b1x1']= 'R3';//Red Horse
-        _stateBeforeMove['b0x2']= 'B2';//Blue Cannon
-        _stateBeforeMove['b1x7']= 'B2';//Blue Cannon
+        _stateBeforeMove['b0x2']= 'B2';//Black Cannon
+        _stateBeforeMove['b1x7']= 'B2';//Black Cannon
         _stateBeforeMove['b1x2']= 'R2';//Red Cannon
-        _stateBeforeMove['b1x2']= 'B3';//Blue Cannon
-        _stateBeforeMove['b1x2']= 'B3';//Blue Cannon
+        _stateBeforeMove['b1x2']= 'B3';//Black Cannon
+        _stateBeforeMove['b1x2']= 'B3';//Black Cannon
 
         expectMoveOk(0,
             _stateBeforeMove,
@@ -653,7 +653,7 @@ describe("In Banqi", function() {
 
     it("game end with Tie, both has only one chess and not next by each other", function() {
         var _stateBeforeMove = _noPieceState;
-        _stateBeforeMove['b1x1']= 'R3';//Blue Horse
+        _stateBeforeMove['b1x1']= 'R3';//Black Horse
         _stateBeforeMove['b0x7']= 'B7';//Red General
 
         expectMoveOk(0,

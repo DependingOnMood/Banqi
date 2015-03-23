@@ -61,7 +61,7 @@ angular.module('myApp').controller('Ctrl',
                 return 'b' + x.toString() + 'x' + y.toString();
             }
 
-            //window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
+            window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
 
 
             //try to initial game 1st

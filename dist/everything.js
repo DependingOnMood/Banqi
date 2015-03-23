@@ -138,7 +138,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
      *
      * A game is ended with a winner as the following rule:
      * If the board only has Red pieces left, Red win
-     * If the board only has Blue pieces left, Blue win
+     * If the board only has Black pieces left, Black win
      *
      * @param stateBeforeMove
      * @returns {string}
@@ -170,9 +170,9 @@ angular.module('myApp', []).factory('gameLogic', function () {
      * Check if the game is tie
      *
      * A game is tie as the following rule:
-     * If Red and Blue has both one piece and they are not next to each other, it's a Tie
-     * If Red only has one piece left and the piece rank higher than all piece in Blue, it's a Tie
-     * If Blue only has one piece left and the piece rank higher than all piece in Red, it's a Tie
+     * If Red and Black has both one piece and they are not next to each other, it's a Tie
+     * If Red only has one piece left and the piece rank higher than all piece in Black, it's a Tie
+     * If Black only has one piece left and the piece rank higher than all piece in Red, it's a Tie
      *
      * @param stateBeforeMove
      * @returns {boolean}
@@ -201,11 +201,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 }
             }
         }
-        // If Red and Blue has both one piece and they are not next to each other, it's a tie
+        // If Red and Black has both one piece and they are not next to each other, it's a tie
         if (numR === 1 && numB === 1 && !isNext(Rx, Ry, Bx, By))
             return true;
 
-        //Red only has one piece left and the piece rank higher than all piece in Blue, it's a tie
+        //Red only has one piece left and the piece rank higher than all piece in Black, it's a tie
         if (numR === 1 && numB > 1) {
             for (var i = 0; i < 4; i++) {
                 for (var j = 0; j < 8; j++) {
@@ -218,7 +218,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
             return true;
         }
 
-        //Blue only has one piece left and the piece rank higher than all piece in Red, it's a tie
+        //Black only has one piece left and the piece rank higher than all piece in Red, it's a tie
         if (numB === 1 && numR > 1) {
             for (var i = 0; i < 4; i++) {
                 for (var j = 0; j < 8; j++) {
@@ -319,7 +319,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
             if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === 'R' && turnIndexBeforeMove !== 0) {
                 throw new Error("Please wait for your turn!");
             }
-            //when it's not Blue's turn, cant choose blue showed piece
+            //when it's not Black's turn, cant choose Black showed piece
             if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === 'B' && turnIndexBeforeMove !== 1) {
                 throw new Error("Please wait for your turn!");
             }
@@ -648,7 +648,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 return 'b' + x.toString() + 'x' + y.toString();
             }
 
-            //window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
+            window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
 
 
             //try to initial game 1st
