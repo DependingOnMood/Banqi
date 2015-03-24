@@ -17,6 +17,8 @@ describe('Banqi', function () {
     }
 
     function expectPiece(row, col, pieceKind) {
+        //console.log(getImg(row, col).isDisplayed());
+        //expect(getImg(row, col).isDisplayed()).toEqual(pieceKind === "" ? false : true);
         if (pieceKind !== "") {
             expect(getImg(row, col).getAttribute("src")).toEqual("http://localhost:9000/res/" + pieceKind + ".png");
         }

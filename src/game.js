@@ -34,6 +34,11 @@ angular.module('myApp').controller('Ctrl',
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
                 $scope.turnIndex = params.turnIndexAfterMove;
 
+                if (!$scope.delta && $scope.isYourTurn) {
+                    //initial the game
+                    initial();
+                    return;
+                }
                 // Is it the computer's turn?
                   if (computerMoved !== 1
                       && $scope.isYourTurn
@@ -85,8 +90,6 @@ angular.module('myApp').controller('Ctrl',
                 updateUI: updateUI
             });
 
-            //initial the game
-            initial();
 
             var firstClickRow = null;
             var firstClickCol = null;
