@@ -1,5 +1,9 @@
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
+/*
+add by Zeleng Zhuang, no bug found.
+*/
+
 describe('Banqi', function () {
 
     'use strict';
@@ -17,8 +21,6 @@ describe('Banqi', function () {
     }
 
     function expectPiece(row, col, pieceKind) {
-        //console.log(getImg(row, col).isDisplayed());
-        //expect(getImg(row, col).isDisplayed()).toEqual(pieceKind === "" ? false : true);
         if (pieceKind !== "") {
             expect(getImg(row, col).getAttribute("src")).toEqual("http://localhost:9000/res/" + pieceKind + ".png");
         }
@@ -57,42 +59,7 @@ describe('Banqi', function () {
         }, JSON.stringify(matchState), JSON.stringify(playMode));
     }
 
-    it('should have a title', function () {
-        expect(browser.getTitle()).toEqual('Banqi');
-    });
-
-    it('should have an Banqi board with all hide pieces at the beginning', function () {
-        expectBoard(
-            [['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide'],
-                ['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide'],
-                ['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide'],
-                ['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide']]);
-    });
-
-    it('should not show Hide if clicked any position at the beginning', function () {
-        clickDivAndExpectNotHide(0, 0);
-    });
-
-    it('should not show Hide if clicked a hided piece any time', function () {
-        clickDivAndExpectNotHide(0, 0);
-        clickDivAndExpectNotHide(1, 0);
-        clickDivAndExpectNotHide(2, 0);
-        clickDivAndExpectNotHide(3, 0);
-        clickDivAndExpectNotHide(0, 5);
-        clickDivAndExpectNotHide(0, 2);
-        clickDivAndExpectNotHide(1, 3);
-        clickDivAndExpectNotHide(1, 6);
-        clickDivAndExpectNotHide(2, 3);
-        clickDivAndExpectNotHide(2, 5);
-    });
-
-    it('should not turn back to hide if click a a piece not hide', function () {
-        clickDivAndExpectNotHide(0, 0);
-        clickDivAndExpectNotHide(0, 0);
-        clickDivAndExpectNotHide(0, 0);
-
-    });
-
+ 
     var lastStateRedMovedStage1 = {
         delta: {rowBeforeMove: 1, colBeforeMove: 0, rowAfterMove: 1, colAfterMove: 1},
         b0x0: '', b0x1: '', b0x2: '', b0x3: 'R1', b0x4: '', b0x5: '', b0x6: '', b0x7: '',
@@ -159,38 +126,34 @@ describe('Banqi', function () {
         currentVisibleTo: {'b0x3':[]}
     };
 
-    it('Black General would kill a RED Chariot nearby', function () {
-        setMatchState(matchStateRedMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 3, "B7");
-        clickDivAndExpectPiece(1, 2, "B7");
-        expectBoard([['', '', '', '', 'Hide', '', '', ''],
-            ['', 'R2', 'B7', '', '', '', '', ''],
-            ['', 'B2', 'B1', 'R1', '', '', '', ''],
-            ['', '', '', '', '', '', '', '']]);
+
+       it('should have a title', function () {
+        expect(browser.getTitle()).toEqual('Banqi');
     });
 
-    it('Black General would not kill a RED Chariot nearby when its not Black Turn', function () {
-        setMatchState(matchStateBlackMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 3, "B7");
-        clickDivAndExpectPiece(1, 2, "R4");
-        expectBoard(boardBeforeMove);
+
+
+    it('should not turn back to hide if click a a piece not hide', function () {
+        clickDivAndExpectNotHide(0, 0);
+        clickDivAndExpectNotHide(0, 0);
+        clickDivAndExpectNotHide(0, 0);
+
     });
 
-    it('RED Chariot would not kill a Black General nearby because lower rank', function () {
-        setMatchState(matchStateBlackMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 2, "R4");
-        clickDivAndExpectPiece(1, 3, "B7");
-        expectBoard(boardBeforeMove);
-    });
 
     it('RED Chariot would not kill a RED Cannon nearby because its same color', function () {
         setMatchState(matchStateBlackMoved, 'passAndPlay');
         expectBoard(boardBeforeMove);
         clickDivAndExpectPiece(1, 2, "R4");
         clickDivAndExpectPiece(1, 1, "R2");
+        expectBoard(boardBeforeMove);
+    });
+
+    it('Black General would not kill a RED Soldier nearby', function () {
+        setMatchState(matchStateRedMoved, 'passAndPlay');
+        expectBoard(boardBeforeMove);
+        clickDivAndExpectPiece(1, 3, "B7");
+        clickDivAndExpectPiece(2, 3, "R1");
         expectBoard(boardBeforeMove);
     });
 
@@ -205,6 +168,30 @@ describe('Banqi', function () {
             ['', '', '', '', '', '', '', '']]);
     });
 
+    it('should have an Banqi board with all hide pieces at the beginning', function () {
+        expectBoard(
+            [['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide'],
+                ['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide'],
+                ['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide'],
+                ['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide']]);
+    });
+
+    it('should not show Hide if clicked any position at the beginning', function () {
+        clickDivAndExpectNotHide(0, 0);
+    });
+
+    it('should not show Hide if clicked a hided piece any time', function () {
+        clickDivAndExpectNotHide(0, 0);
+        clickDivAndExpectNotHide(1, 0);
+        clickDivAndExpectNotHide(2, 0);
+        clickDivAndExpectNotHide(3, 0);
+        clickDivAndExpectNotHide(0, 5);
+        clickDivAndExpectNotHide(0, 2);
+        clickDivAndExpectNotHide(1, 3);
+        clickDivAndExpectNotHide(1, 6);
+        clickDivAndExpectNotHide(2, 3);
+        clickDivAndExpectNotHide(2, 5);
+    });
     it('Red Soldier would kill a Black Soldier nearby', function () {
         setMatchState(matchStateBlackMoved, 'passAndPlay');
         expectBoard(boardBeforeMove);
@@ -227,13 +214,7 @@ describe('Banqi', function () {
             ['', '', '', '', '', '', '', '']]);
     });
 
-    it('Black General would not kill a RED Soldier nearby', function () {
-        setMatchState(matchStateRedMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 3, "B7");
-        clickDivAndExpectPiece(2, 3, "R1");
-        expectBoard(boardBeforeMove);
-    });
+
 
     it('Red Cannon would kill a Black General that have exactly one piece between them', function () {
         setMatchState(matchStateBlackMoved, 'passAndPlay');
@@ -246,60 +227,5 @@ describe('Banqi', function () {
             ['', '', '', '', '', '', '', '']]);
     });
 
-    it('Red Cannon would kill a Black Cannon nearby because its not following Cannon Rule', function () {
-        setMatchState(matchStateBlackMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 1, "R2");
-        clickDivAndExpectPiece(2, 1, "B2");
-        expectBoard(boardBeforeMove);
-    });
-
-    it('Black General would not kill a Hide Piece nearby', function () {
-        setMatchState(matchStateRedMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 3, "B7");
-        clickDivAndExpectPiece(0, 3, "Hide");
-        expectBoard(boardBeforeMove);
-    });
-
-    it('Click a Hide Piece any time (except trying to kill it) would turn it over', function () {
-        setMatchState(matchStateRedMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectNotHide(0, 3);
-    });
-
-    it('Run Until game end, cant move piece after game ended', function () {
-        setMatchState(matchStateRedMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectNotHide(0, 3);
-        clickDivAndExpectPiece(0, 3, "R1");
-        clickDivAndExpectPiece(1, 3, "R1");
-        clickDivAndExpectPiece(2, 2, "B1");
-        clickDivAndExpectPiece(2, 3, "B1");
-        clickDivAndExpectPiece(1, 3, "R1");
-        clickDivAndExpectPiece(2, 3, "R1");
-        clickDivAndExpectPiece(2, 1, "B2");
-        clickDivAndExpectPiece(2, 2, "B2");
-        clickDivAndExpectPiece(1, 2, "R4");
-        clickDivAndExpectPiece(2, 2, "R4");
-        //game ended
-        expectBoard([
-            ['', '', '', '', '', '', '', ''],
-            ['', 'R2', '', '', '', '', '', ''],
-            ['', '', 'R4', 'R1', '', '', '', ''],
-            ['', '', '', '', '', '', '', '']]);
-
-        //move try to move after game ended
-        clickDivAndExpectPiece(2, 2, "R4");
-        clickDivAndExpectNotHide(1, 2);
-
-        //get exactly same board which when game ended
-        expectBoard([
-            ['', '', '', '', '', '', '', ''],
-            ['', 'R2', '', '', '', '', '', ''],
-            ['', '', 'R4', 'R1', '', '', '', ''],
-            ['', '', '', '', '', '', '', '']]);
-
-    });
 
 });

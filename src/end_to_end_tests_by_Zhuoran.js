@@ -17,8 +17,6 @@ describe('Banqi', function () {
     }
 
     function expectPiece(row, col, pieceKind) {
-        //console.log(getImg(row, col).isDisplayed());
-        //expect(getImg(row, col).isDisplayed()).toEqual(pieceKind === "" ? false : true);
         if (pieceKind !== "") {
             expect(getImg(row, col).getAttribute("src")).toEqual("http://localhost:9000/res/" + pieceKind + ".png");
         }
@@ -57,11 +55,7 @@ describe('Banqi', function () {
         }, JSON.stringify(matchState), JSON.stringify(playMode));
     }
 
-    it('should have a title', function () {
-        expect(browser.getTitle()).toEqual('Banqi');
-    });
-
-    it('should have an Banqi board with all hide pieces at the beginning', function () {
+    it('should have a Banqi board with all hide pieces at the beginning', function () {
         expectBoard(
             [['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide'],
                 ['Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide', 'Hide'],
@@ -170,30 +164,6 @@ describe('Banqi', function () {
             ['', '', '', '', '', '', '', '']]);
     });
 
-    it('Black General would not kill a RED Chariot nearby when its not Black Turn', function () {
-        setMatchState(matchStateBlackMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 3, "B7");
-        clickDivAndExpectPiece(1, 2, "R4");
-        expectBoard(boardBeforeMove);
-    });
-
-    it('RED Chariot would not kill a Black General nearby because lower rank', function () {
-        setMatchState(matchStateBlackMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 2, "R4");
-        clickDivAndExpectPiece(1, 3, "B7");
-        expectBoard(boardBeforeMove);
-    });
-
-    it('RED Chariot would not kill a RED Cannon nearby because its same color', function () {
-        setMatchState(matchStateBlackMoved, 'passAndPlay');
-        expectBoard(boardBeforeMove);
-        clickDivAndExpectPiece(1, 2, "R4");
-        clickDivAndExpectPiece(1, 1, "R2");
-        expectBoard(boardBeforeMove);
-    });
-
     it('Black Soldier would kill a RED Soldier nearby', function () {
         setMatchState(matchStateRedMoved, 'passAndPlay');
         expectBoard(boardBeforeMove);
@@ -246,6 +216,21 @@ describe('Banqi', function () {
             ['', '', '', '', '', '', '', '']]);
     });
 
+    it('Red Cannon would kill a Black Soldier that have exactly one piece between them', function () {
+        setMatchState(matchStateBlackMoved, 'passAndPlay');
+        boardBeforeMove = [['', '', '', '', 'Hide', '', '', ''],
+                            ['', 'R2', 'R4', 'B1', '', '', '', ''],
+                            ['', 'B2', 'B1', 'R1', '', '', '', ''],
+                            ['', '', '', '', '', '', '', '']];
+        expectBoard(boardBeforeMove);
+        clickDivAndExpectPiece(1, 1, "R2");
+        clickDivAndExpectPiece(1, 3, "R2");
+        expectBoard([['', '', '', '', 'Hide', '', '', ''],
+            ['', '', 'R4', 'R2', '', '', '', ''],
+            ['', 'B2', 'B1', 'R1', '', '', '', ''],
+            ['', '', '', '', '', '', '', '']]);
+    });
+
     it('Red Cannon would kill a Black Cannon nearby because its not following Cannon Rule', function () {
         setMatchState(matchStateBlackMoved, 'passAndPlay');
         expectBoard(boardBeforeMove);
@@ -262,13 +247,14 @@ describe('Banqi', function () {
         expectBoard(boardBeforeMove);
     });
 
+
     it('Click a Hide Piece any time (except trying to kill it) would turn it over', function () {
         setMatchState(matchStateRedMoved, 'passAndPlay');
         expectBoard(boardBeforeMove);
         clickDivAndExpectNotHide(0, 3);
     });
 
-    it('Run Until game end, cant move piece after game ended', function () {
+    it('Run Until game end, cant move piece after game end', function () {
         setMatchState(matchStateRedMoved, 'passAndPlay');
         expectBoard(boardBeforeMove);
         clickDivAndExpectNotHide(0, 3);
