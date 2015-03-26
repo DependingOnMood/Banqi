@@ -621,6 +621,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
                 $scope.turnIndex = params.turnIndexAfterMove;
 
+                if (!$scope.delta && $scope.isYourTurn) {
+                    //initial the game
+                    initial();
+                    return;
+                }
                 // Is it the computer's turn?
                   if (computerMoved !== 1
                       && $scope.isYourTurn
@@ -672,8 +677,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 updateUI: updateUI
             });
 
-            //initial the game
-            initial();
 
             var firstClickRow = null;
             var firstClickCol = null;
