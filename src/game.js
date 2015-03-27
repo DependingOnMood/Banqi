@@ -254,11 +254,11 @@ angular.module('myApp').controller('Ctrl',
                         var row = $scope.delta.rowAfterMove;
                         var col = $scope.delta.colAfterMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
-                        if (img.className === 'spinLeft') {
+                        if (img.className === 'scale1') {
                             img.className = "spinRight";
                         }
                         else {
-                            img.className = "spinLeft";
+                            img.className = "scale1";
                         }
                     }
                 }
