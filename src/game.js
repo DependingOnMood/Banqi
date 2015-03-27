@@ -249,7 +249,7 @@ angular.module('myApp').controller('Ctrl',
 
                         img.className = "slowlyAppear";
                     }
-                    else {
+                    else if (($scope.delta.rowBeforeMove !== -1) && ($scope.delta.colBeforeMove !== -1)){
                         var row = $scope.delta.rowAfterMove;
                         var col = $scope.delta.colAfterMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
