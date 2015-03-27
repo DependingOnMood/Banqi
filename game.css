@@ -31,15 +31,15 @@
 }
 
 .move {
-    position: relative;
+    position: absolute;
     width: 80%;
     top: 10%;
     left: 10%;
-    /*-webkit-animation: moveAnimation 1s; *//* Chrome, Safari, Opera */
-    /*animation: moveAnimation 1s;*/
-    -webkit-animation-duration: 1s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-name: moveAnimation;
+    -webkit-animation: moveAnimation 1s;   /* Chrome, Safari, Opera */
+    animation: moveAnimation 1s;
+    /*-webkit-animation-duration: 1s;*/
+    /*-webkit-animation-timing-function: linear;*/
+    /*-webkit-animation-name: moveAnimation;*/
 }
 
 /* Chrome, Safari, Opera */
