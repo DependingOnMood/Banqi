@@ -112,7 +112,7 @@ module.exports = function(grunt) {
             'res/R6.png',
             'res/R7.png',
             'res/Hide.png',
-            'res/board.png'
+            'res/board.jpg'
           ],
           network: ['dist/everything.min.js.map', 'dist/everything.js'],
           timestamp: true
