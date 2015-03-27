@@ -186,7 +186,6 @@ angular.module('myApp').controller('Ctrl',
             $scope.colsNum = colsNum;
 
 
-
             var computerMoved = 0;// check if AI already made a move
 
             function sendComputerMove() {
