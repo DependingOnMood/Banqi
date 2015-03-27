@@ -50,6 +50,15 @@
     animation: scale1 1s;
 }
 
+.scale2 {
+    position: absolute;
+    width: 80%;
+    top: 10%;
+    left: 10%;
+    -webkit-animation: scale2 1s;   /* Chrome, Safari, Opera */
+    animation: scale2 1s;
+}
+
 /* Chrome, Safari, Opera */
 @-webkit-keyframes slowlyAppear {
     from {
@@ -132,6 +141,29 @@
 }
 
 @keyframes scale1 {
+    0% {position: absolute;
+        width: 60%;
+        top: 20%;
+        left: 20%;}
+    50% {position: absolute;
+        width: 100%;
+        top: 0%;
+        left: 0%;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes scale2 {
+    0% {position: absolute;
+        width: 60%;
+        top: 20%;
+        left: 20%;}
+    50% {position: absolute;
+        width: 100%;
+        top: 0%;
+        left: 0%;}
+}
+
+@keyframes scale2 {
     0% {position: absolute;
         width: 60%;
         top: 20%;

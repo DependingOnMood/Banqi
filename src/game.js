@@ -255,7 +255,7 @@ angular.module('myApp').controller('Ctrl',
                         var col = $scope.delta.colAfterMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
                         if (img.className === 'scale1') {
-                            img.className = "spinRight";
+                            img.className = "scale2";
                         }
                         else {
                             img.className = "scale1";
