@@ -533,6 +533,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
             }
 
             console.log('stage', stage);
+
             if (stage === 0) {
 
                 var deltaValue = move[1].set.value;
@@ -773,7 +774,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
             $scope.colsNum = colsNum;
 
 
-
             var computerMoved = 0;// check if AI already made a move
 
             function sendComputerMove() {
@@ -796,7 +796,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
 
                 var turnChanged;
-                if ($scope.turnIndex !== params.turnIndexAfterMove) {
+                if ($scope.turnIndex !== params.yourPlayerIndex) {
                     turnChanged = true;
                 }
                 else{
@@ -827,17 +827,17 @@ angular.module('myApp', []).factory('gameLogic', function () {
 
                 //animation
                 //
-                if (turnChanged) {
+                if ((turnChanged) && ($scope.delta !== undefined)) {
                     //if it's tuning a piece
                     if ((($scope.delta.rowAfterMove === -1) || ($scope.delta.colAfterMove === -1))
-                        && (($scope.delta.rowBeforeMove !== -1) && ($scope.delta.colBeforeMove !== -1))) {
+                        && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))) {
                         var row = $scope.delta.rowBeforeMove;
                         var col = $scope.delta.colBeforeMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
 
                         img.className = "slowlyAppear";
                     }
-                    else {
+                    else if (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1)){
                         var row = $scope.delta.rowAfterMove;
                         var col = $scope.delta.colAfterMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
@@ -865,7 +865,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
 
             window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
 
-
             //try to initial game 1st
             function initial() {
                 try {
@@ -877,7 +876,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     return;
                 }
             }
-
 
             gameService.setGame({
                 gameDeveloperEmail: "xiaodongbo627@gmail.com",
