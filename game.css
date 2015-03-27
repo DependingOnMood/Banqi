@@ -11,6 +11,8 @@
     top: 10%;
     left: 10%;
     -webkit-animation: slowlyAppear 1s linear; /* Chrome, Safari, Opera */
+    -moz-animation: slowlyAppear 1s linear;
+    -o-animation: slowlyAppear 1s linear;
     animation: slowlyAppear 1s linear;
 }
 
@@ -20,6 +22,8 @@
     top: 10%;
     left: 10%;
     -webkit-animation: spinLeft 1s; /* Chrome, Safari, Opera */
+    -moz-animation: spinLeft 1s;
+    -o-animation: spinLeft 1s;
     animation: spinLeft 1s;
 }
 
@@ -29,6 +33,8 @@
     top: 10%;
     left: 10%;
     -webkit-animation: spinRight 1s; /* Chrome, Safari, Opera */
+    -moz-animation: spinRight 1s;
+    -o-animation: spinRight 1s;
     animation: spinRight 1s;
 }
 
@@ -38,6 +44,8 @@
     top: 10%;
     left: 10%;
     -webkit-animation: moveAnimation 1s;   /* Chrome, Safari, Opera */
+    -moz-animation: moveAnimation 1s;
+    -o-animation: moveAnimation 1s;
     animation: moveAnimation 1s;
 }
 
@@ -47,6 +55,8 @@
     top: 10%;
     left: 10%;
     -webkit-animation: scale1 1s;   /* Chrome, Safari, Opera */
+    -moz-animation: scale1 1s;
+    -o-animation: scale1 1s;
     animation: scale1 1s;
 }
 
@@ -56,8 +66,14 @@
     top: 10%;
     left: 10%;
     -webkit-animation: scale2 1s;   /* Chrome, Safari, Opera */
+    -moz-animation: scale2 1s;
+    -o-animation: scale2 1s;
     animation: scale2 1s;
 }
+
+/*
+*slowlyAppear
+*/
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes slowlyAppear {
@@ -69,7 +85,24 @@
     }
 }
 
-/* Standard syntax */
+@-moz-keyframes slowlyAppear {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes slowlyAppear {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @keyframes slowlyAppear {
     from {
         opacity: 0.1;
@@ -79,8 +112,30 @@
     }
 }
 
+/*
+*spinLeft
+*/
+
 /* Chrome, Safari, Opera */
 @-webkit-keyframes spinLeft {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@-moz-keyframes spinLeft {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@-o-keyframes spinLeft {
     from {
         transform: rotate(0deg);
     }
@@ -98,8 +153,30 @@
     }
 }
 
+/*
+*spinRight
+*/
+
 /* Chrome, Safari, Opera */
 @-webkit-keyframes spinRight {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes spinRight {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes spinRight {
     from {
         transform: rotate(0deg);
     }
@@ -117,8 +194,22 @@
     }
 }
 
+/*
+*moveAnimation
+*/
+
 /* Chrome, Safari, Opera */
 @-webkit-keyframes moveAnimation {
+    0% {top: 0px; left: 0px;}
+    50% {transform:scale(2);}
+}
+
+@-moz-keyframes moveAnimation {
+    0% {top: 0px; left: 0px;}
+    50% {transform:scale(2);}
+}
+
+@-o-keyframes moveAnimation {
     0% {top: 0px; left: 0px;}
     50% {transform:scale(2);}
 }
@@ -128,8 +219,34 @@
     50% {transform:scale(2);}
 }
 
+/*
+*scale 1
+*/
+
 /* Chrome, Safari, Opera */
 @-webkit-keyframes scale1 {
+    0% {position: absolute;
+        width: 60%;
+        top: 20%;
+        left: 20%;}
+    50% {position: absolute;
+        width: 100%;
+        top: 0%;
+        left: 0%;}
+}
+
+@-moz-keyframes scale1 {
+    0% {position: absolute;
+        width: 60%;
+        top: 20%;
+        left: 20%;}
+    50% {position: absolute;
+        width: 100%;
+        top: 0%;
+        left: 0%;}
+}
+
+@-o-keyframes scale1 {
     0% {position: absolute;
         width: 60%;
         top: 20%;
@@ -151,8 +268,34 @@
         left: 0%;}
 }
 
+/*
+*scale 2
+*/
+
 /* Chrome, Safari, Opera */
 @-webkit-keyframes scale2 {
+    0% {position: absolute;
+        width: 60%;
+        top: 20%;
+        left: 20%;}
+    50% {position: absolute;
+        width: 100%;
+        top: 0%;
+        left: 0%;}
+}
+
+@-moz-keyframes scale2 {
+    0% {position: absolute;
+        width: 60%;
+        top: 20%;
+        left: 20%;}
+    50% {position: absolute;
+        width: 100%;
+        top: 0%;
+        left: 0%;}
+}
+
+@-o-keyframes scale2 {
     0% {position: absolute;
         width: 60%;
         top: 20%;
