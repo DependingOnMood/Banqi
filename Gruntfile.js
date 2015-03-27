@@ -95,6 +95,7 @@ module.exports = function(grunt) {
             'http://yoav-zibin.github.io/emulator/dist/gameServices.min.js',
             'http://yoav-zibin.github.io/emulator/main.css',
             'dist/everything.min.js',
+            'src/dragAndDropListeners.js',
             'game.css',
             'res/B1.png',
             'res/B2.png',
@@ -135,17 +136,17 @@ module.exports = function(grunt) {
             runInBackground: true
         }
     },
-    protractor: {
-      options: {
-        configFile: "protractor.conf.js", // Default config file
-        keepAlive: true, // If false, the grunt process stops when the test fails.
-        noColor: false, // If true, protractor will not use colors in its output.
-        args: {
-          // Arguments passed to the command
-        }
-      },
-      all: {}
-    }
+    //protractor: {
+    //  options: {
+    //    configFile: "protractor.conf.js", // Default config file
+    //    keepAlive: true, // If false, the grunt process stops when the test fails.
+    //    noColor: false, // If true, protractor will not use colors in its output.
+    //    args: {
+    //      // Arguments passed to the command
+    //    }
+    //  },
+    //  all: {}
+    //}
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -156,12 +157,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-processhtml');
   grunt.loadNpmTasks('grunt-manifest');
   grunt.loadNpmTasks('grunt-http-server');
-  grunt.loadNpmTasks('grunt-protractor-runner');
+  //grunt.loadNpmTasks('grunt-protractor-runner');
 
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'karma',
       'concat', 'uglify',
       'processhtml', 'manifest',
-      'http-server', 'protractor']);
+      'http-server',
+      //'protractor'
+  ]);
 
 };
