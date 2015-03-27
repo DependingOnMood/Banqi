@@ -239,7 +239,7 @@ angular.module('myApp').controller('Ctrl',
 
                 //animation
                 //
-                if (turnChanged) {
+                if ((turnChanged) && ($scope.delta !== undefined)) {
                     //if it's tuning a piece
                     if ((($scope.delta.rowAfterMove === -1) || ($scope.delta.colAfterMove === -1))
                         && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))) {
