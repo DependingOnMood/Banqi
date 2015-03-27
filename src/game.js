@@ -250,12 +250,16 @@ angular.module('myApp').controller('Ctrl',
 
                         img.className = "slowlyAppear";
                     }
-                    else{
+                    else {
                         var row = $scope.delta.rowAfterMove;
                         var col = $scope.delta.colAfterMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
-
-                        img.className = "move";
+                        if (img.className === 'spinLeft') {
+                            img.className = "spinRight";
+                        }
+                        else {
+                            img.className = "spinLeft";
+                        }
                     }
                 }
             }
@@ -296,41 +300,6 @@ angular.module('myApp').controller('Ctrl',
                 updateUI: updateUI
             });
 
-
-
-            //$scope.cellClicked = function (row, col) {
-            //    $log.info(["Clicked on cell:", row, col]);
-            //    if (window.location.search === '?throwException') { // to test encoding a stack trace with sourcemap
-            //        throw new Error("Throwing the error because URL has '?throwException'");
-            //    }
-            //    if (!$scope.isYourTurn) {
-            //        return;
-            //    }
-            //    //turn the piece
-            //    if ($scope.stateAfterMove[key(row, col)] === null) {
-            //        try {
-            //            var move = gameLogic.createMove($scope.stateAfterMove,
-            //                row, col, -1, -1, $scope.turnIndex);
-            //            $scope.isYourTurn = false; // to prevent making another move
-            //            gameService.makeMove(move);
-            //        } catch (e) {
-            //            $log.info(["Cell is already full in position:", row, col, -1, -1]);
-            //            return;
-            //        }
-            //
-            //        //check if game end
-            //        try {
-            //            var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-            //            $scope.isYourTurn = false; // to prevent making another move
-            //            gameService.makeMove(move);
-            //
-            //        } catch (e) {
-            //            $log.info(e);
-            //            $log.info("checkGameEnd failed!");
-            //            return;
-            //        }
-            //    }
-            //};
             $scope.shouldShowImage = function (row, col) {
                 var cell = $scope.stateAfterMove[key(row, col)];
                 return cell !== "";

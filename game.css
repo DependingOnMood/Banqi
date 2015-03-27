@@ -5,13 +5,6 @@
     left: 10%;
 }
 
-.pieceClicked {
-    position: absolute;
-    width: 100%;
-    top: 0%;
-    left: 0%;
-}
-
 .slowlyAppear {
     position: absolute;
     width: 80%;
@@ -21,25 +14,31 @@
     animation: slowlyAppear 1s linear;
 }
 
-.spin {
+.spinLeft {
     position: absolute;
     width: 80%;
     top: 10%;
     left: 10%;
-    -webkit-animation: spin 1s; /* Chrome, Safari, Opera */
-    animation: spin 1s;
+    -webkit-animation: spinLeft 1s; /* Chrome, Safari, Opera */
+    animation: spinLeft 1s;
 }
 
-.move {
-    position: relative;
+.spinRight {
+    position: absolute;
     width: 80%;
     top: 10%;
     left: 10%;
-    /*-webkit-animation: moveAnimation 1s; *//* Chrome, Safari, Opera */
-    /*animation: moveAnimation 1s;*/
-    -webkit-animation-duration: 1s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-name: moveAnimation;
+    -webkit-animation: spinRight 1s; /* Chrome, Safari, Opera */
+    animation: spinRight 1s;
+}
+
+.move {
+    position: absolute;
+    width: 80%;
+    top: 10%;
+    left: 10%;
+    -webkit-animation: moveAnimation 1s;   /* Chrome, Safari, Opera */
+    animation: moveAnimation 1s;
 }
 
 /* Chrome, Safari, Opera */
@@ -63,7 +62,7 @@
 }
 
 /* Chrome, Safari, Opera */
-@-webkit-keyframes spin {
+@-webkit-keyframes spinLeft {
     from {
         transform: rotate(0deg);
     }
@@ -72,7 +71,7 @@
     }
 }
 
-@keyframes spin {
+@keyframes spinLeft {
     from {
         transform: rotate(0deg);
     }
@@ -81,10 +80,31 @@
     }
 }
 
+/* Chrome, Safari, Opera */
+@-webkit-keyframes spinRight {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinRight {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Chrome, Safari, Opera */
 @-webkit-keyframes moveAnimation {
     0% {top: 0px; left: 0px;}
     50% {transform:scale(2);}
 }
+
 @keyframes moveAnimation {
     0% {top: 0px; left: 0px;}
     50% {transform:scale(2);}
