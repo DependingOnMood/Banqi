@@ -1,16 +1,144 @@
 angular.module('myApp').controller('Ctrl',
-    ['$scope', '$log', '$timeout',
+    ['$scope', '$log', '$timeout','$rootScope',
         'gameService', 'stateService', 'gameLogic',
         //'aiService',
         'resizeGameAreaService',
-        function ($scope, $log, $timeout,
+        function ($scope, $log, $timeout, $rootScope,
                   gameService, stateService, gameLogic,
                   //aiService,
                   resizeGameAreaService) {
 
             'use strict';
 
+            var gameArea = document.getElementById("gameArea");
+            var rowsNum = 4;
+            var colsNum = 8;
+            var draggingStartedRowCol = null; // The {row: YY, col: XX} where dragging started.
+            var draggingPiece = null;
+
+            window.handleDragEvent = handleDragEvent;
+            function handleDragEvent(type, clientX, clientY) {
+                // Center point in gameArea
+                var x = clientX - gameArea.offsetLeft;
+                var y = clientY - gameArea.offsetTop;
+                var row, col;
+                // Is outside gameArea?
+                if (x < 0 || y < 0 || x >= gameArea.clientWidth || y >= gameArea.clientHeight) {
+                    console.log("outside gameArea");
+                    if (draggingPiece) {
+                        // Drag the piece where the touch is (without snapping to a square).
+                        var size = getSquareWidthHeight();
+                        setDraggingPieceTopLeft({top: y - size.height / 2, left: x - size.width / 2});
+                    } else {
+                        return;
+                    }
+                } else {
+                    // Inside gameArea. Let's find the containing square's row and col
+                    var col = Math.floor(colsNum * x / gameArea.clientWidth);
+                    var row = Math.floor(rowsNum * y / gameArea.clientHeight);
+                    console.log("now at: ", row, col);
+                    if (type === "touchstart" && !draggingStartedRowCol) {
+                        // drag started
+                        if (($scope.stateAfterMove[key(row, col)] !== null)
+                            && ($scope.stateAfterMove[key(row, col)] !== '')){
+                            draggingStartedRowCol = {row: row, col: col};
+                            draggingPiece = document.getElementById("img_" + draggingStartedRowCol.row + "x" + draggingStartedRowCol.col);
+                        }
+                    }
+                    if (!draggingPiece) {
+                        return;
+                    }
+
+                    if (type === "touchend") {
+                        var from = draggingStartedRowCol;
+                        var to = {row: row, col: col};
+                        dragDone(from, to);
+                    } else {
+                        // Drag continue
+                        //setDraggingPieceTopLeft(getSquareTopLeft(row, col));
+                        //var centerXY = getSquareCenterXY(row, col);
+                        var size = getSquareWidthHeight();
+                        setDraggingPieceTopLeft({top: y - size.height / 2, left: x - size.width / 2});
+                    }
+                }
+                if (type === "touchend" || type === "touchcancel" || type === "touchleave") {
+                    // drag ended
+                    // return the piece to it's original style (then angular will take care to hide it).
+                    setDraggingPieceTopLeft(getSquareTopLeft(draggingStartedRowCol.row, draggingStartedRowCol.col));
+                    draggingStartedRowCol = null;
+                    draggingPiece = null;
+                }
+            }
+
+            function setDraggingPieceTopLeft(topLeft) {
+                var size = getSquareWidthHeight();
+                var top = size.height / 10;
+                var left = size.width / 10;
+
+                var originalSize = getSquareTopLeft(draggingStartedRowCol.row, draggingStartedRowCol.col);
+                draggingPiece.style.left = (topLeft.left - originalSize.left + left) + "px";
+                draggingPiece.style.top = (topLeft.top - originalSize.top + top) + "px";
+            }
+
+            function getSquareWidthHeight() {
+                return {
+                    width: gameArea.clientWidth *.96 / colsNum,
+                    height: gameArea.clientHeight *.98 / rowsNum
+                };
+            }
+
+            function getSquareTopLeft(row, col) {
+                var size = getSquareWidthHeight();
+                return {top: row * size.height, left: col * size.width}
+            }
+
+            //make game size scalable
             resizeGameAreaService.setWidthToHeight(2);
+
+
+            function dragDone(from, to) {
+                console.log("DragDone");
+                $rootScope.$apply(function () {
+                    var msg = "Dragged piece " + from.row + "x" + from.col + " to square " + to.row + "x" + to.col;
+                    console.log(msg);
+                    //move piece
+                    try {
+                        var move = gameLogic.createMove($scope.stateAfterMove,
+                            from.row, from.col, to.row, to.col, $scope.turnIndex);
+                        $scope.isYourTurn = false; // to prevent making another move
+                        gameService.makeMove(move);
+                    } catch (e) {
+                        $log.info(["Can not move the piece:", from.row, from.col, to.row, to.col]);
+                        return;
+                    }
+
+                    //check if game end
+                    try {
+                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        $scope.isYourTurn = false; // to prevent making another move
+                        gameService.makeMove(move);
+                    } catch (e) {
+                        $log.info(e);
+                        $log.info("checkGameEnd failed!");
+                        return;
+                    }
+                });
+            }
+
+            function getIntegersTill(number) {
+                var res = [];
+                for (var i = 0; i < number; i++) {
+                    res.push(i);
+                }
+                return res;
+            }
+
+            $scope.rows = getIntegersTill(rowsNum);
+            $scope.cols = getIntegersTill(colsNum);
+            $scope.rowsNum = rowsNum;
+            $scope.colsNum = colsNum;
+
+
 
             var computerMoved = 0;// check if AI already made a move
 
@@ -32,6 +160,15 @@ angular.module('myApp').controller('Ctrl',
                 $scope.delta = params.stateAfterMove.delta;
                 $scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
+
+                var turnChanged;
+                if ($scope.turnIndex !== params.turnIndexAfterMove) {
+                    turnChanged = true;
+                }
+                else{
+                    turnChanged = false;
+                }
+
                 $scope.turnIndex = params.turnIndexAfterMove;
 
                 if (!$scope.delta && $scope.isYourTurn) {
@@ -39,6 +176,7 @@ angular.module('myApp').controller('Ctrl',
                     initial();
                     return;
                 }
+
                 // Is it the computer's turn?
                   if (computerMoved !== 1
                       && $scope.isYourTurn
@@ -52,6 +190,27 @@ angular.module('myApp').controller('Ctrl',
                   {
                       computerMoved = 0;
                   }
+
+                //animation
+                //
+                if (turnChanged) {
+                    //if it's tuning a piece
+                    if ((($scope.delta.rowAfterMove === -1) || ($scope.delta.colAfterMove === -1))
+                        && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))) {
+                        var row = $scope.delta.rowBeforeMove;
+                        var col = $scope.delta.colBeforeMove;
+                        var img = document.getElementById('img_' + row + 'x' + col);
+
+                        img.className = "slowlyAppear";
+                    }
+                    else{
+                        var row = $scope.delta.rowAfterMove;
+                        var col = $scope.delta.colAfterMove;
+                        var img = document.getElementById('img_' + row + 'x' + col);
+
+                        img.className = "move";
+                    }
+                }
             }
 
             /**
@@ -91,9 +250,7 @@ angular.module('myApp').controller('Ctrl',
             });
 
 
-            var firstClickRow = null;
-            var firstClickCol = null;
-            var img = null;
+
             $scope.cellClicked = function (row, col) {
                 $log.info(["Clicked on cell:", row, col]);
                 if (window.location.search === '?throwException') { // to test encoding a stack trace with sourcemap
@@ -103,8 +260,7 @@ angular.module('myApp').controller('Ctrl',
                     return;
                 }
                 //turn the piece
-                if ($scope.stateAfterMove[key(row, col)] === null
-                    && (firstClickRow === null || firstClickCol === null)) {
+                if ($scope.stateAfterMove[key(row, col)] === null) {
                     try {
                         var move = gameLogic.createMove($scope.stateAfterMove,
                             row, col, -1, -1, $scope.turnIndex);
@@ -114,47 +270,18 @@ angular.module('myApp').controller('Ctrl',
                         $log.info(["Cell is already full in position:", row, col, -1, -1]);
                         return;
                     }
-                }
-                else{
-                    if (firstClickRow === null || firstClickCol === null) {
-                        firstClickRow = row, firstClickCol = col;
-                        if ($scope.shouldShowImage(firstClickRow, firstClickCol)){
-                            img = document.getElementById('img_' + firstClickRow + 'x' + firstClickCol);
-                            img.className = "pieceClicked";
-                        }
+
+                    //check if game end
+                    try {
+                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        $scope.isYourTurn = false; // to prevent making another move
+                        gameService.makeMove(move);
+
+                    } catch (e) {
+                        $log.info(e);
+                        $log.info("checkGameEnd failed!");
                         return;
                     }
-                    else{
-                        try {
-                            var move = gameLogic.createMove($scope.stateAfterMove,
-                                firstClickRow, firstClickCol, row, col, $scope.turnIndex);
-                            $scope.isYourTurn = false; // to prevent making another move
-                            gameService.makeMove(move);
-                            if (img !== null) {img.className = "piece"; img = null;}
-                        } catch (e) {
-                            $log.info(["Can not move the piece:", firstClickRow, firstClickCol, row, col]);
-                            firstClickRow = null;
-                            firstClickCol = null;
-                            if (img !== null) {img.className = "piece"; img = null;}
-                            return;
-                        }
-                    }
-                }
-                //check if game end
-                try {
-                    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                    $scope.isYourTurn = false; // to prevent making another move
-                    gameService.makeMove(move);
-                    firstClickRow = null;
-                    firstClickCol = null;
-                    if (img !== null) {img.className = "piece"; img = null;}
-                } catch (e) {
-                    $log.info(e);
-                    $log.info("checkGameEnd failed!");
-                    firstClickRow = null;
-                    firstClickCol = null;
-                    if (img !== null) {img.className = "piece"; img = null;}
-                    return;
                 }
             };
             $scope.shouldShowImage = function (row, col) {
