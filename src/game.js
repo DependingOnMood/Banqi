@@ -37,20 +37,22 @@ angular.module('myApp').controller('Ctrl',
                     var col = Math.floor(colsNum * x / gameArea.clientWidth);
                     var row = Math.floor(rowsNum * y / gameArea.clientHeight);
                     console.log("now at: ", row, col);
+
                     if (type === "touchstart" && !draggingStartedRowCol) {
                         // drag started
+                        draggingStartedRowCol = {row: row, col: col};
+
                         if (($scope.stateAfterMove[key(row, col)] !== null)//not hide
                             && ($scope.stateAfterMove[key(row, col)] !== '')//has piece
                             && ((($scope.turnIndex === 0) && ($scope.stateAfterMove[key(row, col)][0] ==='R'))//red piece can move
                                 || (($scope.turnIndex === 1) && ($scope.stateAfterMove[key(row, col)][0] ==='B'))//blue piece can move
                                 )){
-                            draggingStartedRowCol = {row: row, col: col};
                             draggingPiece = document.getElementById("img_" + draggingStartedRowCol.row + "x" + draggingStartedRowCol.col);
                         }
                     }
-                    if (!draggingPiece) {
-                        return;
-                    }
+                    //if (!draggingPiece) {
+                    //    return;
+                    //}
 
                     if (type === "touchend") {
                         var from = draggingStartedRowCol;
@@ -69,8 +71,10 @@ angular.module('myApp').controller('Ctrl',
                     // return the piece to it's original style (then angular will take care to hide it).
                     setDraggingPieceTopLeft(getSquareTopLeft(draggingStartedRowCol.row, draggingStartedRowCol.col));
                     draggingStartedRowCol = null;
-                    draggingPiece.removeAttribute("style");//fix broken UI
-                    draggingPiece = null;
+                    if (draggingPiece !== null) {
+                        draggingPiece.removeAttribute("style");//fix broken UI
+                        draggingPiece = null;
+                    }
                 }
             }
 
@@ -80,8 +84,10 @@ angular.module('myApp').controller('Ctrl',
                 var left = size.width / 10;
 
                 var originalSize = getSquareTopLeft(draggingStartedRowCol.row, draggingStartedRowCol.col);
-                draggingPiece.style.left = (topLeft.left - originalSize.left + left) + "px";
-                draggingPiece.style.top = (topLeft.top - originalSize.top + top) + "px";
+                if (draggingPiece !== null) {
+                    draggingPiece.style.left = (topLeft.left - originalSize.left + left) + "px";
+                    draggingPiece.style.top = (topLeft.top - originalSize.top + top) + "px";
+                }
             }
 
             function getSquareWidthHeight() {
@@ -106,29 +112,62 @@ angular.module('myApp').controller('Ctrl',
                     var msg = "Dragged piece " + from.row + "x" + from.col + " to square " + to.row + "x" + to.col;
                     console.log(msg);
 
-                    //move piece
-                    try {
-                        var move = gameLogic.createMove($scope.stateAfterMove,
-                            from.row, from.col, to.row, to.col, $scope.turnIndex);
-                        $scope.isYourTurn = false; // to prevent making another move
-                        gameService.makeMove(move);
-
-
-                    } catch (e) {
-                        $log.info(["Can not move the piece:", from.row, from.col, to.row, to.col]);
-
+                    if (!$scope.isYourTurn) {
                         return;
                     }
 
-                    //check if game end
-                    try {
-                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                        $scope.isYourTurn = false; // to prevent making another move
-                        gameService.makeMove(move);
-                    } catch (e) {
-                        $log.info(e);
-                        $log.info("checkGameEnd failed!");
-                        return;
+                    //turn a piece
+                    if ((from.row === to.row) && (from.col === to.col)
+                        && $scope.stateAfterMove[key(from.row, from.col)] === null) {
+                        //turn the piece
+                        try {
+                            var move = gameLogic.createMove($scope.stateAfterMove,
+                                from.row, from.col, -1, -1, $scope.turnIndex);
+                            $scope.isYourTurn = false; // to prevent making another move
+                            gameService.makeMove(move);
+                        } catch (e) {
+                            $log.info(["Can't turn piece:", from.row, from.col, -1, -1]);
+                            return;
+                        }
+
+                        //check if game end
+                        try {
+                            var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                            $scope.isYourTurn = false; // to prevent making another move
+                            gameService.makeMove(move);
+
+                        } catch (e) {
+                            $log.info(e);
+                            $log.info("checkGameEnd failed!");
+                            return;
+                        }
+
+                    }
+                    //move piece
+                    else {
+                        try {
+                            var move = gameLogic.createMove($scope.stateAfterMove,
+                                from.row, from.col, to.row, to.col, $scope.turnIndex);
+                            $scope.isYourTurn = false; // to prevent making another move
+                            gameService.makeMove(move);
+
+
+                        } catch (e) {
+                            $log.info(["Can not move the piece:", from.row, from.col, to.row, to.col]);
+
+                            return;
+                        }
+
+                        //check if game end
+                        try {
+                            var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                            $scope.isYourTurn = false; // to prevent making another move
+                            gameService.makeMove(move);
+                        } catch (e) {
+                            $log.info(e);
+                            $log.info("checkGameEnd failed!");
+                            return;
+                        }
                     }
                 });
             }
@@ -204,7 +243,7 @@ angular.module('myApp').controller('Ctrl',
                 if (turnChanged) {
                     //if it's tuning a piece
                     if ((($scope.delta.rowAfterMove === -1) || ($scope.delta.colAfterMove === -1))
-                        && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))) {
+                        && (($scope.delta.rowBeforeMove !== -1) && ($scope.delta.colBeforeMove !== -1))) {
                         var row = $scope.delta.rowBeforeMove;
                         var col = $scope.delta.colBeforeMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
@@ -259,39 +298,39 @@ angular.module('myApp').controller('Ctrl',
 
 
 
-            $scope.cellClicked = function (row, col) {
-                $log.info(["Clicked on cell:", row, col]);
-                if (window.location.search === '?throwException') { // to test encoding a stack trace with sourcemap
-                    throw new Error("Throwing the error because URL has '?throwException'");
-                }
-                if (!$scope.isYourTurn) {
-                    return;
-                }
-                //turn the piece
-                if ($scope.stateAfterMove[key(row, col)] === null) {
-                    try {
-                        var move = gameLogic.createMove($scope.stateAfterMove,
-                            row, col, -1, -1, $scope.turnIndex);
-                        $scope.isYourTurn = false; // to prevent making another move
-                        gameService.makeMove(move);
-                    } catch (e) {
-                        $log.info(["Cell is already full in position:", row, col, -1, -1]);
-                        return;
-                    }
-
-                    //check if game end
-                    try {
-                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                        $scope.isYourTurn = false; // to prevent making another move
-                        gameService.makeMove(move);
-
-                    } catch (e) {
-                        $log.info(e);
-                        $log.info("checkGameEnd failed!");
-                        return;
-                    }
-                }
-            };
+            //$scope.cellClicked = function (row, col) {
+            //    $log.info(["Clicked on cell:", row, col]);
+            //    if (window.location.search === '?throwException') { // to test encoding a stack trace with sourcemap
+            //        throw new Error("Throwing the error because URL has '?throwException'");
+            //    }
+            //    if (!$scope.isYourTurn) {
+            //        return;
+            //    }
+            //    //turn the piece
+            //    if ($scope.stateAfterMove[key(row, col)] === null) {
+            //        try {
+            //            var move = gameLogic.createMove($scope.stateAfterMove,
+            //                row, col, -1, -1, $scope.turnIndex);
+            //            $scope.isYourTurn = false; // to prevent making another move
+            //            gameService.makeMove(move);
+            //        } catch (e) {
+            //            $log.info(["Cell is already full in position:", row, col, -1, -1]);
+            //            return;
+            //        }
+            //
+            //        //check if game end
+            //        try {
+            //            var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+            //            $scope.isYourTurn = false; // to prevent making another move
+            //            gameService.makeMove(move);
+            //
+            //        } catch (e) {
+            //            $log.info(e);
+            //            $log.info("checkGameEnd failed!");
+            //            return;
+            //        }
+            //    }
+            //};
             $scope.shouldShowImage = function (row, col) {
                 var cell = $scope.stateAfterMove[key(row, col)];
                 return cell !== "";
