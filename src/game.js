@@ -290,7 +290,6 @@ angular.module('myApp').controller('Ctrl',
                 }
             }
 
-
             gameService.setGame({
                 gameDeveloperEmail: "xiaodongbo627@gmail.com",
                 minNumberOfPlayers: 2,
