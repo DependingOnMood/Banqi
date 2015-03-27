@@ -39,8 +39,11 @@ angular.module('myApp').controller('Ctrl',
                     console.log("now at: ", row, col);
                     if (type === "touchstart" && !draggingStartedRowCol) {
                         // drag started
-                        if (($scope.stateAfterMove[key(row, col)] !== null)
-                            && ($scope.stateAfterMove[key(row, col)] !== '')){
+                        if (($scope.stateAfterMove[key(row, col)] !== null)//not hide
+                            && ($scope.stateAfterMove[key(row, col)] !== '')//has piece
+                            && ((($scope.turnIndex === 0) && ($scope.stateAfterMove[key(row, col)][0] ==='R'))//red piece can move
+                                || (($scope.turnIndex === 1) && ($scope.stateAfterMove[key(row, col)][0] ==='B'))//blue piece can move
+                                )){
                             draggingStartedRowCol = {row: row, col: col};
                             draggingPiece = document.getElementById("img_" + draggingStartedRowCol.row + "x" + draggingStartedRowCol.col);
                         }
