@@ -242,14 +242,14 @@ angular.module('myApp').controller('Ctrl',
                 if (turnChanged) {
                     //if it's tuning a piece
                     if ((($scope.delta.rowAfterMove === -1) || ($scope.delta.colAfterMove === -1))
-                        && (($scope.delta.rowBeforeMove !== -1) && ($scope.delta.colBeforeMove !== -1))) {
+                        && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))) {
                         var row = $scope.delta.rowBeforeMove;
                         var col = $scope.delta.colBeforeMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
 
                         img.className = "slowlyAppear";
                     }
-                    else if (($scope.delta.rowBeforeMove !== -1) && ($scope.delta.colBeforeMove !== -1)){
+                    else if (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1)){
                         var row = $scope.delta.rowAfterMove;
                         var col = $scope.delta.colAfterMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
