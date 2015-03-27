@@ -278,7 +278,6 @@ angular.module('myApp').controller('Ctrl',
 
             window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
 
-
             //try to initial game 1st
             function initial() {
                 try {
