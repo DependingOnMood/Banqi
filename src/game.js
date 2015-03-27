@@ -69,6 +69,7 @@ angular.module('myApp').controller('Ctrl',
                     // return the piece to it's original style (then angular will take care to hide it).
                     setDraggingPieceTopLeft(getSquareTopLeft(draggingStartedRowCol.row, draggingStartedRowCol.col));
                     draggingStartedRowCol = null;
+                    draggingPiece.removeAttribute("style");//fix broken UI
                     draggingPiece = null;
                 }
             }
@@ -104,14 +105,18 @@ angular.module('myApp').controller('Ctrl',
                 $rootScope.$apply(function () {
                     var msg = "Dragged piece " + from.row + "x" + from.col + " to square " + to.row + "x" + to.col;
                     console.log(msg);
+
                     //move piece
                     try {
                         var move = gameLogic.createMove($scope.stateAfterMove,
                             from.row, from.col, to.row, to.col, $scope.turnIndex);
                         $scope.isYourTurn = false; // to prevent making another move
                         gameService.makeMove(move);
+
+
                     } catch (e) {
                         $log.info(["Can not move the piece:", from.row, from.col, to.row, to.col]);
+
                         return;
                     }
 
