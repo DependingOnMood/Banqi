@@ -208,7 +208,7 @@ angular.module('myApp').controller('Ctrl',
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
 
                 var turnChanged;
-                if ($scope.turnIndex !== params.turnIndexAfterMove) {
+                if ($scope.turnIndex !== params.yourPlayerIndex) {
                     turnChanged = true;
                 }
                 else{

@@ -530,8 +530,10 @@ angular.module('myApp', []).factory('gameLogic', function () {
             var stage;
             if (stateBeforeMove !== (undefined || null)) {
                 stage = stateBeforeMove.stage;
-                console.log('stage', stage);
             }
+
+            console.log('stage', stage);
+
             if (stage === 0) {
 
                 var deltaValue = move[1].set.value;
