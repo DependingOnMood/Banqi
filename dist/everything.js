@@ -719,16 +719,16 @@ angular.module('myApp', []).factory('gameLogic', function () {
                         }
 
                         //check if game end
-                        try {
-                            var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                            $scope.isYourTurn = false; // to prevent making another move
-                            gameService.makeMove(move);
-
-                        } catch (e) {
-                            $log.info(e);
-                            $log.info("checkGameEnd failed!");
-                            return;
-                        }
+                        //try {
+                        //    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        //    $scope.isYourTurn = false; // to prevent making another move
+                        //    gameService.makeMove(move);
+                        //
+                        //} catch (e) {
+                        //    $log.info(e);
+                        //    $log.info("checkGameEnd failed!");
+                        //    return;
+                        //}
 
                     }
                     //move piece
@@ -747,15 +747,15 @@ angular.module('myApp', []).factory('gameLogic', function () {
                         }
 
                         //check if game end
-                        try {
-                            var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                            $scope.isYourTurn = false; // to prevent making another move
-                            gameService.makeMove(move);
-                        } catch (e) {
-                            $log.info(e);
-                            $log.info("checkGameEnd failed!");
-                            return;
-                        }
+                        //try {
+                        //    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        //    $scope.isYourTurn = false; // to prevent making another move
+                        //    gameService.makeMove(move);
+                        //} catch (e) {
+                        //    $log.info(e);
+                        //    $log.info("checkGameEnd failed!");
+                        //    return;
+                        //}
                     }
                 });
             }
@@ -786,7 +786,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 //  {millisecondsLimit: 1000}));
 
                 //check if the game ends
-                gameService.makeMove(gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex));
+                //gameService.makeMove(gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex));
             }
 
             function updateUI(params) {
@@ -795,8 +795,12 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 $scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
 
+                //console.log("params.yourPlayerIndex", params.yourPlayerIndex);
+                //console.log("params.turnIndexAfterMove", params.turnIndexAfterMove);
+                //console.log("$scope.turnIndex", $scope.turnIndex);
+
                 var turnChanged;
-                if ($scope.turnIndex !== params.yourPlayerIndex) {
+                if ($scope.turnIndex !== params.turnIndexAfterMove) {
                     turnChanged = true;
                 }
                 else{
@@ -824,6 +828,22 @@ angular.module('myApp', []).factory('gameLogic', function () {
                   {
                       computerMoved = 0;
                   }
+
+                //check if the game is end
+                //
+                if ((!turnChanged) && ($scope.delta !== undefined)
+                && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))){
+                    try {
+                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        $scope.isYourTurn = false; // to prevent making another move
+                        gameService.makeMove(move);
+
+                    } catch (e) {
+                        $log.info(e);
+                        $log.info("checkGameEnd failed!");
+                        return;
+                    }
+                }
 
                 //animation
                 //

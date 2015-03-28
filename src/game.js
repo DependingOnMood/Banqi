@@ -60,8 +60,6 @@ angular.module('myApp').controller('Ctrl',
                         dragDone(from, to);
                     } else {
                         // Drag continue
-                        //setDraggingPieceTopLeft(getSquareTopLeft(row, col));
-                        //var centerXY = getSquareCenterXY(row, col);
                         var size = getSquareWidthHeight();
                         setDraggingPieceTopLeft({top: y - size.height / 2, left: x - size.width / 2});
                     }
@@ -129,19 +127,6 @@ angular.module('myApp').controller('Ctrl',
                             $log.info(["Can't turn piece:", from.row, from.col, -1, -1]);
                             return;
                         }
-
-                        //check if game end
-                        //try {
-                        //    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                        //    $scope.isYourTurn = false; // to prevent making another move
-                        //    gameService.makeMove(move);
-                        //
-                        //} catch (e) {
-                        //    $log.info(e);
-                        //    $log.info("checkGameEnd failed!");
-                        //    return;
-                        //}
-
                     }
                     //move piece
                     else {
@@ -157,17 +142,6 @@ angular.module('myApp').controller('Ctrl',
 
                             return;
                         }
-
-                        //check if game end
-                        //try {
-                        //    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                        //    $scope.isYourTurn = false; // to prevent making another move
-                        //    gameService.makeMove(move);
-                        //} catch (e) {
-                        //    $log.info(e);
-                        //    $log.info("checkGameEnd failed!");
-                        //    return;
-                        //}
                     }
                 });
             }
@@ -206,10 +180,6 @@ angular.module('myApp').controller('Ctrl',
                 $scope.delta = params.stateAfterMove.delta;
                 $scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
-
-                //console.log("params.yourPlayerIndex", params.yourPlayerIndex);
-                //console.log("params.turnIndexAfterMove", params.turnIndexAfterMove);
-                //console.log("$scope.turnIndex", $scope.turnIndex);
 
                 var turnChanged;
                 if ($scope.turnIndex !== params.turnIndexAfterMove) {
