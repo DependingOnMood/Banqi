@@ -131,16 +131,16 @@ angular.module('myApp').controller('Ctrl',
                         }
 
                         //check if game end
-                        try {
-                            var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                            $scope.isYourTurn = false; // to prevent making another move
-                            gameService.makeMove(move);
-
-                        } catch (e) {
-                            $log.info(e);
-                            $log.info("checkGameEnd failed!");
-                            return;
-                        }
+                        //try {
+                        //    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        //    $scope.isYourTurn = false; // to prevent making another move
+                        //    gameService.makeMove(move);
+                        //
+                        //} catch (e) {
+                        //    $log.info(e);
+                        //    $log.info("checkGameEnd failed!");
+                        //    return;
+                        //}
 
                     }
                     //move piece
@@ -159,15 +159,15 @@ angular.module('myApp').controller('Ctrl',
                         }
 
                         //check if game end
-                        try {
-                            var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                            $scope.isYourTurn = false; // to prevent making another move
-                            gameService.makeMove(move);
-                        } catch (e) {
-                            $log.info(e);
-                            $log.info("checkGameEnd failed!");
-                            return;
-                        }
+                        //try {
+                        //    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        //    $scope.isYourTurn = false; // to prevent making another move
+                        //    gameService.makeMove(move);
+                        //} catch (e) {
+                        //    $log.info(e);
+                        //    $log.info("checkGameEnd failed!");
+                        //    return;
+                        //}
                     }
                 });
             }
@@ -198,7 +198,7 @@ angular.module('myApp').controller('Ctrl',
                 //  {millisecondsLimit: 1000}));
 
                 //check if the game ends
-                gameService.makeMove(gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex));
+                //gameService.makeMove(gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex));
             }
 
             function updateUI(params) {
@@ -236,6 +236,22 @@ angular.module('myApp').controller('Ctrl',
                   {
                       computerMoved = 0;
                   }
+
+                //check if the game is end
+                //
+                if ((!turnChanged) && ($scope.delta !== undefined)
+                && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))){
+                    try {
+                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        $scope.isYourTurn = false; // to prevent making another move
+                        gameService.makeMove(move);
+
+                    } catch (e) {
+                        $log.info(e);
+                        $log.info("checkGameEnd failed!");
+                        return;
+                    }
+                }
 
                 //animation
                 //
