@@ -207,8 +207,12 @@ angular.module('myApp').controller('Ctrl',
                 $scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
 
+                //console.log("params.yourPlayerIndex", params.yourPlayerIndex);
+                //console.log("params.turnIndexAfterMove", params.turnIndexAfterMove);
+                //console.log("$scope.turnIndex", $scope.turnIndex);
+
                 var turnChanged;
-                if ($scope.turnIndex !== params.yourPlayerIndex) {
+                if ($scope.turnIndex !== params.turnIndexAfterMove) {
                     turnChanged = true;
                 }
                 else{
