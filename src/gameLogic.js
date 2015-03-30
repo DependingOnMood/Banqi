@@ -134,16 +134,17 @@ angular.module('myApp', []).factory('gameLogic', function () {
     }
 
     /**
-     * Return a winner (either 'R' or 'B') or '' if there is no winner.
+     * * Return a winner (either 'R' or 'B') or '' if there is no winner.
      *
      * A game is ended with a winner as the following rule:
      * If the board only has Red pieces left, Red win
      * If the board only has Black pieces left, Black win
      *
      * @param stateBeforeMove
+     * @param turnIndexAfterMove
      * @returns {string}
      */
-    function getWinner(stateBeforeMove) {
+    function getWinner(stateBeforeMove, turnIndexAfterMove) {
         var numR = 0;
         var numB = 0;
         for (var i = 0; i < 4; i++) {
@@ -163,6 +164,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
             return 'B';
         if (numB === 0)
             return 'R';
+
+        if (angular.equals(getPossibleMoves(stateBeforeMove, turnIndexAfterMove), [])){
+            if (turnIndexAfterMove === 0) return 'B';
+            if (turnIndexAfterMove === 1) return 'R';
+        }
         return '';
     }
 
@@ -368,7 +374,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
      */
     function checkGameEnd(stateBeforeMove, turnIndexBeforeMove) {
         var firstOperation;
-        var winner = getWinner(stateBeforeMove);
+        var winner = getWinner(stateBeforeMove, 1 - turnIndexBeforeMove);
 
         if (winner !== '' || isTie(stateBeforeMove)) {
             // Game over.
