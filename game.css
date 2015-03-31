@@ -5,15 +5,26 @@
     left: 10%;
 }
 
-.slowlyAppear {
+.slowlyAppear1 {
     position: absolute;
     width: 80%;
     top: 10%;
     left: 10%;
-    -webkit-animation: slowlyAppear 1s linear; /* Chrome, Safari, Opera */
-    -moz-animation: slowlyAppear 1s linear;
-    -o-animation: slowlyAppear 1s linear;
-    animation: slowlyAppear 1s linear;
+    -webkit-animation: slowlyAppear1 1s linear; /* Chrome, Safari, Opera */
+    -moz-animation: slowlyAppear1 1s linear;
+    -o-animation: slowlyAppear1 1s linear;
+    animation: slowlyAppear1 1s linear;
+}
+
+.slowlyAppear2 {
+    position: absolute;
+    width: 80%;
+    top: 10%;
+    left: 10%;
+    -webkit-animation: slowlyAppear2 1s linear; /* Chrome, Safari, Opera */
+    -moz-animation: slowlyAppear2 1s linear;
+    -o-animation: slowlyAppear2 1s linear;
+    animation: slowlyAppear2 1s linear;
 }
 
 .spinLeft {
@@ -72,11 +83,11 @@
 }
 
 /*
-*slowlyAppear
+*slowlyAppear1
 */
 
 /* Chrome, Safari, Opera */
-@-webkit-keyframes slowlyAppear {
+@-webkit-keyframes slowlyAppear1 {
     from {
         opacity: 0.1;
     }
@@ -85,7 +96,7 @@
     }
 }
 
-@-moz-keyframes slowlyAppear {
+@-moz-keyframes slowlyAppear1 {
     from {
         opacity: 0.1;
     }
@@ -94,7 +105,7 @@
     }
 }
 
-@-o-keyframes slowlyAppear {
+@-o-keyframes slowlyAppear1 {
     from {
         opacity: 0.1;
     }
@@ -103,7 +114,48 @@
     }
 }
 
-@keyframes slowlyAppear {
+@keyframes slowlyAppear1 {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/*
+*slowlyAppear2
+*/
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes slowlyAppear2 {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes slowlyAppear2 {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes slowlyAppear2 {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slowlyAppear2 {
     from {
         opacity: 0.1;
     }

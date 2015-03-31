@@ -237,7 +237,12 @@ angular.module('myApp').controller('Ctrl',
                         var col = $scope.delta.colBeforeMove;
                         var img = document.getElementById('img_' + row + 'x' + col);
 
-                        img.className = "slowlyAppear";
+                        if (img.className === 'slowlyAppear1') {
+                            img.className = "slowlyAppear2";
+                        }
+                        else {
+                            img.className = "slowlyAppear1";
+                        }
                     }
                     //if it's moving piece
                     else if (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1)){
@@ -252,16 +257,6 @@ angular.module('myApp').controller('Ctrl',
                         }
                     }
                 }
-                ////if game ended, reset all pieces animation
-                //if () {
-                //    console.log("here!!!!!!");
-                //    for (var i = 0; i < 4; i++) {
-                //        for (var j = 0; j < 8; j++) {
-                //            var img = document.getElementById('img_' + i + 'x' + j);
-                //            img.className = "piece";
-                //        }
-                //    }
-                //}
             }
 
             /**
