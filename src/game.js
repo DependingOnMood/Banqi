@@ -239,6 +239,7 @@ angular.module('myApp').controller('Ctrl',
 
                         img.className = "slowlyAppear";
                     }
+                    //if it's moving piece
                     else if (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1)){
                         var row = $scope.delta.rowAfterMove;
                         var col = $scope.delta.colAfterMove;
@@ -248,6 +249,16 @@ angular.module('myApp').controller('Ctrl',
                         }
                         else {
                             img.className = "scale1";
+                        }
+                    }
+                    //of it's initial board, reset all pieces
+                    else if (($scope.delta.rowAfterMove === -1) && ($scope.delta.colAfterMove === -1)
+                    && ($scope.delta.rowBeforeMove === -1) && ($scope.delta.colBeforeMove === -1)) {
+                        for (var i = 0; i < 4; i++) {
+                            for (var j = 0; j < 8; j++) {
+                                var img = document.getElementById('img_' + i + 'x' + j);
+                                img.className = "piece";
+                            }
                         }
                     }
                 }
