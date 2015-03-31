@@ -252,16 +252,16 @@ angular.module('myApp').controller('Ctrl',
                         }
                     }
                 }
-                //if it's initial board, reset all pieces animation
-                if (($scope.delta.rowAfterMove === -1) && ($scope.delta.colAfterMove === -1)
-                    && ($scope.delta.rowBeforeMove === -1) && ($scope.delta.colBeforeMove === -1)) {
-                    for (var i = 0; i < 4; i++) {
-                        for (var j = 0; j < 8; j++) {
-                            var img = document.getElementById('img_' + i + 'x' + j);
-                            img.className = "piece";
-                        }
-                    }
-                }
+                ////if game ended, reset all pieces animation
+                //if () {
+                //    console.log("here!!!!!!");
+                //    for (var i = 0; i < 4; i++) {
+                //        for (var j = 0; j < 8; j++) {
+                //            var img = document.getElementById('img_' + i + 'x' + j);
+                //            img.className = "piece";
+                //        }
+                //    }
+                //}
             }
 
             /**
