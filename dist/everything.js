@@ -845,14 +845,14 @@ angular.module('myApp', []).factory('gameLogic', function () {
                             img.className = "scale1";
                         }
                     }
-                    //of it's initial board, reset all pieces
-                    else if (($scope.delta.rowAfterMove === -1) && ($scope.delta.colAfterMove === -1)
+                }
+                //if it's initial board, reset all pieces animation
+                if (($scope.delta.rowAfterMove === -1) && ($scope.delta.colAfterMove === -1)
                     && ($scope.delta.rowBeforeMove === -1) && ($scope.delta.colBeforeMove === -1)) {
-                        for (var i = 0; i < 4; i++) {
-                            for (var j = 0; j < 8; j++) {
-                                var img = document.getElementById('img_' + i + 'x' + j);
-                                img.className = "piece";
-                            }
+                    for (var i = 0; i < 4; i++) {
+                        for (var j = 0; j < 8; j++) {
+                            var img = document.getElementById('img_' + i + 'x' + j);
+                            img.className = "piece";
                         }
                     }
                 }
