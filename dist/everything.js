@@ -134,16 +134,17 @@ angular.module('myApp', []).factory('gameLogic', function () {
     }
 
     /**
-     * Return a winner (either 'R' or 'B') or '' if there is no winner.
+     * * Return a winner (either 'R' or 'B') or '' if there is no winner.
      *
      * A game is ended with a winner as the following rule:
      * If the board only has Red pieces left, Red win
      * If the board only has Black pieces left, Black win
      *
      * @param stateBeforeMove
+     * @param turnIndexAfterMove
      * @returns {string}
      */
-    function getWinner(stateBeforeMove) {
+    function getWinner(stateBeforeMove, turnIndexAfterMove) {
         var numR = 0;
         var numB = 0;
         for (var i = 0; i < 4; i++) {
@@ -163,6 +164,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
             return 'B';
         if (numB === 0)
             return 'R';
+
+        if (angular.equals(getPossibleMoves(stateBeforeMove, turnIndexAfterMove), [])){
+            if (turnIndexAfterMove === 0) return 'B';
+            if (turnIndexAfterMove === 1) return 'R';
+        }
         return '';
     }
 
@@ -368,7 +374,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
      */
     function checkGameEnd(stateBeforeMove, turnIndexBeforeMove) {
         var firstOperation;
-        var winner = getWinner(stateBeforeMove);
+        var winner = getWinner(stateBeforeMove, 1 - turnIndexBeforeMove);
 
         if (winner !== '' || isTie(stateBeforeMove)) {
             // Game over.
@@ -648,8 +654,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
                         dragDone(from, to);
                     } else {
                         // Drag continue
-                        //setDraggingPieceTopLeft(getSquareTopLeft(row, col));
-                        //var centerXY = getSquareCenterXY(row, col);
                         var size = getSquareWidthHeight();
                         setDraggingPieceTopLeft({top: y - size.height / 2, left: x - size.width / 2});
                     }
@@ -717,19 +721,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
                             $log.info(["Can't turn piece:", from.row, from.col, -1, -1]);
                             return;
                         }
-
-                        //check if game end
-                        //try {
-                        //    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                        //    $scope.isYourTurn = false; // to prevent making another move
-                        //    gameService.makeMove(move);
-                        //
-                        //} catch (e) {
-                        //    $log.info(e);
-                        //    $log.info("checkGameEnd failed!");
-                        //    return;
-                        //}
-
                     }
                     //move piece
                     else {
@@ -745,17 +736,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
 
                             return;
                         }
-
-                        //check if game end
-                        //try {
-                        //    var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
-                        //    $scope.isYourTurn = false; // to prevent making another move
-                        //    gameService.makeMove(move);
-                        //} catch (e) {
-                        //    $log.info(e);
-                        //    $log.info("checkGameEnd failed!");
-                        //    return;
-                        //}
                     }
                 });
             }
@@ -794,10 +774,6 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 $scope.delta = params.stateAfterMove.delta;
                 $scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
                 params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
-
-                //console.log("params.yourPlayerIndex", params.yourPlayerIndex);
-                //console.log("params.turnIndexAfterMove", params.turnIndexAfterMove);
-                //console.log("$scope.turnIndex", $scope.turnIndex);
 
                 var turnChanged;
                 if ($scope.turnIndex !== params.turnIndexAfterMove) {
