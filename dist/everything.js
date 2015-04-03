@@ -798,7 +798,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                       computerMoved = 1;// to make sure the UI won't send another move.
                     // Waiting 0.5 seconds to let the move animation finish; if we call aiService
                     // then the animation is paused until the javascript finishes.
-                    $timeout(sendComputerMove, 1000);
+                      $scope.isYourTurn = false;
+                      $timeout(sendComputerMove, 1000);
                   }
                 else
                   {
