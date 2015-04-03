@@ -595,11 +595,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
 });;angular.module('myApp').controller('Ctrl',
     ['$scope', '$log', '$timeout','$rootScope',
         'gameService', 'stateService', 'gameLogic',
-        //'aiService',
+        'aiService',
         'resizeGameAreaService',
         function ($scope, $log, $timeout, $rootScope,
                   gameService, stateService, gameLogic,
-                  //aiService,
+                  aiService,
                   resizeGameAreaService) {
 
             'use strict';
@@ -757,16 +757,16 @@ angular.module('myApp', []).factory('gameLogic', function () {
             var computerMoved = 0;// check if AI already made a move
 
             function sendComputerMove() {
-                var possibleMoves = gameLogic.getPossibleMoves($scope.stateAfterMove, $scope.turnIndex);
-                console.log('possibleMoves: ', possibleMoves);
-                gameService.makeMove(possibleMoves[Math.floor(Math.random()*possibleMoves.length)]);
 
-                //gameService.makeMove(aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex,
-                //  // at most 1 second for the AI to choose a move (but might be much quicker)
-                //  {millisecondsLimit: 1000}));
+                var move = aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex,
+                    // at most 1 second for the AI to choose a move (but might be much quicker)
+                    {millisecondsLimit: 1000})
+                console.log("computer move: ", move);
+                gameService.makeMove(move);
 
-                //check if the game ends
-                //gameService.makeMove(gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex));
+                //var possibleMoves = gameLogic.getPossibleMoves($scope.stateAfterMove, $scope.turnIndex);
+                //console.log('possibleMoves: ', possibleMoves);
+                //gameService.makeMove(possibleMoves[Math.floor(Math.random()*possibleMoves.length)]);
             }
 
             function updateUI(params) {
@@ -798,7 +798,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                       computerMoved = 1;// to make sure the UI won't send another move.
                     // Waiting 0.5 seconds to let the move animation finish; if we call aiService
                     // then the animation is paused until the javascript finishes.
-                    $timeout(sendComputerMove, 500);
+                    $timeout(sendComputerMove, 1000);
                   }
                 else
                   {
@@ -809,6 +809,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 //
                 if ((!turnChanged) && ($scope.delta !== undefined)
                 && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))){
+                    console.log('delta: ', $scope.delta);
                     try {
                         var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
                         $scope.isYourTurn = false; // to prevent making another move
@@ -890,6 +891,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
             $scope.shouldShowImage = function (row, col) {
                 var cell = $scope.stateAfterMove[key(row, col)];
                 return cell !== "";
+                //return true;
             };
             $scope.getImageSrc = function (row, col) {
                 var cell = $scope.stateAfterMove[key(row, col)];
