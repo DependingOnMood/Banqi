@@ -64,7 +64,7 @@ module.exports = function(grunt) {
         src: [
             'src/gameLogic.js',
             'src/game.js',
-            //'src/aiService.js'
+            'src/aiService.js'
         ],
         dest: 'dist/everything.js'
       }
