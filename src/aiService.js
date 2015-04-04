@@ -22,7 +22,7 @@ angular.module('myApp').factory('aiService',
                 var p3Moves = [];
                 var p4Moves = [];
                 var p5Moves = [];
-                var p6Moves = [];
+                var p6Moves = possibleMoves;
                 for (var i = 0; i < possibleMoves.length; i++) {
                     //console.log("possibleMoves[i]: ", possibleMoves[i][1].set.value);
                     var delta = possibleMoves[i][1].set.value;
@@ -61,13 +61,13 @@ angular.module('myApp').factory('aiService',
                             }
                             //move to a position protected
                             else{
-                                p6Moves.push(possibleMoves[i]);
+                                p5Moves.push(possibleMoves[i]);
                             }
                         }
                     }
                     //turn a piece
                     else{
-                        p5Moves.push(possibleMoves[i]);
+                        p4Moves.push(possibleMoves[i]);
                     }
                 }
 
@@ -88,9 +88,6 @@ angular.module('myApp').factory('aiService',
                 }
                 if (!angular.equals(p6Moves,[])){
                     return p6Moves[Math.floor(Math.random()*p6Moves.length)];
-                }
-                if (!angular.equals(possibleMoves,[])){
-                    return possibleMoves[Math.floor(Math.random()*possibleMoves.length)];
                 }
             }
 
