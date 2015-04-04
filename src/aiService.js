@@ -9,6 +9,11 @@ angular.module('myApp').factory('aiService',
              * alphaBetaLimits is an object that sets a limit on the alpha-beta search,
              * and it has a millisecondsLimit:
              * millisecondsLimit is a time limit
+             *
+             * @param stateAfterMove
+             * @param playerIndex
+             * @param Limits
+             * @returns {*}
              */
             function createComputerMove(stateAfterMove, playerIndex, Limits) {
                 var possibleMoves = gameLogic.getPossibleMoves(stateAfterMove, playerIndex);
@@ -26,11 +31,13 @@ angular.module('myApp').factory('aiService',
                         //kill
                         if (stateAfterMove[key(delta.rowAfterMove, delta.colAfterMove)]
                             != '') {
+                            //kill a unprotected piece
                             if (!checkProtecting(stateAfterMove,
                                     delta.rowBeforeMove, delta.colBeforeMove,
                                     delta.rowAfterMove, delta.colAfterMove)) {
                                 p1Moves.push(possibleMoves[i]);
                             }
+                            //kill a protected piece
                             else{
                                 p2Moves.push(possibleMoves[i]);
                             }
@@ -58,6 +65,7 @@ angular.module('myApp').factory('aiService',
                             }
                         }
                     }
+                    //turn a piece
                     else{
                         p5Moves.push(possibleMoves[i]);
                     }
@@ -89,6 +97,10 @@ angular.module('myApp').factory('aiService',
             /**
              * Turn a position (a,b) to 'axb' key version
              * ep. key(0,1) returns '0x1'
+             *
+             * @param x
+             * @param y
+             * @returns {string}
              */
             function key(x, y) {
                 return 'b' + x.toString() + 'x' + y.toString();
@@ -97,6 +109,13 @@ angular.module('myApp').factory('aiService',
             /**
              * Check if the piece is getting protected
              * that means, if I kill it, it has another can kill me back
+             *
+             * @param stateAfterMove
+             * @param rowBefore
+             * @param colBefore
+             * @param rowAfter
+             * @param colAfter
+             * @returns {boolean}
              */
             function checkProtecting(stateAfterMove, rowBefore, colBefore, rowAfter, colAfter){
                 //check up
@@ -167,6 +186,16 @@ angular.module('myApp').factory('aiService',
                 return false;
             }
 
+            /**
+             * check if protected by cannon
+             *
+             * @param stateBeforeMove
+             * @param rowBeforeMove
+             * @param colBeforeMove
+             * @param rowAfterMove
+             * @param colAfterMove
+             * @returns {boolean}
+             */
             function cannonRule(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove) {
                 //check if it's follow the cannon killing rule
                 if (rowBeforeMove === rowAfterMove) {
@@ -218,4 +247,5 @@ angular.module('myApp').factory('aiService',
             }
 
             return {createComputerMove: createComputerMove};
+
         }]);

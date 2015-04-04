@@ -17,6 +17,18 @@ angular.module('myApp').controller('Ctrl',
             var draggingPiece = null;
 
             window.handleDragEvent = handleDragEvent;
+            window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
+
+            //make game size scalable
+            resizeGameAreaService.setWidthToHeight(2);
+
+            /**
+             * handle the Drag Event using DragAndDropListener
+             *
+             * @param type
+             * @param clientX
+             * @param clientY
+             */
             function handleDragEvent(type, clientX, clientY) {
                 // Center point in gameArea
                 var x = clientX - gameArea.offsetLeft;
@@ -76,6 +88,11 @@ angular.module('myApp').controller('Ctrl',
                 }
             }
 
+            /**
+             * set Dragging Piece Top Left
+             *
+             * @param topLeft
+             */
             function setDraggingPieceTopLeft(topLeft) {
                 var size = getSquareWidthHeight();
                 var top = size.height / 10;
@@ -88,6 +105,10 @@ angular.module('myApp').controller('Ctrl',
                 }
             }
 
+            /**
+             * get Square Width Height of board (square position)
+             * @returns {{width: number, height: number}}
+             */
             function getSquareWidthHeight() {
                 return {
                     width: gameArea.clientWidth *.96 / colsNum,
@@ -95,15 +116,22 @@ angular.module('myApp').controller('Ctrl',
                 };
             }
 
+            /**
+             * get Square Top Left position
+             * @param row
+             * @param col
+             * @returns {{top: number, left: number}}
+             */
             function getSquareTopLeft(row, col) {
                 var size = getSquareWidthHeight();
                 return {top: row * size.height, left: col * size.width}
             }
 
-            //make game size scalable
-            resizeGameAreaService.setWidthToHeight(2);
-
-
+            /**
+             * drag Done listener
+             * @param from
+             * @param to
+             */
             function dragDone(from, to) {
                 console.log("DragDone");
                 $rootScope.$apply(function () {
@@ -146,6 +174,12 @@ angular.module('myApp').controller('Ctrl',
                 });
             }
 
+            /**
+             * get integers for calculation
+             *
+             * @param number
+             * @returns {Array}
+             */
             function getIntegersTill(number) {
                 var res = [];
                 for (var i = 0; i < number; i++) {
@@ -162,6 +196,9 @@ angular.module('myApp').controller('Ctrl',
 
             var computerMoved = 0;// check if AI already made a move
 
+            /**
+             * send the computer move (AI)
+             */
             function sendComputerMove() {
 
                 var move = aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex,
@@ -175,6 +212,11 @@ angular.module('myApp').controller('Ctrl',
                 //gameService.makeMove(possibleMoves[Math.floor(Math.random()*possibleMoves.length)]);
             }
 
+            /**
+             * updateUI function
+             *
+             * @param params
+             */
             function updateUI(params) {
                 $scope.stateAfterMove = params.stateAfterMove;
                 $scope.delta = params.stateAfterMove.delta;
@@ -191,8 +233,8 @@ angular.module('myApp').controller('Ctrl',
 
                 $scope.turnIndex = params.turnIndexAfterMove;
 
+                //initial the game
                 if (!$scope.delta && $scope.isYourTurn) {
-                    //initial the game
                     initial();
                     return;
                 }
@@ -275,9 +317,9 @@ angular.module('myApp').controller('Ctrl',
                 return 'b' + x.toString() + 'x' + y.toString();
             }
 
-            window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
-
-            //try to initial game 1st
+            /**
+             * initial game
+             */
             function initial() {
                 try {
                     var move = gameLogic.initialGame();

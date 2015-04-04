@@ -611,6 +611,18 @@ angular.module('myApp', []).factory('gameLogic', function () {
             var draggingPiece = null;
 
             window.handleDragEvent = handleDragEvent;
+            window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
+
+            //make game size scalable
+            resizeGameAreaService.setWidthToHeight(2);
+
+            /**
+             * handle the Drag Event using DragAndDropListener
+             *
+             * @param type
+             * @param clientX
+             * @param clientY
+             */
             function handleDragEvent(type, clientX, clientY) {
                 // Center point in gameArea
                 var x = clientX - gameArea.offsetLeft;
@@ -670,6 +682,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 }
             }
 
+            /**
+             * set Dragging Piece Top Left
+             *
+             * @param topLeft
+             */
             function setDraggingPieceTopLeft(topLeft) {
                 var size = getSquareWidthHeight();
                 var top = size.height / 10;
@@ -682,6 +699,10 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 }
             }
 
+            /**
+             * get Square Width Height of board (square position)
+             * @returns {{width: number, height: number}}
+             */
             function getSquareWidthHeight() {
                 return {
                     width: gameArea.clientWidth *.96 / colsNum,
@@ -689,15 +710,22 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 };
             }
 
+            /**
+             * get Square Top Left position
+             * @param row
+             * @param col
+             * @returns {{top: number, left: number}}
+             */
             function getSquareTopLeft(row, col) {
                 var size = getSquareWidthHeight();
                 return {top: row * size.height, left: col * size.width}
             }
 
-            //make game size scalable
-            resizeGameAreaService.setWidthToHeight(2);
-
-
+            /**
+             * drag Done listener
+             * @param from
+             * @param to
+             */
             function dragDone(from, to) {
                 console.log("DragDone");
                 $rootScope.$apply(function () {
@@ -740,6 +768,12 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 });
             }
 
+            /**
+             * get integers for calculation
+             *
+             * @param number
+             * @returns {Array}
+             */
             function getIntegersTill(number) {
                 var res = [];
                 for (var i = 0; i < number; i++) {
@@ -756,6 +790,9 @@ angular.module('myApp', []).factory('gameLogic', function () {
 
             var computerMoved = 0;// check if AI already made a move
 
+            /**
+             * send the computer move (AI)
+             */
             function sendComputerMove() {
 
                 var move = aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex,
@@ -769,6 +806,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 //gameService.makeMove(possibleMoves[Math.floor(Math.random()*possibleMoves.length)]);
             }
 
+            /**
+             * updateUI function
+             *
+             * @param params
+             */
             function updateUI(params) {
                 $scope.stateAfterMove = params.stateAfterMove;
                 $scope.delta = params.stateAfterMove.delta;
@@ -785,8 +827,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
 
                 $scope.turnIndex = params.turnIndexAfterMove;
 
+                //initial the game
                 if (!$scope.delta && $scope.isYourTurn) {
-                    //initial the game
                     initial();
                     return;
                 }
@@ -869,9 +911,9 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 return 'b' + x.toString() + 'x' + y.toString();
             }
 
-            window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
-
-            //try to initial game 1st
+            /**
+             * initial game
+             */
             function initial() {
                 try {
                     var move = gameLogic.initialGame();
@@ -928,6 +970,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
              * alphaBetaLimits is an object that sets a limit on the alpha-beta search,
              * and it has a millisecondsLimit:
              * millisecondsLimit is a time limit
+             *
+             * @param stateAfterMove
+             * @param playerIndex
+             * @param Limits
+             * @returns {*}
              */
             function createComputerMove(stateAfterMove, playerIndex, Limits) {
                 var possibleMoves = gameLogic.getPossibleMoves(stateAfterMove, playerIndex);
@@ -945,11 +992,13 @@ angular.module('myApp', []).factory('gameLogic', function () {
                         //kill
                         if (stateAfterMove[key(delta.rowAfterMove, delta.colAfterMove)]
                             != '') {
+                            //kill a unprotected piece
                             if (!checkProtecting(stateAfterMove,
                                     delta.rowBeforeMove, delta.colBeforeMove,
                                     delta.rowAfterMove, delta.colAfterMove)) {
                                 p1Moves.push(possibleMoves[i]);
                             }
+                            //kill a protected piece
                             else{
                                 p2Moves.push(possibleMoves[i]);
                             }
@@ -977,6 +1026,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
                             }
                         }
                     }
+                    //turn a piece
                     else{
                         p5Moves.push(possibleMoves[i]);
                     }
@@ -1008,6 +1058,10 @@ angular.module('myApp', []).factory('gameLogic', function () {
             /**
              * Turn a position (a,b) to 'axb' key version
              * ep. key(0,1) returns '0x1'
+             *
+             * @param x
+             * @param y
+             * @returns {string}
              */
             function key(x, y) {
                 return 'b' + x.toString() + 'x' + y.toString();
@@ -1016,6 +1070,13 @@ angular.module('myApp', []).factory('gameLogic', function () {
             /**
              * Check if the piece is getting protected
              * that means, if I kill it, it has another can kill me back
+             *
+             * @param stateAfterMove
+             * @param rowBefore
+             * @param colBefore
+             * @param rowAfter
+             * @param colAfter
+             * @returns {boolean}
              */
             function checkProtecting(stateAfterMove, rowBefore, colBefore, rowAfter, colAfter){
                 //check up
@@ -1086,6 +1147,16 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 return false;
             }
 
+            /**
+             * check if protected by cannon
+             *
+             * @param stateBeforeMove
+             * @param rowBeforeMove
+             * @param colBeforeMove
+             * @param rowAfterMove
+             * @param colAfterMove
+             * @returns {boolean}
+             */
             function cannonRule(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove) {
                 //check if it's follow the cannon killing rule
                 if (rowBeforeMove === rowAfterMove) {
@@ -1137,4 +1208,5 @@ angular.module('myApp', []).factory('gameLogic', function () {
             }
 
             return {createComputerMove: createComputerMove};
+
         }]);
