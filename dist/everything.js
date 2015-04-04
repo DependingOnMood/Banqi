@@ -809,7 +809,9 @@ angular.module('myApp', []).factory('gameLogic', function () {
                 //check if the game is end
                 //
                 if ((!turnChanged) && ($scope.delta !== undefined)
-                && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))){
+                    && (($scope.delta.rowBeforeMove !== -1) || ($scope.delta.colBeforeMove !== -1))
+                    && $scope.stateAfterMove.stage === 1){
+                    
                     console.log('delta: ', $scope.delta);
                     try {
                         var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
