@@ -130,7 +130,7 @@ angular.module('myApp').factory('aiService',
                     if (stateAfterMove[key(rowAfter - 1, colAfter)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter - 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && ((stateAfterMove[key(rowAfter - 1, colAfter)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === 1) && (stateAfterMove[key(rowBefore, colBefore)][1] === 7)))) {
+                            || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
                             console.log('up protecting');
                             return true;
                         }
@@ -142,7 +142,7 @@ angular.module('myApp').factory('aiService',
                     if (stateAfterMove[key(rowAfter, colAfter-1)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter, colAfter -1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && ((stateAfterMove[key(rowAfter, colAfter - 1)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === 1) && (stateAfterMove[key(rowBefore, colBefore)][1] === 7)))) {
+                            || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
                             console.log('left protecting');
                             return true;
                         }
@@ -155,7 +155,7 @@ angular.module('myApp').factory('aiService',
                     if (stateAfterMove[key(rowAfter + 1, colAfter)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter + 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && ((stateAfterMove[key(rowAfter + 1, colAfter)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === 1) && (stateAfterMove[key(rowBefore, colBefore)][1] === 7)))) {
+                            || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
                             console.log('down protecting');
                             return true;
                         }
@@ -167,7 +167,7 @@ angular.module('myApp').factory('aiService',
                     if (stateAfterMove[key(rowAfter, colAfter + 1)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter, colAfter + 1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && ((stateAfterMove[key(rowAfter, colAfter + 1)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === 1) && (stateAfterMove[key(rowBefore, colBefore)][1] === 7)))) {
+                            || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
                             console.log('right protecting');
                             return true;
                         }
@@ -260,7 +260,7 @@ angular.module('myApp').factory('aiService',
                     if (stateAfterMove[key(rowAfter - 1, colAfter)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter - 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && ((stateAfterMove[key(rowAfter - 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === 7) && (stateAfterMove[key(rowBefore, colBefore)][1] === 1)))) {
+                            || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
                             console.log('up protecting');
                             return true;
                         }
@@ -272,7 +272,7 @@ angular.module('myApp').factory('aiService',
                     if (stateAfterMove[key(rowAfter, colAfter-1)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter, colAfter -1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && ((stateAfterMove[key(rowAfter, colAfter - 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === 7) && (stateAfterMove[key(rowBefore, colBefore)][1] === 1)))) {
+                            || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
                             console.log('left protecting');
                             return true;
                         }
@@ -285,7 +285,7 @@ angular.module('myApp').factory('aiService',
                     if (stateAfterMove[key(rowAfter + 1, colAfter)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter + 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && ((stateAfterMove[key(rowAfter + 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === 7) && (stateAfterMove[key(rowBefore, colBefore)][1] === 1)))) {
+                            || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
                             console.log('down protecting');
                             return true;
                         }
@@ -297,7 +297,7 @@ angular.module('myApp').factory('aiService',
                     if (stateAfterMove[key(rowAfter, colAfter + 1)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter, colAfter + 1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && ((stateAfterMove[key(rowAfter, colAfter + 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === 7) && (stateAfterMove[key(rowBefore, colBefore)][1] === 1)))) {
+                            || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
                             console.log('right protecting');
                             return true;
                         }
