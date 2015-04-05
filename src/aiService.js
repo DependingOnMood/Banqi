@@ -32,7 +32,7 @@ angular.module('myApp').factory('aiService',
                         if (stateAfterMove[key(delta.rowAfterMove, delta.colAfterMove)]
                             != '') {
                             //kill a unprotected piece
-                            if (!checkProtecting(stateAfterMove,
+                            if (!isProtected(stateAfterMove,
                                     delta.rowBeforeMove, delta.colBeforeMove,
                                     delta.rowAfterMove, delta.colAfterMove)) {
                                 p1Moves.push(possibleMoves[i]);
@@ -44,17 +44,26 @@ angular.module('myApp').factory('aiService',
                         }
                         //move
                         else{
-                            //run away
-                            if (!checkProtecting(stateAfterMove,
+                            //go to attack position that is not protected
+                            if (!isProtected(stateAfterMove,
                                     delta.rowBeforeMove, delta.colBeforeMove,
                                     delta.rowAfterMove, delta.colAfterMove)
-                                && checkProtecting(stateAfterMove,
+                                && isAttackPoint(stateAfterMove,
+                                    delta.rowBeforeMove, delta.colBeforeMove,
+                                    delta.rowAfterMove, delta.colAfterMove)){
+                                p3Moves.push(possibleMoves[i]);
+                            }
+                            //run away
+                            if (!isProtected(stateAfterMove,
+                                    delta.rowBeforeMove, delta.colBeforeMove,
+                                    delta.rowAfterMove, delta.colAfterMove)
+                                && isProtected(stateAfterMove,
                                     delta.rowBeforeMove, delta.colBeforeMove,
                                     delta.rowBeforeMove, delta.colBeforeMove)){
                                     p3Moves.push(possibleMoves[i]);
                             }
                             //move to a position not protected
-                            else if (!checkProtecting(stateAfterMove,
+                            else if (!isProtected(stateAfterMove,
                                 delta.rowBeforeMove, delta.colBeforeMove,
                                 delta.rowAfterMove, delta.colAfterMove)) {
                                 p4Moves.push(possibleMoves[i]);
@@ -104,7 +113,7 @@ angular.module('myApp').factory('aiService',
             }
 
             /**
-             * Check if the piece is getting protected
+             * Check if the piece/position is getting protected
              * that means, if I kill it, it has another can kill me back
              *
              * @param stateAfterMove
@@ -114,7 +123,7 @@ angular.module('myApp').factory('aiService',
              * @param colAfter
              * @returns {boolean}
              */
-            function checkProtecting(stateAfterMove, rowBefore, colBefore, rowAfter, colAfter){
+            function isProtected(stateAfterMove, rowBefore, colBefore, rowAfter, colAfter){
                 //check up
                 if (rowAfter - 1 >= 0){
                     console.log("up:", stateAfterMove[key(rowAfter-1, colAfter)]);
@@ -241,6 +250,60 @@ angular.module('myApp').factory('aiService',
 
                 return false;
 
+            }
+
+
+            function isAttackPoint(stateAfterMove, rowBefore, colBefore, rowAfter, colAfter){
+                //check up
+                if (rowAfter - 1 >= 0){
+                    console.log("up:", stateAfterMove[key(rowAfter-1, colAfter)]);
+                    if (stateAfterMove[key(rowAfter - 1, colAfter)] !== ('' || null)) {
+                        if ((stateAfterMove[key(rowAfter - 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
+                            && ((stateAfterMove[key(rowAfter - 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                            || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === 7) && (stateAfterMove[key(rowBefore, colBefore)][1] === 1)))) {
+                            console.log('up protecting');
+                            return true;
+                        }
+                    }
+                }
+                //check left
+                if (colAfter - 1 >= 0) {
+                    console.log("left:", stateAfterMove[key(rowAfter, colAfter-1)]);
+                    if (stateAfterMove[key(rowAfter, colAfter-1)] !== ('' || null)) {
+                        if ((stateAfterMove[key(rowAfter, colAfter -1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
+                            && ((stateAfterMove[key(rowAfter, colAfter - 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                            || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === 7) && (stateAfterMove[key(rowBefore, colBefore)][1] === 1)))) {
+                            console.log('left protecting');
+                            return true;
+                        }
+                    }
+
+                }
+                //check down
+                if (rowAfter + 1 <= 3) {
+                    console.log("down:", stateAfterMove[key(rowAfter+1, colAfter)]);
+                    if (stateAfterMove[key(rowAfter + 1, colAfter)] !== ('' || null)){
+                        if ((stateAfterMove[key(rowAfter + 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
+                            && ((stateAfterMove[key(rowAfter + 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                            || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === 7) && (stateAfterMove[key(rowBefore, colBefore)][1] === 1)))) {
+                            console.log('down protecting');
+                            return true;
+                        }
+                    }
+                }
+                //check right
+                if (colAfter + 1 <= 7) {
+                    console.log("right:", stateAfterMove[key(rowAfter, colAfter+1)]);
+                    if (stateAfterMove[key(rowAfter, colAfter + 1)] !== ('' || null)){
+                        if ((stateAfterMove[key(rowAfter, colAfter + 1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
+                            && ((stateAfterMove[key(rowAfter, colAfter + 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                            || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === 7) && (stateAfterMove[key(rowBefore, colBefore)][1] === 1)))) {
+                            console.log('right protecting');
+                            return true;
+                        }
+                    }
+                }
+                return false;
             }
 
             return {createComputerMove: createComputerMove};
