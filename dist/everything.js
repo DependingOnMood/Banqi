@@ -211,12 +211,23 @@ angular.module('myApp', []).factory('gameLogic', function () {
         if (numR === 1 && numB === 1 && !isNext(Rx, Ry, Bx, By))
             return true;
 
-        //Red only has one piece left and the piece rank higher than all piece in Black, it's a tie
+        //Red tie situate
         if (numR === 1 && numB > 1) {
             for (var i = 0; i < 4; i++) {
                 for (var j = 0; j < 8; j++) {
+                    //Red only has one piece left and the piece rank higher than all piece in Black, it's a tie
                     if ((stateBeforeMove[key(i, j)][0] === 'B')
                         && (stateBeforeMove[key(Rx, Ry)][1] < stateBeforeMove[key(i, j)][1])) {
+                        return false;
+                    }
+                    //Red only has one piece left and it's a General, if Black has no Soldier, it's a tie
+                    if ((stateBeforeMove[key(i, j)][0] === 'B')
+                        && (stateBeforeMove[key(Rx, Ry)][1] === '7' && stateBeforeMove[key(i, j)][1] === '1')) {
+                        return false;
+                    }
+                    //Red only has one piece left, but Black has a Cannon, it's not tie yet
+                    if ((stateBeforeMove[key(i, j)][0] === 'B')
+                        && (stateBeforeMove[key(i, j)][1] === '2')) {
                         return false;
                     }
                 }
@@ -224,12 +235,22 @@ angular.module('myApp', []).factory('gameLogic', function () {
             return true;
         }
 
-        //Black only has one piece left and the piece rank higher than all piece in Red, it's a tie
+        //Black tie situate
         if (numB === 1 && numR > 1) {
             for (var i = 0; i < 4; i++) {
                 for (var j = 0; j < 8; j++) {
                     if ((stateBeforeMove[key(i, j)][0] === 'R')
                         && (stateBeforeMove[key(Bx, By)][1] < stateBeforeMove[key(i, j)][1])) {
+                        return false;
+                    }
+                    //Black only has one piece left and it's a General, if Red has no Soldier, it's a tie
+                    if ((stateBeforeMove[key(i, j)][0] === 'R')
+                        && (stateBeforeMove[key(Rx, Ry)][1] === '7' && stateBeforeMove[key(i, j)][1] === '1')) {
+                        return false;
+                    }
+                    //Black only has one piece left, but Red has a Cannon, it's not tie yet
+                    if ((stateBeforeMove[key(i, j)][0] === 'R')
+                        && (stateBeforeMove[key(i, j)][1] === '2')) {
                         return false;
                     }
                 }
