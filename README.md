@@ -19,8 +19,11 @@ general, advisor, elephant, chariot, horse, soldier.
 This ranking is based on the initial board positions of the corresponding pieces in xiangqi,
 though the horse and chariot are inexplicably swapped.
 
-Except for the cannon,
-pieces capture with the same motion as for movement: one square up, down, left, or right.
+Only pieces of equal or lower rank may be captured, with one exception.
+The one exception concerns generals and soldiers:
+the general cannot capture soldiers, and soldiers can capture the general.
+
+Except for the cannon, pieces capture with the same motion as for movement: one square up, down, left, or right.
 
 The cannon is not included in the ranking because it is exceptional:
 it captures in an unusual way, it can capture a piece of any rank,
