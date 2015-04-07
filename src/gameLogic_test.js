@@ -340,6 +340,25 @@ describe("In Banqi", function() {
             ]);
     });
 
+    it("again, kill a chess has lower rank is legal", function() {
+        var _stateBeforeMove = _newState;
+        _stateBeforeMove['b0x0']= 'B6';//Black Advisor
+        _stateBeforeMove['b0x1']= 'B7';//Black General
+        _stateBeforeMove['b0x2']= '';  //Space
+        _stateBeforeMove['b1x0']= 'R2';//Red Cannon
+        _stateBeforeMove['b1x1']= 'R1';//Red Soldier
+        _stateBeforeMove['b1x2']= null;//Black Cannon(unturned)
+
+        expectMoveOk(1,
+            _stateBeforeMove,
+            [{setTurn: {turnIndex : 1}},
+                {set: {key: 'delta', value: {rowBeforeMove: 0, colBeforeMove: 0, rowAfterMove: 1, colAfterMove: 0}}},
+                {set: {key: 'stage', value: 1}},
+                {set: {key: 'b1x0', value: 'B6'}},
+                {set: {key: 'b0x0', value: ''}}
+            ]);
+    });
+
     it("kill a chess has higher rank is not legal", function() {
         var _stateBeforeMove = _newState;
         _stateBeforeMove['b0x0']= 'B3';//Black Horse
@@ -408,6 +427,27 @@ describe("In Banqi", function() {
         _stateBeforeMove['b1x0']= 'R2';//Red Cannon
         _stateBeforeMove['b1x1']= 'R1';//Red Soldier
         _stateBeforeMove['b1x2']= 'B4';//Black Chariot
+        _stateBeforeMove['b2x1']= 'B4';//Black Chariot
+        _stateBeforeMove['b2x2']= 'R4';//Red Chariot
+
+        expectMoveOk(0,
+            _stateBeforeMove,
+            [{setTurn: {turnIndex : 0}},
+                {set: {key: 'delta', value: {rowBeforeMove: 1, colBeforeMove: 0, rowAfterMove: 1, colAfterMove: 2}}},
+                {set: {key: 'stage', value: 1}},
+                {set: {key: 'b1x2', value: 'R2'}},
+                {set: {key: 'b1x0', value: ''}}
+            ]);
+    });
+
+    it("a Cannon kill any chess has one turned chess between hori it is legal, even it's a General ", function() {
+        var _stateBeforeMove = _newState;
+        _stateBeforeMove['b0x0']= 'B3';//Black Horse
+        _stateBeforeMove['b0x1']= 'B7';//Black General
+        _stateBeforeMove['b0x2']= '';  //Space
+        _stateBeforeMove['b1x0']= 'R2';//Red Cannon
+        _stateBeforeMove['b1x1']= 'R1';//Red Soldier
+        _stateBeforeMove['b1x2']= 'B7';//Black General
         _stateBeforeMove['b2x1']= 'B4';//Black Chariot
         _stateBeforeMove['b2x2']= 'R4';//Red Chariot
 
@@ -574,20 +614,6 @@ describe("In Banqi", function() {
                 {set: {key: 'stage', value: 0}}]);
     });
 
-    it("game end with Tie, Red has one chess left and higher rank than all Black chesses", function() {
-        var _stateBeforeMove = _noPieceState;
-        _stateBeforeMove['b0x0']= 'B3';//Black Horse
-        _stateBeforeMove['b1x1']= 'B3';//Black Horse
-        _stateBeforeMove['b0x2']= ''; //Space
-        _stateBeforeMove['b1x7']= 'R7';//Red General
-        _stateBeforeMove['b1x2']= 'B2';//Black Cannon
-
-        expectMoveOk(1,
-            _stateBeforeMove,
-            [{endMatch: {endMatchScores:[0, 0]}},
-                {set: {key: 'stage', value: 0}}]);
-
-    });
 
     it("game not end with Tie, Red has one chess left but not higher rank than all Black chesses", function() {
         var _stateBeforeMove = _noPieceState;
@@ -604,20 +630,6 @@ describe("In Banqi", function() {
 
     });
 
-    it("game end with Tie, Black has one chess left and higher rank than all Red chesses", function() {
-        var _stateBeforeMove = _noPieceState;
-        _stateBeforeMove['b0x0']= 'R3';//Red Horse
-        _stateBeforeMove['b1x1']= 'R3';//Red Horse
-        _stateBeforeMove['b0x2']= '';  //Space
-        _stateBeforeMove['b1x7']= 'B7';//Black Cannon
-        _stateBeforeMove['b1x2']= 'R2';//Red Cannon
-
-        expectMoveOk(0,
-            _stateBeforeMove,
-            [{endMatch: {endMatchScores:[0, 0]}},
-                {set: {key: 'stage', value: 0}}]);
-
-    });
 
     it("game not end with Tie, Black has one chess left but not higher rank than all Red chesses", function() {
         var _stateBeforeMove = _noPieceState;
@@ -651,17 +663,6 @@ describe("In Banqi", function() {
 
     });
 
-    it("game end with Tie, both has only one chess and not next by each other", function() {
-        var _stateBeforeMove = _noPieceState;
-        _stateBeforeMove['b1x1']= 'R3';//Black Horse
-        _stateBeforeMove['b0x7']= 'B7';//Red General
-
-        expectMoveOk(0,
-            _stateBeforeMove,
-            [{endMatch: {endMatchScores:[0, 0]}},
-                {set: {key: 'stage', value: 0}}]);
-
-    });
 
     it("null move is illegal", function() {
         expectIllegalMove(0, {}, null);

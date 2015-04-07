@@ -24,13 +24,12 @@ angular.module('myApp').factory('aiService',
                 var p5Moves = [];
                 var p6Moves = possibleMoves;
                 for (var i = 0; i < possibleMoves.length; i++) {
-                    //console.log("possibleMoves[i]: ", possibleMoves[i][1].set.value);
                     var delta = possibleMoves[i][1].set.value;
 
                     if ((delta.rowAfterMove !== -1) || (delta.colAfterMove !== -1)) {
                         //kill
                         if (stateAfterMove[key(delta.rowAfterMove, delta.colAfterMove)]
-                            != '') {
+                            !== '') {
                             //kill a unprotected piece
                             if (!isProtected(stateAfterMove,
                                     delta.rowBeforeMove, delta.colBeforeMove,
@@ -45,12 +44,12 @@ angular.module('myApp').factory('aiService',
                         //move
                         else{
                             //go to attack position that is not protected
-                            if (!isProtected(stateAfterMove,
+                            if ((!isProtected(stateAfterMove,
                                     delta.rowBeforeMove, delta.colBeforeMove,
-                                    delta.rowAfterMove, delta.colAfterMove)
-                                && isAttackPoint(stateAfterMove,
+                                    delta.rowAfterMove, delta.colAfterMove))
+                                && (isAttackPoint(stateAfterMove,
                                     delta.rowBeforeMove, delta.colBeforeMove,
-                                    delta.rowAfterMove, delta.colAfterMove)){
+                                    delta.rowAfterMove, delta.colAfterMove))){
                                 p3Moves.push(possibleMoves[i]);
                             }
                             //run away
@@ -126,24 +125,23 @@ angular.module('myApp').factory('aiService',
             function isProtected(stateAfterMove, rowBefore, colBefore, rowAfter, colAfter){
                 //check up
                 if (rowAfter - 1 >= 0){
-                    console.log("up:", stateAfterMove[key(rowAfter-1, colAfter)]);
                     if (stateAfterMove[key(rowAfter - 1, colAfter)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter - 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
-                            && ((stateAfterMove[key(rowAfter - 1, colAfter)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                            || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
-                            console.log('up protecting');
+                            && (((stateAfterMove[key(rowAfter - 1, colAfter)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
+                                && !((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))
+                            || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7'))))
+                        {
                             return true;
                         }
                     }
                 }
                 //check left
                 if (colAfter - 1 >= 0) {
-                    console.log("left:", stateAfterMove[key(rowAfter, colAfter-1)]);
                     if (stateAfterMove[key(rowAfter, colAfter-1)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter, colAfter -1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
-                            && ((stateAfterMove[key(rowAfter, colAfter - 1)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
+                            && (((stateAfterMove[key(rowAfter, colAfter - 1)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
+                                && !((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))
                             || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
-                            console.log('left protecting');
                             return true;
                         }
                     }
@@ -151,24 +149,22 @@ angular.module('myApp').factory('aiService',
                 }
                 //check down
                 if (rowAfter + 1 <= 3) {
-                    console.log("down:", stateAfterMove[key(rowAfter+1, colAfter)]);
                     if (stateAfterMove[key(rowAfter + 1, colAfter)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter + 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
-                            && ((stateAfterMove[key(rowAfter + 1, colAfter)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
+                            && (((stateAfterMove[key(rowAfter + 1, colAfter)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
+                            && !((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))
                             || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
-                            console.log('down protecting');
                             return true;
                         }
                     }
                 }
                 //check right
                 if (colAfter + 1 <= 7) {
-                    console.log("right:", stateAfterMove[key(rowAfter, colAfter+1)]);
                     if (stateAfterMove[key(rowAfter, colAfter + 1)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter, colAfter + 1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
-                            && ((stateAfterMove[key(rowAfter, colAfter + 1)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
+                            && (((stateAfterMove[key(rowAfter, colAfter + 1)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
+                                && !((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))
                             || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
-                            console.log('right protecting');
                             return true;
                         }
                     }
@@ -182,7 +178,6 @@ angular.module('myApp').factory('aiService',
                     for (var j = 0; j < 8; j++) {
                         if (stateAfterMove[key(i, j)] === cannon) {
                             if (cannonRule(stateAfterMove, i, j, rowAfter, colAfter)){
-                                console.log('cannon protecting');
                                 return true;
                             }
                         }
@@ -256,24 +251,22 @@ angular.module('myApp').factory('aiService',
             function isAttackPoint(stateAfterMove, rowBefore, colBefore, rowAfter, colAfter){
                 //check up
                 if (rowAfter - 1 >= 0){
-                    console.log("up:", stateAfterMove[key(rowAfter-1, colAfter)]);
                     if (stateAfterMove[key(rowAfter - 1, colAfter)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter - 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
-                            && ((stateAfterMove[key(rowAfter - 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                            && (((stateAfterMove[key(rowAfter - 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                                && !((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))
                             || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
-                            console.log('up protecting');
                             return true;
                         }
                     }
                 }
                 //check left
                 if (colAfter - 1 >= 0) {
-                    console.log("left:", stateAfterMove[key(rowAfter, colAfter-1)]);
                     if (stateAfterMove[key(rowAfter, colAfter-1)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter, colAfter -1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
-                            && ((stateAfterMove[key(rowAfter, colAfter - 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                            && (((stateAfterMove[key(rowAfter, colAfter - 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                                && !((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))
                             || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
-                            console.log('left protecting');
                             return true;
                         }
                     }
@@ -281,24 +274,22 @@ angular.module('myApp').factory('aiService',
                 }
                 //check down
                 if (rowAfter + 1 <= 3) {
-                    console.log("down:", stateAfterMove[key(rowAfter+1, colAfter)]);
                     if (stateAfterMove[key(rowAfter + 1, colAfter)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter + 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
-                            && ((stateAfterMove[key(rowAfter + 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                            && (((stateAfterMove[key(rowAfter + 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                                && !((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))
                             || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
-                            console.log('down protecting');
                             return true;
                         }
                     }
                 }
                 //check right
                 if (colAfter + 1 <= 7) {
-                    console.log("right:", stateAfterMove[key(rowAfter, colAfter+1)]);
                     if (stateAfterMove[key(rowAfter, colAfter + 1)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter, colAfter + 1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
-                            && ((stateAfterMove[key(rowAfter, colAfter + 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                            && (((stateAfterMove[key(rowAfter, colAfter + 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
+                                && !((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))
                             || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
-                            console.log('right protecting');
                             return true;
                         }
                     }
