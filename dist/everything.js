@@ -1110,7 +1110,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     if (stateAfterMove[key(rowAfter - 1, colAfter)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter - 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && (((stateAfterMove[key(rowAfter - 1, colAfter)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                                && !((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))
+                                && !((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1'))
+                                && !(stateAfterMove[key(rowAfter - 1, colAfter)][1] === '2'))
                             || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7'))))
                         {
                             return true;
@@ -1122,7 +1123,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     if (stateAfterMove[key(rowAfter, colAfter-1)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter, colAfter -1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && (((stateAfterMove[key(rowAfter, colAfter - 1)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                                && !((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))
+                                && !((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1'))
+                                && !(stateAfterMove[key(rowAfter, colAfter - 1)][1] === '2'))
                             || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
                             return true;
                         }
@@ -1134,7 +1136,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     if (stateAfterMove[key(rowAfter + 1, colAfter)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter + 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && (((stateAfterMove[key(rowAfter + 1, colAfter)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                            && !((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))
+                                && !((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1'))
+                                && !(stateAfterMove[key(rowAfter + 1, colAfter)][1] === '2'))
                             || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
                             return true;
                         }
@@ -1145,7 +1148,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     if (stateAfterMove[key(rowAfter, colAfter + 1)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter, colAfter + 1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && (((stateAfterMove[key(rowAfter, colAfter + 1)][1] >= stateAfterMove[key(rowBefore, colBefore)][1])
-                                && !((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))
+                                && !((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1'))
+                                && !(stateAfterMove[key(rowAfter, colAfter + 1)][1] === '2'))
                             || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))) {
                             return true;
                         }
@@ -1236,7 +1240,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     if (stateAfterMove[key(rowAfter - 1, colAfter)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter - 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && (((stateAfterMove[key(rowAfter - 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
-                                && !((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))
+                                && !((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7'))
+                                && !(stateAfterMove[key(rowBefore, colBefore)][1] === '2'))
                             || ((stateAfterMove[key(rowAfter - 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
                             return true;
                         }
@@ -1247,7 +1252,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     if (stateAfterMove[key(rowAfter, colAfter-1)] !== ('' || null)) {
                         if ((stateAfterMove[key(rowAfter, colAfter -1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && (((stateAfterMove[key(rowAfter, colAfter - 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
-                                && !((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))
+                                && !((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7'))
+                                && !(stateAfterMove[key(rowBefore, colBefore)][1] === '2'))
                             || ((stateAfterMove[key(rowAfter, colAfter - 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
                             return true;
                         }
@@ -1259,7 +1265,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     if (stateAfterMove[key(rowAfter + 1, colAfter)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter + 1, colAfter)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && (((stateAfterMove[key(rowAfter + 1, colAfter)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
-                                && !((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))
+                                && !((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7'))
+                                && !(stateAfterMove[key(rowBefore, colBefore)][1] === '2'))
                             || ((stateAfterMove[key(rowAfter + 1, colAfter)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
                             return true;
                         }
@@ -1270,7 +1277,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
                     if (stateAfterMove[key(rowAfter, colAfter + 1)] !== ('' || null)){
                         if ((stateAfterMove[key(rowAfter, colAfter + 1)][0] !== stateAfterMove[key(rowBefore, colBefore)][0])
                             && (((stateAfterMove[key(rowAfter, colAfter + 1)][1] < stateAfterMove[key(rowBefore, colBefore)][1])
-                                && !((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7')))
+                                && !((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '1') && (stateAfterMove[key(rowBefore, colBefore)][1] === '7'))
+                                && !(stateAfterMove[key(rowBefore, colBefore)][1] === '2'))
                             || ((stateAfterMove[key(rowAfter, colAfter + 1)][1] === '7') && (stateAfterMove[key(rowBefore, colBefore)][1] === '1')))) {
                             return true;
                         }
