@@ -617,11 +617,11 @@ angular.module('myApp', []).factory('gameLogic', function () {
     ['$scope', '$log', '$timeout','$rootScope',
         'gameService', 'stateService', 'gameLogic',
         'aiService',
-        'resizeGameAreaService',
+        'resizeGameAreaService', 'dragAndDropService',
         function ($scope, $log, $timeout, $rootScope,
                   gameService, stateService, gameLogic,
                   aiService,
-                  resizeGameAreaService) {
+                  resizeGameAreaService,  dragAndDropService) {
 
             'use strict';
 
@@ -631,7 +631,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
             var draggingStartedRowCol = null; // The {row: YY, col: XX} where dragging started.
             var draggingPiece = null;
 
-            window.handleDragEvent = handleDragEvent;
+            dragAndDropService.addDragListener("gameArea", handleDragEvent);
+            
             window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
 
             //make game size scalable
@@ -818,7 +819,7 @@ angular.module('myApp', []).factory('gameLogic', function () {
 
                 var move = aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex,
                     // at most 1 second for the AI to choose a move (but might be much quicker)
-                    {millisecondsLimit: 1000})
+                    {millisecondsLimit: 1000});
                 console.log("computer move: ", move);
                 gameService.makeMove(move);
 
