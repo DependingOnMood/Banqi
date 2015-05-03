@@ -2,7 +2,8 @@
  * Created by Dongbo on 2/12/15.
  */
 
-angular.module('myApp', []).factory('gameLogic', function () {
+angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
+.factory('gameLogic', function() {
 
     'use strict';
 
@@ -614,14 +615,14 @@ angular.module('myApp', []).factory('gameLogic', function () {
     };
 
 });;angular.module('myApp').controller('Ctrl',
-    ['$scope', '$log', '$timeout','$rootScope',
+    ['$scope', '$log', '$timeout','$rootScope','$translate',
         'gameService', 'stateService', 'gameLogic',
         'aiService',
         'resizeGameAreaService', 'dragAndDropService',
-        function ($scope, $log, $timeout, $rootScope,
+        function ($scope, $log, $timeout, $rootScope, $translate,
                   gameService, stateService, gameLogic,
                   aiService,
-                  resizeGameAreaService,  dragAndDropService) {
+                  resizeGameAreaService, dragAndDropService) {
 
             'use strict';
 
@@ -632,6 +633,8 @@ angular.module('myApp', []).factory('gameLogic', function () {
             var draggingPiece = null;
 
             dragAndDropService.addDragListener("gameArea", handleDragEvent);
+
+            console.log("Translation of 'RULES_OF_BANQI' is " + $translate('RULES_OF_BANQI'));
             
             window.e2e_test_stateService = stateService; // to allow us to load any state in our e2e tests.
 

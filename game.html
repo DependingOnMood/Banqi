@@ -13,18 +13,122 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js" crossorigin="anonymous"></script>
     <!-- /build -->
 
-    <!-- build:js dist/everything.min.js -->
-    <script src="src/gameLogic.js" crossorigin="anonymous"></script>
-    <script src="src/game.js" crossorigin="anonymous"></script>
-    <script src="src/aiService.js" crossorigin="anonymous"></script>
+    <!-- For the game rules/instructions, I use carousel from Angular UI + Bootstrap -->
+    <!-- build:css http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.css">
+    <!-- /build -->
+    <!-- build:js http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-touch.min.js -->
+    <script crossorigin="anonymous"
+            src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-touch.js"></script>
+    <!-- /build -->
+    <!-- build:js http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js -->
+    <script crossorigin="anonymous"
+            src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.js"></script>
     <!-- /build -->
 
-    <script src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.2.min.js" crossorigin="anonymous"></script>
+    <!-- build:js dist/everything.min.js -->
+    <script crossorigin="anonymous" src="src/gameLogic.js"></script>
+    <script crossorigin="anonymous" src="src/game.js"></script>
+    <script crossorigin="anonymous" src="src/aiService.js"></script>
+    <!-- /build -->
+
+    <script>window.angularTranslationLanguages = ['en', 'zh'];</script>
+
+    <script crossorigin="anonymous" src="http://yoav-zibin.github.io/emulator/dist/turnBasedServices.2.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="http://yoav-zibin.github.io/emulator/main.css">
     <link rel="stylesheet" type="text/css" href="game.css">
 </head>
 <body ng-cloak ng-controller="Ctrl">
+
+<div style="position:absolute; bottom:5px; left: 5px">
+        <span ng-click="isHelpModalShown = true"
+              class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+</div>
+
+<div class="overlayModal" ng-show="isHelpModalShown" aria-hidden="true">
+    <div class="modal-backdrop in"></div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="isHelpModalShown = false" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    {{ 'RULES_OF_BANQI' | translate }}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <carousel style="height: 150px">
+                    <slide>
+                        <table>
+                            <tr>
+                                <td>
+                                    {{ 'RULES_SLIDE1' | translate }}
+                                </td>
+                                <td>
+                                    <img src="res/HelpSlide1.png" style="height:100px;">
+                                </td>
+                            </tr>
+                        </table>
+                    </slide>
+                    <slide>
+                        <table>
+                            <tr>
+                                <td>
+                                    {{ 'RULES_SLIDE2' | translate }}
+                                </td>
+                                <td>
+                                    <img src="res/HelpSlide2.png" style="height:100px;">
+                                </td>
+                            </tr>
+                        </table>
+                    </slide>
+                    <slide>
+                        <table>
+                            <tr>
+                                <td>
+                                    {{ 'RULES_SLIDE3' | translate }}
+                                </td>
+                                <td>
+                                    <img src="res/HelpSlide3.png" style="height:100px;">
+                                </td>
+                            </tr>
+                        </table>
+                    </slide>
+                    <slide>
+                        <table>
+                            <tr>
+                                <td>
+                                    {{ 'RULES_SLIDE4' | translate }}
+                                </td>
+                                <td>
+                                    <img src="res/HelpSlide4.png" style="height:100px;">
+                                </td>
+                            </tr>
+                        </table>
+                    </slide>
+                    <slide>
+                        <table>
+                            <tr>
+                                <td>
+                                    {{ 'RULES_SLIDE5' | translate }}
+                                </td>
+                                <td>
+                                    <img src="res/HelpSlide5.png" style="height:100px;">
+                                </td>
+                            </tr>
+                        </table>
+                    </slide>
+                </carousel>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="isHelpModalShown = false">
+                    {{ 'CLOSE' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="gameArea">
     <img ng-src="res/board.jpg" width="100%" height="100%">
