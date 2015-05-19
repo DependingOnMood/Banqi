@@ -16,6 +16,8 @@ angular.module('myApp').controller('Ctrl',
             var draggingStartedRowCol = null; // The {row: YY, col: XX} where dragging started.
             var draggingPiece = null;
 
+            //var isHelpIconClicked = false ;// check if the helper icon is clicked
+
             dragAndDropService.addDragListener("gameArea", handleDragEvent);
 
             console.log("Translation of 'RULES_OF_BANQI' is " + $translate('RULES_OF_BANQI'));
@@ -53,6 +55,23 @@ angular.module('myApp').controller('Ctrl',
                     var row = Math.floor(rowsNum * y / gameArea.clientHeight);
                     console.log("now at: ", row, col);
 
+                    //check if the help screen is Hide
+                    //var helpModel = document.getElementById("helpModal");
+                    //var helpModelHideCheck = helpModel.getAttribute("class");
+                    //var isHelpModelHide;
+                    //if (helpModelHideCheck === "overlayModal ng-hide") isHelpModelHide = true;
+                    //else isHelpModelHide = false;
+                    //
+                    //console.log("isHelpModelHide", isHelpModelHide);
+
+
+                    //console.log("isHelpIconClicked", isHelpIconClicked);
+
+                    //if (isHelpIconClicked) {
+                    //    isHelpIconClicked = false;
+                    //    return;
+                    //}
+
                     if (type === "touchstart" && !draggingStartedRowCol) {
                         // drag started
                         draggingStartedRowCol = {row: row, col: col};
@@ -61,14 +80,11 @@ angular.module('myApp').controller('Ctrl',
                             && ($scope.stateAfterMove[key(row, col)] !== '')//has piece
                             && ((($scope.turnIndex === 0) && ($scope.stateAfterMove[key(row, col)][0] ==='R'))//red piece can move
                                 || (($scope.turnIndex === 1) && ($scope.stateAfterMove[key(row, col)][0] ==='B'))//blue piece can move
-                                )){
+                                )
+                            ){
                             draggingPiece = document.getElementById("img_" + draggingStartedRowCol.row + "x" + draggingStartedRowCol.col);
                         }
                     }
-                    //if (!draggingPiece) {
-                    //    return;
-                    //}
-
                     if (type === "touchend") {
                         var from = draggingStartedRowCol;
                         var to = {row: row, col: col};
@@ -366,5 +382,8 @@ angular.module('myApp').controller('Ctrl',
                     : cell === null ? "res/Hide.png"
                     : "";
             };
+            //$scope.helpClicked = function (bool) {
+            //    isHelpIconClicked = bool;
+            //};
 
         }]);

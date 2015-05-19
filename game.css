@@ -81,6 +81,12 @@
     -o-animation: scale2 1s;
     animation: scale2 1s;
 }
+.disappear{
+    -webkit-animation: slowlyDisappear 1s;   /* Chrome, Safari, Opera */
+    -moz-animation: slowlyDisappear 1s;
+    -o-animation: slowlyDisappear 1s;
+    animation: slowlyDisappear 1s;
+}
 
 .carousel-indicators li {
     background-color: black;
@@ -112,6 +118,46 @@ td {
     height:100%;
 }
 
+/*
+*slowlyDisappear
+*/
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes slowlyDisappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.1;
+    }
+}
+
+@-moz-keyframes slowlyDisappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.1;
+    }
+}
+
+@-o-keyframes slowlyDisappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.1;
+    }
+}
+
+@keyframes slowlyDisappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.1;
+    }
+}
 
 /*
 *slowlyAppear1
