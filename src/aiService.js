@@ -15,8 +15,8 @@ angular.module('myApp').factory('aiService',
              * @param Limits
              * @returns {*}
              */
-            function createComputerMove(stateAfterMove, playerIndex, myColor, Limits) {
-                var possibleMoves = gameLogic.getPossibleMoves(stateAfterMove, playerIndex, myColor);
+            function createComputerMove(stateAfterMove, playerIndex, Limits) {
+                var possibleMoves = gameLogic.getPossibleMoves(stateAfterMove, playerIndex);
                 var p1Moves = [];
                 var p2Moves = [];
                 var p3Moves = [];
