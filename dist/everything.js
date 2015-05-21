@@ -145,7 +145,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
      * @param turnIndexAfterMove
      * @returns {string}
      */
-    function getWinner(stateBeforeMove, turnIndexAfterMove) {
+    function getWinner(stateBeforeMove, turnIndexAfterMove, myColor) {
         var numR = 0;
         var numB = 0;
         for (var i = 0; i < 4; i++) {
@@ -166,9 +166,13 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
         if (numB === 0)
             return 'R';
 
+        var yourColor;
+        if (myColor === 'R'){ yourColor='B';}
+        else if (myColor === 'B'){ yourColor='R';}
+
         if (angular.equals(getPossibleMoves(stateBeforeMove, turnIndexAfterMove), [])){
-            if (turnIndexAfterMove === 0) return 'B';
-            if (turnIndexAfterMove === 1) return 'R';
+            if (turnIndexAfterMove === 0) return yourColor;
+            if (turnIndexAfterMove === 1) return myColor;
         }
         return '';
     }
@@ -290,7 +294,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
      * @param turnIndexBeforeMove
      * @returns {Array}
      */
-    function getPossibleMoves(stateBeforeMove, turnIndexBeforeMove) {
+    function getPossibleMoves(stateBeforeMove, turnIndexBeforeMove, myColor) {
         var possibleMoves = [];
         var i, j, k, l;
         for (i = 0; i < 4; i++) {
@@ -298,7 +302,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
                 for (k = -1; k < 4; k++) {
                     for (l = -1; l < 8; l++) {
                         try {
-                            possibleMoves.push(createMove(stateBeforeMove, i, j, k, l, turnIndexBeforeMove));
+                            possibleMoves.push(createMove(stateBeforeMove, i, j, k, l, turnIndexBeforeMove, myColor));
                         } catch (e) {
                             // if there are any exceptions then the move is illegal
                         }
@@ -325,7 +329,11 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
      * @param turnIndexBeforeMove
      * @returns {*}
      */
-    function createMove(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove, turnIndexBeforeMove) {
+    function createMove(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove, turnIndexBeforeMove, myColor) {
+        var yourColor;
+        if (myColor === 'R'){ yourColor='B';}
+        else if (myColor === 'B'){ yourColor='R';}
+
         //When the space has nothing, cant choose it
         if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)] === '') {
             throw new Error("There is nothing at that position!");
@@ -344,11 +352,11 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
                 throw new Error("You can't kill yourself!");
             }
             //when it's not Red's turn, cant choose red showed piece
-            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === 'R' && turnIndexBeforeMove !== 0) {
+            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === myColor && turnIndexBeforeMove !== 0) {
                 throw new Error("Please wait for your turn!");
             }
             //when it's not Black's turn, cant choose Black showed piece
-            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === 'B' && turnIndexBeforeMove !== 1) {
+            if (stateBeforeMove[key(rowBeforeMove, colBeforeMove)][0] === yourColor && turnIndexBeforeMove !== 1) {
                 throw new Error("Please wait for your turn!");
             }
         }
@@ -373,6 +381,8 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
                 needToSet = killPiece(stateBeforeMove, rowBeforeMove, colBeforeMove, rowAfterMove, colAfterMove);
             }
         }
+
+        if (myColor === null || myColor === undefined){myColor='';}
         return [{setTurn: {turnIndex: turnIndexBeforeMove}},
             {
                 set: {
@@ -382,7 +392,9 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
                     }
                 }
             },
-            {set: {key: 'stage', value: 1}}].concat(needToSet);
+            {set: {key: 'stage', value: 1}},
+            {set: {key: 'myColor', value: myColor}},
+        ].concat(needToSet);
 
     }
 
@@ -394,15 +406,25 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
      * @param turnIndexBeforeMove
      * @returns {{set: {key: string, value: number}}[]}
      */
-    function checkGameEnd(stateBeforeMove, turnIndexBeforeMove) {
+    function checkGameEnd(stateBeforeMove, turnIndexBeforeMove, myColor) {
         var firstOperation;
-        var winner = getWinner(stateBeforeMove, 1 - turnIndexBeforeMove);
+        var winner = getWinner(stateBeforeMove, 1 - turnIndexBeforeMove, myColor);
+
+        var yourColor;
+        if (myColor === 'R'){ yourColor ='B';}
+        else if (myColor === 'B'){ yourColor='R';}
+
+        console.log('isTie:', isTie(stateBeforeMove));
+        console.log('winner in checkGameEnd:', winner);
+        console.log('myColor in checkGameEnd:', myColor);
+        console.log('yourColor in checkGameEnd:', yourColor);
+
 
         if (winner !== '' || isTie(stateBeforeMove)) {
             // Game over.
             firstOperation = {
                 endMatch: {
-                    endMatchScores: (winner === 'R' ? [1, 0] : (winner === 'B' ? [0, 1] : [0, 0]))
+                    endMatchScores: (winner === myColor ? [1, 0] : (winner === yourColor ? [0, 1] : [0, 0]))
                 }
             };
         } else {
@@ -550,39 +572,55 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
 
         // The state and turn after move are not needed in any game where all state is public.
         //var turnIndexAfterMove = params.turnIndexAfterMove;
-        //var stateAfterMove = params.stateAfterMove;
+        var stateAfterMove = params.stateAfterMove;
 
         // We can assume that turnIndexBeforeMove and stateBeforeMove are legal, and we need
         // to verify that move is legal.
         try {
+            //var isFirstMove = true;
+            var myColor;
             var stage;
             if (stateBeforeMove !== (undefined || null)) {
                 stage = stateBeforeMove.stage;
             }
 
             console.log('stage', stage);
+            console.log('myColor', myColor);
 
             if (stage === 0) {
 
                 var deltaValue = move[1].set.value;
-
+                myColor = stateAfterMove["myColor"];
                 var rowBeforeMove = deltaValue.rowBeforeMove;
                 var colBeforeMove = deltaValue.colBeforeMove;
                 var rowAfterMove = deltaValue.rowAfterMove;
                 var colAfterMove = deltaValue.colAfterMove;
                 var expectedMove = createMove(stateBeforeMove, rowBeforeMove, colBeforeMove,
-                    rowAfterMove, colAfterMove, turnIndexBeforeMove);
+                    rowAfterMove, colAfterMove, turnIndexBeforeMove, myColor);
+                //get myColor
+                //if (isFirstMove){
+                //    console.log('deltaValue: ', deltaValue);
+                //    console.log('stateAfterMove: ', stateAfterMove);
+                //    myColor = stateAfterMove[key(deltaValue.rowBeforeMove, deltaValue.colBeforeMove)][0];
+                //    console.log('myColor in isMoveOk: ', myColor);
+                //    isFirstMove = false;
+                //}
 
                 if (!angular.equals(move, expectedMove)) {
                     console.log('move, expectedMove are not equal');
+                    console.log('move', move);
+                    console.log('expectedMove', expectedMove);
                     return false;
                 }
             }
             else if (stage === 1) {
-                var expectedMove = checkGameEnd(stateBeforeMove, turnIndexBeforeMove);
+                myColor = stateAfterMove["myColor"];
+                var expectedMove = checkGameEnd(stateBeforeMove, turnIndexBeforeMove, myColor);
 
                 if (!angular.equals(move, expectedMove)) {
                     console.log('move, expectedMove are not equal');
+                    console.log('move', move);
+                    console.log('expectedMove', expectedMove);
                     return false;
                 }
             }
@@ -631,6 +669,9 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
             var colsNum = 8;
             var draggingStartedRowCol = null; // The {row: YY, col: XX} where dragging started.
             var draggingPiece = null;
+            var myColor;
+            var yourColor;
+            var isFirstMove = true;
 
             //var isHelpIconClicked = false ;// check if the helper icon is clicked
 
@@ -694,8 +735,8 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
 
                         if (($scope.stateAfterMove[key(row, col)] !== null)//not hide
                             && ($scope.stateAfterMove[key(row, col)] !== '')//has piece
-                            && ((($scope.turnIndex === 0) && ($scope.stateAfterMove[key(row, col)][0] ==='R'))//red piece can move
-                                || (($scope.turnIndex === 1) && ($scope.stateAfterMove[key(row, col)][0] ==='B'))//blue piece can move
+                            && ((($scope.turnIndex === 0) && ($scope.stateAfterMove[key(row, col)][0] === myColor))//red piece can move
+                                || (($scope.turnIndex === 1) && ($scope.stateAfterMove[key(row, col)][0] === yourColor))//blue piece can move
                                 )
                             ){
                             draggingPiece = document.getElementById("img_" + draggingStartedRowCol.row + "x" + draggingStartedRowCol.col);
@@ -783,7 +824,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
                         //turn the piece
                         try {
                             var move = gameLogic.createMove($scope.stateAfterMove,
-                                from.row, from.col, -1, -1, $scope.turnIndex);
+                                from.row, from.col, -1, -1, $scope.turnIndex, myColor);
                             $scope.isYourTurn = false; // to prevent making another move
                             gameService.makeMove(move);
                         } catch (e) {
@@ -795,7 +836,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
                     else {
                         try {
                             var move = gameLogic.createMove($scope.stateAfterMove,
-                                from.row, from.col, to.row, to.col, $scope.turnIndex);
+                                from.row, from.col, to.row, to.col, $scope.turnIndex, myColor);
                             $scope.isYourTurn = false; // to prevent making another move
                             gameService.makeMove(move);
 
@@ -836,7 +877,7 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
              */
             function sendComputerMove() {
 
-                var move = aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex,
+                var move = aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex, myColor,
                     // at most 1 second for the AI to choose a move (but might be much quicker)
                     {millisecondsLimit: 1000});
                 console.log("computer move: ", move);
@@ -896,8 +937,19 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
                     && $scope.stateAfterMove.stage === 1){
 
                     console.log('delta: ', $scope.delta);
+                    console.log('stateAfterMove: ', $scope.stateAfterMove);
                     try {
-                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        //get myColor
+                        if (isFirstMove){
+                            myColor = $scope.stateAfterMove[key($scope.delta.rowBeforeMove, $scope.delta.colBeforeMove)][0];
+                            console.log('myColor: ', myColor);
+                            isFirstMove = false;
+                        }
+
+                        if (myColor === 'R'){ yourColor = 'B';}
+                        else if (myColor === 'B'){ yourColor = 'R';}
+
+                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex, myColor);
                         $scope.isYourTurn = false; // to prevent making another move
                         gameService.makeMove(move);
 
@@ -1020,8 +1072,8 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap'])
              * @param Limits
              * @returns {*}
              */
-            function createComputerMove(stateAfterMove, playerIndex, Limits) {
-                var possibleMoves = gameLogic.getPossibleMoves(stateAfterMove, playerIndex);
+            function createComputerMove(stateAfterMove, playerIndex, myColor, Limits) {
+                var possibleMoves = gameLogic.getPossibleMoves(stateAfterMove, playerIndex, myColor);
                 var p1Moves = [];
                 var p2Moves = [];
                 var p3Moves = [];

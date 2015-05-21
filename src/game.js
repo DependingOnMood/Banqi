@@ -15,6 +15,9 @@ angular.module('myApp').controller('Ctrl',
             var colsNum = 8;
             var draggingStartedRowCol = null; // The {row: YY, col: XX} where dragging started.
             var draggingPiece = null;
+            var myColor;
+            var yourColor;
+            var isFirstMove = true;
 
             //var isHelpIconClicked = false ;// check if the helper icon is clicked
 
@@ -78,8 +81,8 @@ angular.module('myApp').controller('Ctrl',
 
                         if (($scope.stateAfterMove[key(row, col)] !== null)//not hide
                             && ($scope.stateAfterMove[key(row, col)] !== '')//has piece
-                            && ((($scope.turnIndex === 0) && ($scope.stateAfterMove[key(row, col)][0] ==='R'))//red piece can move
-                                || (($scope.turnIndex === 1) && ($scope.stateAfterMove[key(row, col)][0] ==='B'))//blue piece can move
+                            && ((($scope.turnIndex === 0) && ($scope.stateAfterMove[key(row, col)][0] === myColor))//red piece can move
+                                || (($scope.turnIndex === 1) && ($scope.stateAfterMove[key(row, col)][0] === yourColor))//blue piece can move
                                 )
                             ){
                             draggingPiece = document.getElementById("img_" + draggingStartedRowCol.row + "x" + draggingStartedRowCol.col);
@@ -167,7 +170,7 @@ angular.module('myApp').controller('Ctrl',
                         //turn the piece
                         try {
                             var move = gameLogic.createMove($scope.stateAfterMove,
-                                from.row, from.col, -1, -1, $scope.turnIndex);
+                                from.row, from.col, -1, -1, $scope.turnIndex, myColor);
                             $scope.isYourTurn = false; // to prevent making another move
                             gameService.makeMove(move);
                         } catch (e) {
@@ -179,7 +182,7 @@ angular.module('myApp').controller('Ctrl',
                     else {
                         try {
                             var move = gameLogic.createMove($scope.stateAfterMove,
-                                from.row, from.col, to.row, to.col, $scope.turnIndex);
+                                from.row, from.col, to.row, to.col, $scope.turnIndex, myColor);
                             $scope.isYourTurn = false; // to prevent making another move
                             gameService.makeMove(move);
 
@@ -220,7 +223,7 @@ angular.module('myApp').controller('Ctrl',
              */
             function sendComputerMove() {
 
-                var move = aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex,
+                var move = aiService.createComputerMove($scope.stateAfterMove, $scope.turnIndex, myColor,
                     // at most 1 second for the AI to choose a move (but might be much quicker)
                     {millisecondsLimit: 1000});
                 console.log("computer move: ", move);
@@ -280,8 +283,19 @@ angular.module('myApp').controller('Ctrl',
                     && $scope.stateAfterMove.stage === 1){
 
                     console.log('delta: ', $scope.delta);
+                    console.log('stateAfterMove: ', $scope.stateAfterMove);
                     try {
-                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex);
+                        //get myColor
+                        if (isFirstMove){
+                            myColor = $scope.stateAfterMove[key($scope.delta.rowBeforeMove, $scope.delta.colBeforeMove)][0];
+                            console.log('myColor: ', myColor);
+                            isFirstMove = false;
+                        }
+
+                        if (myColor === 'R'){ yourColor = 'B';}
+                        else if (myColor === 'B'){ yourColor = 'R';}
+
+                        var move = gameLogic.checkGameEnd($scope.stateAfterMove, $scope.turnIndex, myColor);
                         $scope.isYourTurn = false; // to prevent making another move
                         gameService.makeMove(move);
 
